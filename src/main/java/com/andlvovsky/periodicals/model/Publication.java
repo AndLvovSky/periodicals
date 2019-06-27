@@ -1,8 +1,16 @@
 package com.andlvovsky.periodicals.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Objects;
 
+@Entity
 public class Publication {
+
+    @Id
+    @GeneratedValue
+    private Long id;
 
     private String name;
 
@@ -11,6 +19,8 @@ public class Publication {
     private Float cost; /** cost per publication */
 
     private String description;
+
+    public Publication() {}
 
     public Publication(String name, Integer frequency, Float cost, String description) {
         this.name = name;
@@ -49,6 +59,10 @@ public class Publication {
 
     public String getDescription() {
         return description;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     @Override
