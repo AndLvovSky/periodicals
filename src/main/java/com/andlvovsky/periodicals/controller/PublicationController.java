@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.controller;
 
+import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
 import com.andlvovsky.periodicals.model.Publication;
 import com.andlvovsky.periodicals.repository.PublicationRepository;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class PublicationController {
     @ResponseBody
     @GetMapping("/{id}")
     public Publication getPublication(@PathVariable Long id) {
-        return repository.findById(id).get();
+        return repository.findById(id).orElseThrow(() -> new PublicationNotFoundException(id));
     }
 
 }
