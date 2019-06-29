@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
 public class PeriodicalsApplication {
@@ -15,6 +16,7 @@ public class PeriodicalsApplication {
     }
 
     @Bean
+    @Profile("!test")
     public CommandLineRunner createDefaultRepository(PublicationRepository repository) {
         return (args) -> {
             repository.save(new Publication("Tampa Bay Times", 7, 5f, "-"));
