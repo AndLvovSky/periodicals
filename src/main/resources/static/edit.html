@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Edit publications</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/css/src/edit.css" th:href="@{/css/src/edit.css}">
+    <link rel="stylesheet" href="/css/src/edit.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="/js/src/edit.js"></script>
 </head>
 <body>
 <div class="jumbotron text-center">
@@ -19,30 +20,53 @@
         <input id="publicationId" type="number" min=-5 max=10 value=1 step=1>
     </div>
     <button class="btn btn-primary" id="selectPublication">Select</button>
-    <button class="btn btn-primary">Delete</button>
+    <button class="btn btn-primary" id="deletePublication">Delete</button>
+    <button class="btn btn-primary" id="showAllPublications">Show All</button>
     <h3 class="mt-4">Publication</h3>
-    <div id="selectedPublication"></div>
     <form name="publication">
         <div class="form-group">
             <label for="publicationName">Name:</label><br>
-            <input id="publicationName" name="name" type="text" placeholder="name">
+            <input id="publicationName" name="name" type="text">
         </div>
         <div class="form-group">
             <label for="publicationFrequency">Frequency:</label><br>
-            <input id="publicationFrequency" name="frequency" type="text" placeholder="frequency">
+            <input id="publicationFrequency" name="frequency" type="text">
         </div>
         <div class="form-group">
             <label for="publicationCost">Cost:</label><br>
-            <input id="publicationCost" name="cost" type="text" placeholder="cost">
+            <input id="publicationCost" name="cost" type="text">
         </div>
         <div class="form-group">
             <label for="publicationDescription">Description:</label><br>
-            <input id="publicationDescription" name="description" type="text" placeholder="description">
+            <input id="publicationDescription" name="description" type="text">
         </div>
     </form>
     <button class="btn btn-primary" id="addPublication">Add</button>
     <button class="btn btn-primary" id="replacePublication">Replace</button>
-    <div class="fixed-bottom p-3 invisible" id="info">editing...</div>
+    <div class="fixed-bottom p-3 d-none" id="info">editing...</div>
+    <h2 class="mt-5 text-center">Publications</h2>
+    <div class="container-fluid">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Frequency</th>
+                <th>Cost</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody id="ptbody">
+            <tr>
+                <td>1</td>
+                <td>John</td>
+                <td>Doe</td>
+                <td>john@example.com</td>
+                <td>fafa</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>
