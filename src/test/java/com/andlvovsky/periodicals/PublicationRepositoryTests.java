@@ -27,8 +27,8 @@ public class PublicationRepositoryTests {
     private TestEntityManager entityManager;
 
     private Publication[] publications = {
-        new Publication("New York Times", 7, 15f, "-"),
-        new Publication("New Yorker", 30, 10f, "-")
+        new Publication("New York Times", 7, 15., "-"),
+        new Publication("New Yorker", 30, 10., "-")
     };
 
     @Test

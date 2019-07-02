@@ -38,11 +38,11 @@ public class PublicationControllerTests {
     private PublicationRepository repository;
 
     Publication[] publications = {
-            new Publication("The Guardian", 7, 10f, "-"),
-            new Publication("Daily Mail", 1, 5.5f, "-"),
-            new Publication("The Washington Post", 14, 17f, "-"),
-            new Publication("The Sun", 30, 20f, "-"),
-            new Publication("The Wall Street Journal", 7, 15f, "-")
+            new Publication("The Guardian", 7, 10., "-"),
+            new Publication("Daily Mail", 1, 5.5, "-"),
+            new Publication("The Washington Post", 14, 17., "-"),
+            new Publication("The Sun", 30, 20., "-"),
+            new Publication("The Wall Street Journal", 7, 15., "-")
     };
 
     @Before

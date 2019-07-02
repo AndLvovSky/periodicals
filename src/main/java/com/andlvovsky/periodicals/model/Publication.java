@@ -16,13 +16,13 @@ public class Publication {
 
     private Integer frequency; /** days between publications */
 
-    private Float cost; /** cost per publication */
+    private Double cost; /** cost per publication */
 
     private String description;
 
     public Publication() {}
 
-    public Publication(String name, Integer frequency, Float cost, String description) {
+    public Publication(String name, Integer frequency, Double cost, String description) {
         this.name = name;
         this.frequency = frequency;
         this.cost = cost;
@@ -45,11 +45,11 @@ public class Publication {
         return frequency;
     }
 
-    public void setCost(Float cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
-    public Float getCost() {
+    public Double getCost() {
         return cost;
     }
 
