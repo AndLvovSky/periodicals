@@ -25,7 +25,7 @@ public class EditPublicationsTests {
 
     private static WebDriver browser;
 
-    private final int MAX_WAIT = 5;
+    private final int MAX_WAIT = 10;
 
     {
         // ChromeDriver 75.0.3770.90
