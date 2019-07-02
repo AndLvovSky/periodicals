@@ -79,7 +79,7 @@ public class PublicationControllerTests {
         ObjectMapper mapper = new ObjectMapper();
         String publicationJson = mapper.writeValueAsString(publications[3]);
         mvc.perform(post("/publications/").content(publicationJson)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk());
+                .contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isCreated());
         verify(repository).save(publications[3]);
         verifyNoMoreInteractions(repository);
     }
@@ -90,7 +90,7 @@ public class PublicationControllerTests {
         ObjectMapper mapper = new ObjectMapper();
         String publicationJson = mapper.writeValueAsString(publications[4]);
         mvc.perform(put("/publications/2").content(publicationJson)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk());
+                .contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isNoContent());
         verify(repository).findById(2L);
         verify(repository).save(publications[4]);
         verifyNoMoreInteractions(repository);
@@ -98,7 +98,7 @@ public class PublicationControllerTests {
 
     @Test
     public void testDeletePublication() throws Exception {
-        mvc.perform(delete("/publications/3")).andExpect(status().isOk());
+        mvc.perform(delete("/publications/3")).andExpect(status().isNoContent());
         verify(repository).deleteById(3L);
     }
 
