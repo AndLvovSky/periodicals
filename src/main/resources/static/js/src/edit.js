@@ -43,9 +43,14 @@ function createPublicationRow(publication) {
 function getPublication(id, handler) {
     $.ajax({
         url: "http://localhost:8080/publications/" + id
-    }).then(function(data) {
-        handler(data);
-    });
+    }).then(
+        function(data) {
+            handler(data);
+        },
+        function(xhr) {
+            showInfoMessage(xhr.responseText, false);
+        }
+    );
 }
 
 function getPublications(handler) {
@@ -60,10 +65,15 @@ function deletePublication(id) {
     $.ajax({
         url: "http://localhost:8080/publications/" + id,
         method: "DELETE"
-    }).then(function(data) {
-        showInfoMessage("successfully deleted publication with id " + id);
-        updatePublications();
-    });
+    }).then(
+        function() {
+            showInfoMessage("successfully deleted publication with id " + id);
+            updatePublications();
+        },
+        function(xhr) {
+            showInfoMessage(xhr.responseText, false);
+        }
+    );
 }
 
 function addPublication() {
@@ -96,10 +106,14 @@ function getPublicationData() {
     return JSON.stringify(data);
 }
 
-function showInfoMessage(msg) {
+function showInfoMessage(msg, good) {
+    if (good === false) {
+        $("#info").addClass("bad");
+    }
     $("#info").html(msg);
     $("#info").removeClass("d-none");
     setTimeout(function () {
         $("#info").addClass("d-none");
+        $("#info").removeClass("bad");
     }, 5000);
 }

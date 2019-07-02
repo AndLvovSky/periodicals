@@ -3,6 +3,10 @@
     color: white;
 }
 
+#info.bad {
+    background-color: rgba(200, 0, 50, 0.5);
+}
+
 form[name="publication"] input {
     width: 50%;
     padding: 0.5rem;
