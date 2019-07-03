@@ -1,0 +1,18 @@
+{
+  "publication": [
+    {
+      "id": 1,
+      "name": "New York Times",
+      "frequency": 7,
+      "cost": 15.0,
+      "description": "-"
+    },
+    {
+      "id": 2,
+      "name": "New Yorker",
+      "frequency": 30,
+      "cost": 10.0,
+      "description": "-"
+    }
+  ]
+}

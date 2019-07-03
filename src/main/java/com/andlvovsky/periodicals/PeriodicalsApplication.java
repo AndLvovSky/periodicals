@@ -19,6 +19,7 @@ public class PeriodicalsApplication {
     @Profile("!test")
     public CommandLineRunner createDefaultRepository(PublicationRepository repository) {
         return (args) -> {
+            repository.deleteAll();
             repository.save(new Publication("Tampa Bay Times", 7, 5., "-"));
             repository.save(new Publication("Minneapolis Star Tribune", 30, 7.5, "-"));
             repository.save(new Publication("Philadelphia Inquirer", 7, 10., "-"));
