@@ -25,13 +25,13 @@ public class EditPublicationsTests {
     }
 
     @Test
-    public void testUpdate() {
+    public void shouldShowAllPublications() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
     }
 
     @Test
-    public void testSelect() {
+    public void shouldSelectTheSecondPublication() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
         String secondId = $("#ptbody tr:nth-child(2) td:first-child").getText();
@@ -43,7 +43,7 @@ public class EditPublicationsTests {
     }
 
     @Test
-    public void testDelete() {
+    public void shouldDeleteTheForthPublication() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(7);
         String forthId = $("#ptbody tr:nth-child(4) td:first-child").getText();
@@ -54,7 +54,7 @@ public class EditPublicationsTests {
     }
 
     @Test
-    public void testAdd() {
+    public void shouldAddNewPublication() {
         open(url());
         enterPublication();
         $("#addPublication").click();
@@ -63,7 +63,7 @@ public class EditPublicationsTests {
     }
 
     @Test
-    public void testReplace() {
+    public void shouldReplaceTheThirdPublication() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(7);
         String thirdId = $("#ptbody tr:nth-child(3) td:first-child").getText();
