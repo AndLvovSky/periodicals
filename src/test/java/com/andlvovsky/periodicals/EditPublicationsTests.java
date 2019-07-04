@@ -1,20 +1,18 @@
 package com.andlvovsky.periodicals;
 
 import com.codeborne.selenide.Configuration;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class EditPublicationsTests {
+public class EditPublicationsTests extends AbstractTestNGSpringContextTests {
 
     @LocalServerPort
     private int port;
@@ -24,13 +22,13 @@ public class EditPublicationsTests {
         Configuration.timeout = 10000;
     }
 
-    @Test
+    @Test(priority = 1)
     public void shouldShowAllPublications() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
     }
 
-    @Test
+    @Test(priority = 2)
     public void shouldSelectTheSecondPublication() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
@@ -42,30 +40,30 @@ public class EditPublicationsTests {
         assertThat($("#ptbody").getText()).doesNotContain("11");
     }
 
-    @Test
+    @Test(priority = 3)
     public void shouldDeleteTheForthPublication() {
         open(url());
-        $$("#ptbody tr").shouldHaveSize(7);
+        $$("#ptbody tr").shouldHaveSize(6);
         String forthId = $("#ptbody tr:nth-child(4) td:first-child").getText();
         $("#publicationId").setValue(forthId);
         $("#deletePublication").click();
-        $$("#ptbody tr").shouldHaveSize(6);
-        assertThat($("#ptbody").getText()).doesNotContain("Philadelphia Inquirer");
+        $$("#ptbody tr").shouldHaveSize(5);
+        assertThat($("#ptbody").getText()).doesNotContain("St. Louis Post-Dispatch");
     }
 
-    @Test
+    @Test(priority = 4)
     public void shouldAddNewPublication() {
         open(url());
         enterPublication();
         $("#addPublication").click();
-        $$("#ptbody tr").shouldHaveSize(7);
+        $$("#ptbody tr").shouldHaveSize(6);
         assertThat($("#ptbody").getText()).contains("The Guardian");
     }
 
-    @Test
+    @Test(priority = 5)
     public void shouldReplaceTheThirdPublication() {
         open(url());
-        $$("#ptbody tr").shouldHaveSize(7);
+        $$("#ptbody tr").shouldHaveSize(6);
         String thirdId = $("#ptbody tr:nth-child(3) td:first-child").getText();
         $("#publicationId").setValue(thirdId);
         enterPublication();
