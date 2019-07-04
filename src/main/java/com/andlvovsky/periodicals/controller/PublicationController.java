@@ -31,7 +31,6 @@ public class PublicationController {
         publicationService.add(publication);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public void replace(@PathVariable Long id, @RequestBody Publication newPublication) {
         publicationService.replace(id, newPublication);

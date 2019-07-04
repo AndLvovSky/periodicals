@@ -89,7 +89,7 @@ public class PublicationControllerTests {
         ObjectMapper mapper = new ObjectMapper();
         String publicationJson = mapper.writeValueAsString(publications[4]);
         mvc.perform(put("/publications/2").content(publicationJson)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isNoContent());
+                .contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk());
         verify(service).replace(2L, publications[4]);
         verifyNoMoreInteractions(service);
     }
