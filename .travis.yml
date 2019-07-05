@@ -7,3 +7,5 @@ before_script:
 env:
   global:
   - PGPORT=5432
+addons:
+  chrome: stable
