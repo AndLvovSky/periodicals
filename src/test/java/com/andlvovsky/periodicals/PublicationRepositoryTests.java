@@ -39,14 +39,14 @@ public class PublicationRepositoryTests {
     @DataSet("datasets/publications.json")
     public void testFindById() {
         Publication publication = repository.findById(1L).get();
-        assertEquals(publication.getName(), "New York Times");
+        assertEquals("New York Times", publication.getName());
     }
 
     @Test
     @DataSet("datasets/publications.json")
     public void testFindAll() {
         List<Publication> publications = repository.findAll();
-        assertEquals(publications.size(), 2);
+        assertEquals(2, publications.size());
         assertThat(publications.get(1).getFrequency()).isEqualTo(30);
     }
 
@@ -54,16 +54,16 @@ public class PublicationRepositoryTests {
     @DataSet("datasets/publications.json")
     public void testSave() {
         repository.save(new Publication("The Sun", 1, 5.5, "-"));
-        assertEquals(repository.count(), 3);
+        assertEquals(3, repository.count());
     }
 
     @Test
     @DataSet("datasets/publications.json")
     public void testDelete() {
         repository.deleteById(1L);
-        assertEquals(repository.count(), 1);
+        assertEquals(1, repository.count());
         Publication publication = repository.findById(2L).get();
-        assertEquals(publication.getName(), "New Yorker");
+        assertEquals("New Yorker", publication.getName());
     }
 
 }
