@@ -11,6 +11,8 @@ import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+// should reset database after each test to prevent order dependencies
+// but @Transactional don't work with SpringBootTest with DEFINED_PORT
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class EditPublicationsTests extends AbstractTestNGSpringContextTests {
 
