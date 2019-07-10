@@ -1,6 +1,6 @@
 package com.andlvovsky.periodicals;
 
-import com.andlvovsky.periodicals.model.Publication;
+import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.repository.PublicationRepository;
 import com.github.database.rider.core.DBUnitRule;
 import com.github.database.rider.core.api.dataset.DataSet;

@@ -1,6 +1,6 @@
 package com.andlvovsky.periodicals;
 
-import com.andlvovsky.periodicals.model.Publication;
+import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.repository.PublicationRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

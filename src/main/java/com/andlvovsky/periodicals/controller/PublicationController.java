@@ -1,6 +1,8 @@
 package com.andlvovsky.periodicals.controller;
 
-import com.andlvovsky.periodicals.model.Publication;
+import com.andlvovsky.periodicals.model.publication.Publication;
+import com.andlvovsky.periodicals.model.publication.PublicationDto;
+import com.andlvovsky.periodicals.model.publication.PublicationMapper;
 import com.andlvovsky.periodicals.service.PublicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,12 +29,14 @@ public class PublicationController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/")
-    public void add(@RequestBody Publication publication) {
+    public void add(@RequestBody PublicationDto publicationDto) {
+        Publication publication = PublicationMapper.INSTANCE.fromDto(publicationDto);
         publicationService.add(publication);
     }
 
     @PutMapping("/{id}")
-    public void replace(@PathVariable Long id, @RequestBody Publication newPublication) {
+    public void replace(@PathVariable Long id, @RequestBody PublicationDto newPublicationDto) {
+        Publication newPublication = PublicationMapper.INSTANCE.fromDto(newPublicationDto);
         publicationService.replace(id, newPublication);
     }
 

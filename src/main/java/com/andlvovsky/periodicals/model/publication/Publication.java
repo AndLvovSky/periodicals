@@ -1,4 +1,4 @@
-package com.andlvovsky.periodicals.model;
+package com.andlvovsky.periodicals.model.publication;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
