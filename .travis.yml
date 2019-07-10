@@ -10,3 +10,4 @@ env:
   - PGPORT=5432
 addons:
   chrome: stable
+script: mvn test -B
