@@ -4,12 +4,12 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
-public interface PublicationMapper {
+public abstract class PublicationMapper {
 
-    PublicationMapper INSTANCE = Mappers.getMapper(PublicationMapper.class);
+    public static final PublicationMapper INSTANCE = Mappers.getMapper(PublicationMapper.class);
 
-    Publication fromDto(PublicationDto publicationDto);
+    public abstract Publication fromDto(PublicationDto publicationDto);
 
-    PublicationDto toDto(Publication publication);
+    public abstract PublicationDto toDto(Publication publication);
 
 }

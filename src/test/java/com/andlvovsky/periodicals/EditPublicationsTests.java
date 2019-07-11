@@ -31,7 +31,7 @@ public class EditPublicationsTests {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
 
     @Rule
     public DBUnitRule dbUnitRule = DBUnitRule.instance(() -> dataSource.getConnection());
