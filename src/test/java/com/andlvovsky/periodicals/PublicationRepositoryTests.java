@@ -19,27 +19,9 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.Assert.assertEquals;
 
-// don't work with H2 database
-// throw org.dbunit.dataset.NoSuchTableException: 
-// The table 'publication' does not exist in schema 'null'
-// when processing @DataSet
-//
-// @Test
-// public void testSQL() throws SQLException {
-//     Connection conn = dataSource.getConnection();
-//     System.out.println(conn.getSchema());
-//     PreparedStatement ps = conn.prepareStatement("select * from publication");
-//     ps.execute();
-//     ResultSet rs = ps.getResultSet();
-//     System.out.println(rs.getMetaData().getColumnName(2));
-// }
-// while abovementioned code inside class prints 
-// PUBLIC
-// COST
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class PublicationRepositoryTests {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
