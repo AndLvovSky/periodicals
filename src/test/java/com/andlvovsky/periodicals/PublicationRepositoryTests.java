@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ActiveProfiles("test")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class PublicationRepositoryTests {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
