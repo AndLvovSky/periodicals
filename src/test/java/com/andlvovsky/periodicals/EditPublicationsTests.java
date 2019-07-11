@@ -40,14 +40,14 @@ public class EditPublicationsTests {
 
     @Test
     @DataSet("datasets/publicationsUi.json")
-    public void shouldShowAllPublications() {
+    public void showAllPublications() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
     }
 
     @Test
     @DataSet("datasets/publicationsUi.json")
-    public void shouldSelectTheSecondPublication() {
+    public void selectTheSecondPublication() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
         String secondId = $("#ptbody tr:nth-child(2) td:first-child").getText();
@@ -60,7 +60,7 @@ public class EditPublicationsTests {
 
     @Test
     @DataSet("datasets/publicationsUi.json")
-    public void shouldDeleteTheForthPublication() {
+    public void deleteTheForthPublication() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
         String forthId = $("#ptbody tr:nth-child(4) td:first-child").getText();
@@ -72,7 +72,7 @@ public class EditPublicationsTests {
 
     @Test
     @DataSet("datasets/publicationsUi.json")
-    public void shouldAddNewPublication() {
+    public void addNewPublication() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
         enterPublication();
@@ -83,7 +83,7 @@ public class EditPublicationsTests {
 
     @Test
     @DataSet("datasets/publicationsUi.json")
-    public void shouldReplaceTheThirdPublication() {
+    public void replaceTheThirdPublication() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
         String thirdId = $("#ptbody tr:nth-child(3) td:first-child").getText();
