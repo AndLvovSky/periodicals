@@ -1,36 +1,52 @@
 package com.andlvovsky.periodicals;
 
 import com.codeborne.selenide.Configuration;
+import com.github.database.rider.core.DBUnitRule;
+import com.github.database.rider.core.api.dataset.DataSet;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import javax.sql.DataSource;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-// should reset database after each test to prevent order dependencies
-// but @Transactional don't work with SpringBootTest with DEFINED_PORT
+@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class EditPublicationsTests extends AbstractTestNGSpringContextTests {
+@ActiveProfiles("test")
+public class EditPublicationsTests {
 
     @LocalServerPort
     private int port;
+
+    @Autowired
+    DataSource dataSource;
+
+    @Rule
+    public DBUnitRule dbUnitRule = DBUnitRule.instance(() -> dataSource.getConnection());
 
     @BeforeClass
     public static void setup() {
         Configuration.timeout = 10000;
     }
 
-    @Test(priority = 1)
+    @Test
+    @DataSet("datasets/publicationsUi.json")
     public void shouldShowAllPublications() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
     }
 
-    @Test(priority = 2)
+    @Test
+    @DataSet("datasets/publicationsUi.json")
     public void shouldSelectTheSecondPublication() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
@@ -42,7 +58,8 @@ public class EditPublicationsTests extends AbstractTestNGSpringContextTests {
         assertThat($("#ptbody").getText()).doesNotContain("11");
     }
 
-    @Test(priority = 3)
+    @Test
+    @DataSet("datasets/publicationsUi.json")
     public void shouldDeleteTheForthPublication() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
@@ -53,16 +70,19 @@ public class EditPublicationsTests extends AbstractTestNGSpringContextTests {
         assertThat($("#ptbody").getText()).doesNotContain("St. Louis Post-Dispatch");
     }
 
-    @Test(priority = 4)
+    @Test
+    @DataSet("datasets/publicationsUi.json")
     public void shouldAddNewPublication() {
         open(url());
+        $$("#ptbody tr").shouldHaveSize(6);
         enterPublication();
         $("#addPublication").click();
-        $$("#ptbody tr").shouldHaveSize(6);
+        $$("#ptbody tr").shouldHaveSize(7);
         assertThat($("#ptbody").getText()).contains("The Guardian");
     }
 
-    @Test(priority = 5)
+    @Test
+    @DataSet("datasets/publicationsUi.json")
     public void shouldReplaceTheThirdPublication() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
