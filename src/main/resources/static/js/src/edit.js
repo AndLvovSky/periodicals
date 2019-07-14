@@ -17,8 +17,8 @@ $(document).ready(function() {
 });
 
 function updatePublications() {
-    $("#ptbody").html("");
     getPublications(function(publications) {
+        $("#ptbody").html("");
         publications.forEach(function(publication) {
             $("#ptbody").append(createPublicationRow(publication));
         });
@@ -82,10 +82,14 @@ function addPublication() {
         method: "POST",
         data: getPublicationData(),
         contentType: "application/json"
-    }).then(function(data) {
-        showInfoMessage("successfully added publication");
-        updatePublications();
-    });
+    }).then(
+        function() {
+            showInfoMessage("successfully added publication");
+            clearValidationErrors();
+            updatePublications();
+        },
+        validationFailed
+    );
 }
 
 function replacePublication(id) {
@@ -94,10 +98,13 @@ function replacePublication(id) {
         method: "PUT",
         data: getPublicationData(),
         contentType: "application/json"
-    }).then(function(data) {
-        showInfoMessage("successfully replaced publication with id " + id);
-        updatePublications();
-    });
+    }).then(
+        function() {
+            showInfoMessage("successfully replaced publication with id " + id);
+            updatePublications();
+        },
+        validationFailed
+    );
 }
 
 function getPublicationData() {
@@ -116,4 +123,20 @@ function showInfoMessage(msg, good) {
         $("#info").addClass("d-none");
         $("#info").removeClass("bad");
     }, 5000);
+}
+
+function validationFailed(xhr) {
+    showInfoMessage("publication validation failed", false);
+    showValidationErrors(JSON.parse(xhr.responseText));
+}
+
+function showValidationErrors(errors) {
+    clearValidationErrors();
+    errors.forEach(function(error) {
+        $("#" + error.field + "PublicationError").html(error.defaultMessage);
+    })
+}
+
+function clearValidationErrors() {
+    $(".validationError").html("");
 }

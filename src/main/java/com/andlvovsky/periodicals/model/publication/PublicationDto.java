@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 public class PublicationDto {
 
     @NotNull
-    @Size(min=2)
+    @Size(min=2, max=1000)
     private String name;
 
     @NotNull
