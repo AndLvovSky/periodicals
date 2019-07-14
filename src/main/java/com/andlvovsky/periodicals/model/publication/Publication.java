@@ -1,4 +1,4 @@
-package com.andlvovsky.periodicals.model;
+package com.andlvovsky.periodicals.model.publication;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import javax.persistence.Id;
 public class Publication {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     private String name;

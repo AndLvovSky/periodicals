@@ -1,6 +1,6 @@
 package com.andlvovsky.periodicals;
 
-import com.andlvovsky.periodicals.model.Publication;
+import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.repository.PublicationRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,7 +18,7 @@ public class PeriodicalsApplication {
     @Bean
     @Profile("!test")
     public CommandLineRunner createDefaultRepository(PublicationRepository repository) {
-        return (args) -> {
+        return args -> {
             repository.deleteAll();
             repository.save(new Publication("Tampa Bay Times", 7, 5., "-"));
             repository.save(new Publication("Minneapolis Star Tribune", 30, 7.5, "-"));

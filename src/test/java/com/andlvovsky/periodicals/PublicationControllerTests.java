@@ -1,7 +1,9 @@
 package com.andlvovsky.periodicals;
 
 import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
-import com.andlvovsky.periodicals.model.Publication;
+import com.andlvovsky.periodicals.model.publication.Publication;
+import com.andlvovsky.periodicals.model.publication.PublicationDto;
+import com.andlvovsky.periodicals.model.publication.PublicationMapper;
 import com.andlvovsky.periodicals.service.PublicationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
@@ -77,7 +79,8 @@ public class PublicationControllerTests {
     @Test
     public void testAdd() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        String publicationJson = mapper.writeValueAsString(publications[3]);
+        PublicationDto publicationDto = PublicationMapper.INSTANCE.toDto(publications[3]);
+        String publicationJson = mapper.writeValueAsString(publicationDto);
         mvc.perform(post("/publications/").content(publicationJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isCreated());
         verify(service).add(publications[3]);
@@ -87,7 +90,8 @@ public class PublicationControllerTests {
     @Test
     public void testReplace() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        String publicationJson = mapper.writeValueAsString(publications[4]);
+        PublicationDto publicationDto = PublicationMapper.INSTANCE.toDto(publications[4]);
+        String publicationJson = mapper.writeValueAsString(publicationDto);
         mvc.perform(put("/publications/2").content(publicationJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk());
         verify(service).replace(2L, publications[4]);

@@ -33,3 +33,4 @@ build/
 ### Custom ###
 task.pdf
 notes.txt
+logs/

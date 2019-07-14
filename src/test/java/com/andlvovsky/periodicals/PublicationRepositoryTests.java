@@ -1,6 +1,6 @@
 package com.andlvovsky.periodicals;
 
-import com.andlvovsky.periodicals.model.Publication;
+import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.repository.PublicationRepository;
 import com.github.database.rider.core.DBUnitRule;
 import com.github.database.rider.core.api.dataset.DataSet;
@@ -37,33 +37,33 @@ public class PublicationRepositoryTests {
 
     @Test
     @DataSet("datasets/publications.json")
-    public void testFindById() {
+    public void findById() {
         Publication publication = repository.findById(1L).get();
-        assertEquals(publication.getName(), "New York Times");
+        assertEquals("New York Times", publication.getName());
     }
 
     @Test
     @DataSet("datasets/publications.json")
-    public void testFindAll() {
+    public void findAll() {
         List<Publication> publications = repository.findAll();
-        assertEquals(publications.size(), 2);
+        assertEquals(2, publications.size());
         assertThat(publications.get(1).getFrequency()).isEqualTo(30);
     }
 
     @Test
     @DataSet("datasets/publications.json")
-    public void testSave() {
+    public void save() {
         repository.save(new Publication("The Sun", 1, 5.5, "-"));
-        assertEquals(repository.count(), 3);
+        assertEquals(3, repository.count());
     }
 
     @Test
     @DataSet("datasets/publications.json")
-    public void testDelete() {
+    public void delete() {
         repository.deleteById(1L);
-        assertEquals(repository.count(), 1);
+        assertEquals(1, repository.count());
         Publication publication = repository.findById(2L).get();
-        assertEquals(publication.getName(), "New Yorker");
+        assertEquals("New Yorker", publication.getName());
     }
 
 }
