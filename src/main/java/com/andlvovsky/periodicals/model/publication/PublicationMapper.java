@@ -1,9 +1,10 @@
 package com.andlvovsky.periodicals.model.publication;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class PublicationMapper {
 
     public static final PublicationMapper INSTANCE = Mappers.getMapper(PublicationMapper.class);
