@@ -6,8 +6,12 @@ import com.andlvovsky.periodicals.model.publication.PublicationMapper;
 import com.andlvovsky.periodicals.service.PublicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,17 +31,26 @@ public class PublicationController {
         return publicationService.getAll();
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/")
-    public void add(@RequestBody PublicationDto publicationDto) {
+    public ResponseEntity<List<ObjectError>> add(
+            @Valid @RequestBody PublicationDto publicationDto, Errors validationResult) {
+        if (validationResult.hasErrors()) {
+            return new ResponseEntity<>(validationResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
         Publication publication = PublicationMapper.INSTANCE.fromDto(publicationDto);
         publicationService.add(publication);
+        return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public void replace(@PathVariable Long id, @RequestBody PublicationDto newPublicationDto) {
+    public ResponseEntity<List<ObjectError>> replace(
+            @PathVariable Long id, @Valid @RequestBody PublicationDto newPublicationDto, Errors validationResult) {
+        if (validationResult.hasErrors()) {
+            return new ResponseEntity<>(validationResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
         Publication newPublication = PublicationMapper.INSTANCE.fromDto(newPublicationDto);
         publicationService.replace(id, newPublication);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -39,12 +39,13 @@ public class PublicationControllerTests {
     @MockBean
     private PublicationService service;
 
-    Publication[] publications = {
+    private Publication[] publications = {
             new Publication("The Guardian", 7, 10., "-"),
             new Publication("Daily Mail", 1, 5.5, "-"),
             new Publication("The Washington Post", 14, 17., "-"),
             new Publication("The Sun", 30, 20., "-"),
-            new Publication("The Wall Street Journal", 7, 15., "-")
+            new Publication("The Wall Street Journal", 7, 15., "-"),
+            new Publication("The New Yorker", -5, 10., "-")
     };
 
     @Before
@@ -56,13 +57,13 @@ public class PublicationControllerTests {
     }
 
     @Test
-    public void testGetOne() throws Exception {
+    public void getsOne() throws Exception {
         mvc.perform(get("/publications/1")).andExpect(status().isOk()).andDo(print())
             .andExpect(jsonPath("$.name").value("The Guardian"));
     }
 
     @Test
-    public void testGetOneFail() throws Exception {
+    public void getsOneFail() throws Exception {
         when(service.getOne(99L)).thenThrow(new PublicationNotFoundException(99L));
         mvc.perform(get("/publications/99")).andExpect(status().isNotFound()).andDo(print())
                 .andExpect(content().string(allOf(Matchers.containsString("cannot find"),
@@ -70,14 +71,14 @@ public class PublicationControllerTests {
     }
 
     @Test
-    public void testGetAll() throws Exception {
+    public void getsAll() throws Exception {
         mvc.perform(get("/publications/")).andDo(print())
                 .andExpect(jsonPath("$.length()").value(3))
                 .andExpect(jsonPath("$[2].frequency").value(14));
     }
 
     @Test
-    public void testAdd() throws Exception {
+    public void adds() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         PublicationDto publicationDto = PublicationMapper.INSTANCE.toDto(publications[3]);
         String publicationJson = mapper.writeValueAsString(publicationDto);
@@ -88,7 +89,18 @@ public class PublicationControllerTests {
     }
 
     @Test
-    public void testReplace() throws Exception {
+    public void additionFails() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        PublicationDto publicationDto = PublicationMapper.INSTANCE.toDto(publications[5]);
+        String publicationJson = mapper.writeValueAsString(publicationDto);
+        mvc.perform(post("/publications/").content(publicationJson)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isBadRequest()).andDo(print());
+        verifyNoMoreInteractions(service);
+    }
+
+    @Test
+    public void replaces() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         PublicationDto publicationDto = PublicationMapper.INSTANCE.toDto(publications[4]);
         String publicationJson = mapper.writeValueAsString(publicationDto);
@@ -99,13 +111,24 @@ public class PublicationControllerTests {
     }
 
     @Test
-    public void testDelete() throws Exception {
+    public void replacementFails() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        PublicationDto publicationDto = PublicationMapper.INSTANCE.toDto(publications[5]);
+        String publicationJson = mapper.writeValueAsString(publicationDto);
+        mvc.perform(put("/publications/2").content(publicationJson)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isBadRequest()).andDo(print());
+        verifyNoMoreInteractions(service);
+    }
+
+    @Test
+    public void deletes() throws Exception {
         mvc.perform(delete("/publications/3")).andExpect(status().isNoContent());
         verify(service).delete(3L);
     }
 
     @Test
-    public void testDeleteFail() throws Exception {
+    public void deletionFails() throws Exception {
         doThrow(new PublicationNotFoundException(88L)).when(service).delete(88L);
         mvc.perform(delete("/publications/88")).andExpect(status().isNotFound()).andDo(print())
                 .andExpect(content().string(allOf(Matchers.containsString("cannot find"),
