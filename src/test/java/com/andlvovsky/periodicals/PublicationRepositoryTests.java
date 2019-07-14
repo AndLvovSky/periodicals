@@ -38,7 +38,7 @@ public class PublicationRepositoryTests {
     @Test
     @DataSet("datasets/publications.json")
     public void findsById() {
-        Publication publication = repository.findById(1L).get();
+        Publication publication = repository.findById(2L).get();
         assertEquals("New York Times", publication.getName());
     }
 
@@ -60,9 +60,9 @@ public class PublicationRepositoryTests {
     @Test
     @DataSet("datasets/publications.json")
     public void deletes() {
-        repository.deleteById(1L);
+        repository.deleteById(2L);
         assertEquals(1, repository.count());
-        Publication publication = repository.findById(2L).get();
+        Publication publication = repository.findById(3L).get();
         assertEquals("New Yorker", publication.getName());
     }
 
