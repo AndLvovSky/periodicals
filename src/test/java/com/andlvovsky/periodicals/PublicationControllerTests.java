@@ -10,6 +10,7 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -39,6 +40,8 @@ public class PublicationControllerTests {
     @MockBean
     private PublicationService service;
 
+    private PublicationMapper publicationDtoMapper = Mappers.getMapper(PublicationMapper.class);
+
     private Publication[] publications = {
             new Publication("The Guardian", 7, 10., "-"),
             new Publication("Daily Mail", 1, 5.5, "-"),
@@ -59,7 +62,7 @@ public class PublicationControllerTests {
     @Test
     public void getsOne() throws Exception {
         mvc.perform(get("/publications/1")).andExpect(status().isOk()).andDo(print())
-            .andExpect(jsonPath("$.name").value("The Guardian"));
+                .andExpect(jsonPath("$.name").value("The Guardian"));
     }
 
     @Test
@@ -79,9 +82,9 @@ public class PublicationControllerTests {
 
     @Test
     public void adds() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        PublicationDto publicationDto = PublicationMapper.INSTANCE.toDto(publications[3]);
-        String publicationJson = mapper.writeValueAsString(publicationDto);
+        PublicationDto publicationDto = publicationDtoMapper.toDto(publications[3]);
+        ObjectMapper jsonMapper = new ObjectMapper();
+        String publicationJson = jsonMapper.writeValueAsString(publicationDto);
         mvc.perform(post("/publications/").content(publicationJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isCreated());
         verify(service).add(publications[3]);
@@ -90,9 +93,9 @@ public class PublicationControllerTests {
 
     @Test
     public void additionFails() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        PublicationDto publicationDto = PublicationMapper.INSTANCE.toDto(publications[5]);
-        String publicationJson = mapper.writeValueAsString(publicationDto);
+        PublicationDto publicationDto = publicationDtoMapper.toDto(publications[5]);
+        ObjectMapper jsonMapper = new ObjectMapper();
+        String publicationJson = jsonMapper.writeValueAsString(publicationDto);
         mvc.perform(post("/publications/").content(publicationJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest()).andDo(print());
@@ -102,7 +105,7 @@ public class PublicationControllerTests {
     @Test
     public void replaces() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        PublicationDto publicationDto = PublicationMapper.INSTANCE.toDto(publications[4]);
+        PublicationDto publicationDto = publicationDtoMapper.toDto(publications[4]);
         String publicationJson = mapper.writeValueAsString(publicationDto);
         mvc.perform(put("/publications/2").content(publicationJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk());
@@ -113,7 +116,7 @@ public class PublicationControllerTests {
     @Test
     public void replacementFails() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        PublicationDto publicationDto = PublicationMapper.INSTANCE.toDto(publications[5]);
+        PublicationDto publicationDto = publicationDtoMapper.toDto(publications[5]);
         String publicationJson = mapper.writeValueAsString(publicationDto);
         mvc.perform(put("/publications/2").content(publicationJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))

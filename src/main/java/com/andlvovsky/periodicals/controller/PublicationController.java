@@ -4,6 +4,8 @@ import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.model.publication.PublicationDto;
 import com.andlvovsky.periodicals.model.publication.PublicationMapper;
 import com.andlvovsky.periodicals.service.PublicationService;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ public class PublicationController {
     @Autowired
     private PublicationService publicationService;
 
+    private PublicationMapper publicationMapper = Mappers.getMapper(PublicationMapper.class);
+
     @GetMapping("/{id}")
     public Publication getOne(@PathVariable Long id) {
         return publicationService.getOne(id);
@@ -37,7 +41,7 @@ public class PublicationController {
         if (validationResult.hasErrors()) {
             return new ResponseEntity<>(validationResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        Publication publication = PublicationMapper.INSTANCE.fromDto(publicationDto);
+        Publication publication = publicationMapper.fromDto(publicationDto);
         publicationService.add(publication);
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
@@ -48,7 +52,7 @@ public class PublicationController {
         if (validationResult.hasErrors()) {
             return new ResponseEntity<>(validationResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        Publication newPublication = PublicationMapper.INSTANCE.fromDto(newPublicationDto);
+        Publication newPublication = publicationMapper.fromDto(newPublicationDto);
         publicationService.replace(id, newPublication);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
