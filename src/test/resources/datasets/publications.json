@@ -3,14 +3,14 @@
     {
       "id": 2,
       "name": "New York Times",
-      "frequency": 7,
+      "period": 7,
       "cost": 15.0,
       "description": "-"
     },
     {
       "id": 3,
       "name": "New Yorker",
-      "frequency": 30,
+      "period": 30,
       "cost": 10.0,
       "description": "-"
     }

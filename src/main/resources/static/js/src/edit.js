@@ -34,7 +34,7 @@ function createPublicationRow(publication) {
     return $("<tr></tr>").append(
         $("<td></td>").text(publication["id"]),
         $("<td></td>").text(publication["name"]),
-        $("<td></td>").text(publication["frequency"]),
+        $("<td></td>").text(publication["period"]),
         $("<td></td>").text(publication["cost"]),
         $("<td></td>").text(publication["description"])
     );

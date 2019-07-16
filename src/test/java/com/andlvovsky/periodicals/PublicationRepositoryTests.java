@@ -47,7 +47,7 @@ public class PublicationRepositoryTests {
     public void findsAll() {
         List<Publication> publications = repository.findAll();
         assertEquals(2, publications.size());
-        assertThat(publications.get(1).getFrequency()).isEqualTo(30);
+        assertThat(publications.get(1).getPeriod()).isEqualTo(30);
     }
 
     @Test

@@ -114,7 +114,7 @@ public class EditPublicationsTests {
         enterInvalidPublication();
         $("#addPublication").click();
         $$("#ptbody tr").shouldHaveSize(6);
-        $("#frequencyPublicationError").shouldNotBe(empty);
+        $("#periodPublicationError").shouldNotBe(empty);
     }
 
     @Test
@@ -138,19 +138,19 @@ public class EditPublicationsTests {
         enterInvalidPublication();
         $("#replacePublication").click();
         $$("#ptbody tr").shouldHaveSize(6);
-        $("#frequencyPublicationError").shouldNotBe(empty);
+        $("#periodPublicationError").shouldNotBe(empty);
     }
 
     private void enterPublication() {
         $("#publicationName").setValue("The Guardian");
-        $("#publicationFrequency").setValue("7");
+        $("#publicationPeriod").setValue("7");
         $("#publicationCost").setValue("5.5");
         $("#publicationDescription").setValue("-");
     }
 
     private void enterInvalidPublication() {
         $("#publicationName").setValue("The Sun");
-        $("#publicationFrequency").setValue("-7");
+        $("#publicationPeriod").setValue("-7");
         $("#publicationCost").setValue("10.5");
         $("#publicationDescription").setValue("-");
     }

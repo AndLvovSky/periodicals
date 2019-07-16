@@ -34,7 +34,7 @@ public class PublicationValidationTest {
     }
 
     @Test
-    public void frequencyMustBePositive() {
+    public void periodMustBePositive() {
         PublicationDto publication = new PublicationDto("The Guardian", 0, 15.5, "-");
         Set<ConstraintViolation<PublicationDto>> constraintViolations = validator.validate(publication);
         assertEquals( 1, constraintViolations.size() );

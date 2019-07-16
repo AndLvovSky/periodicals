@@ -37,7 +37,7 @@ public class PublicationServiceImpl implements PublicationService {
         if (opt.isPresent()) {
             Publication publication = opt.get();
             publication.setName(newPublication.getName());
-            publication.setFrequency(newPublication.getFrequency());
+            publication.setPeriod(newPublication.getPeriod());
             publication.setCost(newPublication.getCost());
             publication.setDescription(newPublication.getDescription());
             repository.save(publication);

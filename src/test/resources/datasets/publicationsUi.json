@@ -3,42 +3,42 @@
     {
       "id": 10,
       "name": "Tampa Bay Times",
-      "frequency": 7,
+      "period": 7,
       "cost": 5.0,
       "description": "-"
     },
     {
       "id": 20,
       "name": "Minneapolis Star Tribune",
-      "frequency": 30,
+      "period": 30,
       "cost": 7.5,
       "description": "-"
     },
     {
       "id": 30,
       "name": "Philadelphia Inquirer",
-      "frequency": 7,
+      "period": 7,
       "cost": 10.0,
       "description": "-"
     },
     {
       "id": 40,
       "name": "St. Louis Post-Dispatch",
-      "frequency": 7,
+      "period": 7,
       "cost": 3.75,
       "description": "-"
     },
     {
       "id": 50,
       "name": "New Jersey Star-Ledger",
-      "frequency": 14,
+      "period": 14,
       "cost": 11.0,
       "description": "-"
     },
     {
       "id": 60,
       "name": "Arizona Republic",
-      "frequency": 21,
+      "period": 21,
       "cost": 16.2,
       "description": "-"
     }

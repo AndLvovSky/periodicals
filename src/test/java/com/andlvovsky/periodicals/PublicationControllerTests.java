@@ -74,7 +74,7 @@ public class PublicationControllerTests {
     public void getsAll() throws Exception {
         mvc.perform(get("/publications/")).andDo(print())
                 .andExpect(jsonPath("$.length()").value(3))
-                .andExpect(jsonPath("$[2].frequency").value(14));
+                .andExpect(jsonPath("$[2].period").value(14));
     }
 
     @Test

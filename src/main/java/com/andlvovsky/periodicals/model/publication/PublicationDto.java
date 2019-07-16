@@ -20,11 +20,11 @@ public class PublicationDto {
 
     @NotNull
     @Min(1)
-    private Integer frequency; /** days between publications */
+    private Integer period; /** days between publishing */
 
     @NotNull
     @DecimalMin("0.0")
-    private Double cost; /** cost per publication */
+    private Double cost; /** cost per publication in dollars */
 
     private String description;
 
