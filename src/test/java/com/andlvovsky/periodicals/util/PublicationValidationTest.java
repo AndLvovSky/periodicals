@@ -1,4 +1,4 @@
-package com.andlvovsky.periodicals;
+package com.andlvovsky.periodicals.util;
 
 import com.andlvovsky.periodicals.model.publication.PublicationDto;
 import org.junit.BeforeClass;

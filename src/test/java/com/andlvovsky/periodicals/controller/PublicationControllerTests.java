@@ -1,4 +1,4 @@
-package com.andlvovsky.periodicals;
+package com.andlvovsky.periodicals.controller;
 
 import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
 import com.andlvovsky.periodicals.model.publication.Publication;

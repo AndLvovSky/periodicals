@@ -1,4 +1,4 @@
-package com.andlvovsky.periodicals;
+package com.andlvovsky.periodicals.ui;
 
 import com.codeborne.selenide.Configuration;
 import com.github.database.rider.core.DBUnitRule;

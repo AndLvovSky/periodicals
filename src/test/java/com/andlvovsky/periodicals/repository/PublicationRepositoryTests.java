@@ -1,4 +1,4 @@
-package com.andlvovsky.periodicals;
+package com.andlvovsky.periodicals.repository;
 
 import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.repository.PublicationRepository;
