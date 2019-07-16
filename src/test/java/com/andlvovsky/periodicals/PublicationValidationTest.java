@@ -29,24 +29,24 @@ public class PublicationValidationTest {
     public void nameIsTooShort() {
         PublicationDto publication = new PublicationDto("A", 7, 10.0, "-");
         Set<ConstraintViolation<PublicationDto>> constraintViolations = validator.validate(publication);
-        assertEquals( 1, constraintViolations.size() );
-        assertEquals( "A", constraintViolations.iterator().next().getInvalidValue());
+        assertEquals(1, constraintViolations.size());
+        assertEquals("A", constraintViolations.iterator().next().getInvalidValue());
     }
 
     @Test
     public void periodMustBePositive() {
         PublicationDto publication = new PublicationDto("The Guardian", 0, 15.5, "-");
         Set<ConstraintViolation<PublicationDto>> constraintViolations = validator.validate(publication);
-        assertEquals( 1, constraintViolations.size() );
-        assertEquals( 0, constraintViolations.iterator().next().getInvalidValue());
+        assertEquals(1, constraintViolations.size());
+        assertEquals(0, constraintViolations.iterator().next().getInvalidValue());
     }
 
     @Test
     public void costMustNotBeNegative() {
         PublicationDto publication = new PublicationDto("The Sun", 30, -5.0, "-");
         Set<ConstraintViolation<PublicationDto>> constraintViolations = validator.validate(publication);
-        assertEquals( 1, constraintViolations.size() );
-        assertEquals( -5.0, constraintViolations.iterator().next().getInvalidValue());
+        assertEquals(1, constraintViolations.size());
+        assertEquals(-5.0, constraintViolations.iterator().next().getInvalidValue());
     }
 
     @Test
@@ -54,7 +54,7 @@ public class PublicationValidationTest {
         PublicationDto publication = new PublicationDto(
                 "The New York Times", 14, 20.25, null);
         Set<ConstraintViolation<PublicationDto>> constraintViolations = validator.validate(publication);
-        assertEquals( 0, constraintViolations.size() );
+        assertEquals(0, constraintViolations.size());
     }
 
 }

@@ -1,3 +1,5 @@
+const PUBLICATIONS_URL = "http://localhost:8080/publications/";
+
 $(document).ready(function() {
     $('#selectPublication').click(function () {
         var id = $('#publicationId').val();
@@ -26,23 +28,26 @@ function updatePublications() {
 }
 
 function selectPublication(publication) {
-    $("#ptbody").html("");
-    $("#ptbody").append(createPublicationRow(publication));
+    $("#ptbody").html("").append(createPublicationRow(publication));
 }
 
 function createPublicationRow(publication) {
     return $("<tr></tr>").append(
-        $("<td></td>").text(publication["id"]),
-        $("<td></td>").text(publication["name"]),
-        $("<td></td>").text(publication["period"]),
-        $("<td></td>").text(publication["cost"]),
-        $("<td></td>").text(publication["description"])
+        createCell(publication["id"]),
+        createCell(publication["name"]),
+        createCell(publication["period"]),
+        createCell(publication["cost"]),
+        createCell(publication["description"])
     );
+}
+
+function createCell(text) {
+    return $("<td></td>").text(text);
 }
 
 function getPublication(id, handler) {
     $.ajax({
-        url: "http://localhost:8080/publications/" + id
+        url: PUBLICATIONS_URL + id
     }).then(
         function(data) {
             handler(data);
@@ -55,7 +60,7 @@ function getPublication(id, handler) {
 
 function getPublications(handler) {
     $.ajax({
-        url: "http://localhost:8080/publications/"
+        url: PUBLICATIONS_URL
     }).then(function(data) {
         handler(data);
     });
@@ -63,7 +68,7 @@ function getPublications(handler) {
 
 function deletePublication(id) {
     $.ajax({
-        url: "http://localhost:8080/publications/" + id,
+        url: PUBLICATIONS_URL + id,
         method: "DELETE"
     }).then(
         function() {
@@ -78,7 +83,7 @@ function deletePublication(id) {
 
 function addPublication() {
     $.ajax({
-        url: "http://localhost:8080/publications/",
+        url: PUBLICATIONS_URL,
         method: "POST",
         data: getPublicationData(),
         contentType: "application/json"
@@ -94,7 +99,7 @@ function addPublication() {
 
 function replacePublication(id) {
     $.ajax({
-        url: "http://localhost:8080/publications/" + id,
+        url: PUBLICATIONS_URL + id,
         method: "PUT",
         data: getPublicationData(),
         contentType: "application/json"
@@ -109,7 +114,9 @@ function replacePublication(id) {
 
 function getPublicationData() {
     var data = {};
-    $("form[name=publication]").serializeArray().map(function(x){data[x.name] = x.value;});
+    $("form[name=publication]").serializeArray().map(function(input) {
+        data[input.name] = input.value;
+    });
     return JSON.stringify(data);
 }
 
@@ -117,11 +124,9 @@ function showInfoMessage(msg, good) {
     if (good === false) {
         $("#info").addClass("bad");
     }
-    $("#info").html(msg);
-    $("#info").removeClass("d-none");
+    $("#info").html(msg).removeClass("d-none");
     setTimeout(function () {
-        $("#info").addClass("d-none");
-        $("#info").removeClass("bad");
+        $("#info").addClass("d-none").removeClass("bad");
     }, 5000);
 }
 
