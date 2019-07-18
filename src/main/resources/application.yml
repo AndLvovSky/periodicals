@@ -4,11 +4,14 @@ spring:
     driverClassName: org.postgresql.Driver
     username: postgres
     password: password
+    initialization-mode: always
 
   jpa:
     show-sql: true
-    generate-ddl: true
     properties:
       hibernate:
         jdbc.lob.non_contextual_creation: true
-        ddl-auto: create-drop
+        hbm2ddl:
+          auto: create-drop
+          import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
+
