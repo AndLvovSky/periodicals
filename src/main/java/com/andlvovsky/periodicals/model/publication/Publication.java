@@ -14,20 +14,20 @@ import javax.persistence.Id;
 public class Publication {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
     private String name;
 
-    private Integer frequency; /** days between publications */
+    private Integer period;
 
-    private Double cost; /** cost per publication */
+    private Double cost;
 
     private String description;
 
-    public Publication(String name, Integer frequency, Double cost, String description) {
+    public Publication(String name, Integer period, Double cost, String description) {
         this.name = name;
-        this.frequency = frequency;
+        this.period = period;
         this.cost = cost;
         this.description = description;
     }

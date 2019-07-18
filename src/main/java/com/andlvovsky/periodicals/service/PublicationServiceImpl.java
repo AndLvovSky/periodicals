@@ -8,7 +8,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PublicationServiceImpl implements PublicationService {
@@ -33,18 +32,8 @@ public class PublicationServiceImpl implements PublicationService {
 
     @Override
     public void replace(Long id, Publication newPublication) {
-        Optional<Publication> opt = repository.findById(id);
-        if (opt.isPresent()) {
-            Publication publication = opt.get();
-            publication.setName(newPublication.getName());
-            publication.setFrequency(newPublication.getFrequency());
-            publication.setCost(newPublication.getCost());
-            publication.setDescription(newPublication.getDescription());
-            repository.save(publication);
-        } else {
-            newPublication.setId(id);
-            repository.save(newPublication);
-        }
+        newPublication.setId(id);
+        repository.save(newPublication);
     }
 
     @Override
@@ -55,4 +44,5 @@ public class PublicationServiceImpl implements PublicationService {
             throw new PublicationNotFoundException(id);
         }
     }
+
 }

@@ -1,4 +1,4 @@
-package com.andlvovsky.periodicals;
+package com.andlvovsky.periodicals.ui;
 
 import com.codeborne.selenide.Configuration;
 import com.github.database.rider.core.DBUnitRule;
@@ -21,9 +21,9 @@ import static com.codeborne.selenide.Condition.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment=SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE)
 public class EditPublicationsTests {
 
     @LocalServerPort
@@ -43,14 +43,14 @@ public class EditPublicationsTests {
 
     @Test
     @DataSet("datasets/publicationsUi.json")
-    public void showAllPublications() {
+    public void showsAllPublications() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
     }
 
     @Test
     @DataSet("datasets/publicationsUi.json")
-    public void selectTheSecondPublication() {
+    public void selectsTheSecondPublication() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
         String secondId = $("#ptbody tr:nth-child(2) td:first-child").getText();
@@ -63,7 +63,18 @@ public class EditPublicationsTests {
 
     @Test
     @DataSet("datasets/publicationsUi.json")
-    public void deleteTheForthPublication() {
+    public void selectPublicationFails() {
+        open(url());
+        $$("#ptbody tr").shouldHaveSize(6);
+        $("#publicationId").setValue("999");
+        $("#selectPublication").click();
+        $("#info").shouldHave(cssClass("bad"));
+        $("#info").shouldNotHave(cssClass("d-none"));
+    }
+
+    @Test
+    @DataSet("datasets/publicationsUi.json")
+    public void deletesTheForthPublication() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
         String forthId = $("#ptbody tr:nth-child(4) td:first-child").getText();
@@ -75,7 +86,18 @@ public class EditPublicationsTests {
 
     @Test
     @DataSet("datasets/publicationsUi.json")
-    public void addNewPublication() {
+    public void deletePublicationFails() {
+        open(url());
+        $$("#ptbody tr").shouldHaveSize(6);
+        $("#publicationId").setValue("888");
+        $("#deletePublication").click();
+        $("#info").shouldHave(cssClass("bad"));
+        $("#info").shouldNotHave(cssClass("d-none"));
+    }
+
+    @Test
+    @DataSet("datasets/publicationsUi.json")
+    public void addsNewPublication() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
         enterPublication();
@@ -86,7 +108,18 @@ public class EditPublicationsTests {
 
     @Test
     @DataSet("datasets/publicationsUi.json")
-    public void replaceTheThirdPublication() {
+    public void addPublicationFails() {
+        open(url());
+        $$("#ptbody tr").shouldHaveSize(6);
+        enterInvalidPublication();
+        $("#addPublication").click();
+        $$("#ptbody tr").shouldHaveSize(6);
+        $("#periodPublicationError").shouldNotBe(empty);
+    }
+
+    @Test
+    @DataSet("datasets/publicationsUi.json")
+    public void replacesTheThirdPublication() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
         String thirdId = $("#ptbody tr:nth-child(3) td:first-child").getText();
@@ -97,10 +130,28 @@ public class EditPublicationsTests {
         assertThat($("#ptbody").getText()).contains("The Guardian");
     }
 
+    @Test
+    @DataSet("datasets/publicationsUi.json")
+    public void replacePublicationFails() {
+        open(url());
+        $$("#ptbody tr").shouldHaveSize(6);
+        enterInvalidPublication();
+        $("#replacePublication").click();
+        $$("#ptbody tr").shouldHaveSize(6);
+        $("#periodPublicationError").shouldNotBe(empty);
+    }
+
     private void enterPublication() {
         $("#publicationName").setValue("The Guardian");
-        $("#publicationFrequency").setValue("7");
+        $("#publicationPeriod").setValue("7");
         $("#publicationCost").setValue("5.5");
+        $("#publicationDescription").setValue("-");
+    }
+
+    private void enterInvalidPublication() {
+        $("#publicationName").setValue("The Sun");
+        $("#publicationPeriod").setValue("-7");
+        $("#publicationCost").setValue("10.5");
         $("#publicationDescription").setValue("-");
     }
 

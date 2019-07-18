@@ -1,15 +1,13 @@
 package com.andlvovsky.periodicals.model.publication;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper
-public abstract class PublicationMapper {
+@Mapper(unmappedTargetPolicy=ReportingPolicy.IGNORE)
+public interface PublicationMapper {
 
-    public static final PublicationMapper INSTANCE = Mappers.getMapper(PublicationMapper.class);
+    Publication fromDto(PublicationDto publicationDto);
 
-    public abstract Publication fromDto(PublicationDto publicationDto);
-
-    public abstract PublicationDto toDto(Publication publication);
+    PublicationDto toDto(Publication publication);
 
 }

@@ -12,6 +12,7 @@ public interface PublicationService {
 
     void add(Publication publication);
 
+    // if publication with specified id does not exist, creates a new entity
     void replace(Long id, Publication newPublication);
 
     void delete(Long id);

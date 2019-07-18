@@ -11,3 +11,8 @@ form[name="publication"] input {
     width: 50%;
     padding: 0.5rem;
 }
+
+.validationError {
+    font-style: italic;
+    color: red;
+}

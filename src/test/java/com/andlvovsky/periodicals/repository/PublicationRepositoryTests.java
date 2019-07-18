@@ -1,4 +1,4 @@
-package com.andlvovsky.periodicals;
+package com.andlvovsky.periodicals.repository;
 
 import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.repository.PublicationRepository;
@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE)
 public class PublicationRepositoryTests {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -37,32 +37,32 @@ public class PublicationRepositoryTests {
 
     @Test
     @DataSet("datasets/publications.json")
-    public void findById() {
-        Publication publication = repository.findById(1L).get();
+    public void findsById() {
+        Publication publication = repository.findById(2L).get();
         assertEquals("New York Times", publication.getName());
     }
 
     @Test
     @DataSet("datasets/publications.json")
-    public void findAll() {
+    public void findsAll() {
         List<Publication> publications = repository.findAll();
         assertEquals(2, publications.size());
-        assertThat(publications.get(1).getFrequency()).isEqualTo(30);
+        assertThat(publications.get(1).getPeriod()).isEqualTo(30);
     }
 
     @Test
     @DataSet("datasets/publications.json")
-    public void save() {
+    public void saves() {
         repository.save(new Publication("The Sun", 1, 5.5, "-"));
         assertEquals(3, repository.count());
     }
 
     @Test
     @DataSet("datasets/publications.json")
-    public void delete() {
-        repository.deleteById(1L);
+    public void deletes() {
+        repository.deleteById(2L);
         assertEquals(1, repository.count());
-        Publication publication = repository.findById(2L).get();
+        Publication publication = repository.findById(3L).get();
         assertEquals("New Yorker", publication.getName());
     }
 
