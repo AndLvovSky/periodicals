@@ -3,6 +3,7 @@ package com.andlvovsky.periodicals.ui;
 import com.codeborne.selenide.Configuration;
 import com.github.database.rider.core.DBUnitRule;
 import com.github.database.rider.core.api.dataset.DataSet;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,6 +40,14 @@ public class EditPublicationsTests {
     @BeforeClass
     public static void setup() {
         Configuration.timeout = 10000;
+    }
+
+    @Before
+    public void login() {
+        open("/login");
+        $("input[name=\"username\"]").setValue("u");
+        $("input[name=\"password\"]").setValue("p");
+        $("button[type=\"submit\"]").click();
     }
 
     @Test
@@ -156,7 +165,7 @@ public class EditPublicationsTests {
     }
 
     private String url() {
-        return "http://localhost:" + port + "/edit.html";
+        return "/edit";
     }
 
 }
