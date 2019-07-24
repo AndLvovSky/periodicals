@@ -9,8 +9,7 @@ import java.util.Collection;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name="user_entity")
-public class User {
+public class Privilege {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -18,15 +17,11 @@ public class User {
 
     private String name;
 
-    private String password;
-
-    @ManyToMany
+    @ManyToMany(mappedBy="privileges")
     private Collection<Role> roles;
 
-    public User(String name, String password, Collection<Role> roles) {
+    public Privilege(String name) {
         this.name = name;
-        this.password = password;
-        this.roles = roles;
     }
 
 }

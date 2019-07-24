@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.sql.DataSource;
 
+import static com.andlvovsky.periodicals.ui.UiTests.*;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,11 +44,8 @@ public class EditPublicationsTests {
     }
 
     @Before
-    public void login() {
-        open("/login");
-        $("input[name=\"username\"]").setValue("u");
-        $("input[name=\"password\"]").setValue("p");
-        $("button[type=\"submit\"]").click();
+    public void beforeEach() {
+        loginAsAdmin();
     }
 
     @Test
@@ -55,6 +53,14 @@ public class EditPublicationsTests {
     public void showsAllPublications() {
         open(url());
         $$("#ptbody tr").shouldHaveSize(6);
+    }
+
+    @Test
+    public void notAdminShouldNotSeeEditPage() {
+        logout();
+        loginAsUser();
+        open(url());
+        assertThat($("body").getText()).contains("403");
     }
 
     @Test

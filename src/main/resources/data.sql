@@ -1,7 +1,5 @@
 drop sequence publication_sequence;
-drop sequence user_sequence;
 create sequence publication_sequence start with 1 increment by 1;
-create sequence user_sequence start with 1 increment by 1;
 delete from publication where true;
 insert into publication (id ,name, period, cost, description) values
     (1, 'Tampa Bay Times', 7, 5., '-'),
