@@ -1,7 +1,6 @@
 package com.andlvovsky.periodicals.repository;
 
 import com.andlvovsky.periodicals.model.publication.Publication;
-import com.andlvovsky.periodicals.repository.PublicationRepository;
 import com.github.database.rider.core.DBUnitRule;
 import com.github.database.rider.core.api.dataset.DataSet;
 import org.junit.Rule;
@@ -10,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.sql.DataSource;
@@ -21,7 +19,6 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE)
 public class PublicationRepositoryTests {
 

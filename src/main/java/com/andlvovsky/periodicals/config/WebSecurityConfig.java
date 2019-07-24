@@ -16,7 +16,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/").permitAll()
-                    .antMatchers("/edit").hasAuthority("EDIT_PUBLICATIONS")
+                    .antMatchers("/edit", "/publications/**").hasAuthority("EDIT_PUBLICATIONS")
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
