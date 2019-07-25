@@ -31,9 +31,10 @@ public class UserDataLoader implements ApplicationRunner {
 
     public void run(ApplicationArguments args) {
         deleteAll();
+        createPrivilege("READ_PUBLICATIONS");
         createPrivilege("EDIT_PUBLICATIONS");
         createRole("ADMIN", "EDIT_PUBLICATIONS");
-        createRole("USER");
+        createRole("USER", "READ_PUBLICATIONS");
         createUser("a", "p", "USER", "ADMIN");
         createUser("u", "p", "USER");
     }
