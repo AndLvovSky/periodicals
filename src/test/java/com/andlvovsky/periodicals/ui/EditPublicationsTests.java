@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.sql.DataSource;
@@ -26,10 +25,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE)
 public class EditPublicationsTests {
 
-    @LocalServerPort
-    private int port;
+    private static final String URL = "/edit";
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private DataSource dataSource;
 
@@ -49,7 +46,7 @@ public class EditPublicationsTests {
     @Test
     @DataSet("datasets/publicationsUi.json")
     public void showsAllPublications() {
-        open(url());
+        open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
     }
 
@@ -57,14 +54,14 @@ public class EditPublicationsTests {
     public void notAdminShouldNotSeeEditPage() {
         logout();
         loginAsUser();
-        open(url());
+        open(URL);
         assertThat($("body").getText()).contains("Access denied");
     }
 
     @Test
     @DataSet("datasets/publicationsUi.json")
     public void selectsTheSecondPublication() {
-        open(url());
+        open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
         String secondId = $("#ptbody tr:nth-child(2) td:first-child").getText();
         $("#publicationId").setValue(secondId);
@@ -77,7 +74,7 @@ public class EditPublicationsTests {
     @Test
     @DataSet("datasets/publicationsUi.json")
     public void selectPublicationFails() {
-        open(url());
+        open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
         $("#publicationId").setValue("999");
         $("#selectPublication").click();
@@ -88,7 +85,7 @@ public class EditPublicationsTests {
     @Test
     @DataSet("datasets/publicationsUi.json")
     public void deletesTheForthPublication() {
-        open(url());
+        open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
         String forthId = $("#ptbody tr:nth-child(4) td:first-child").getText();
         $("#publicationId").setValue(forthId);
@@ -100,7 +97,7 @@ public class EditPublicationsTests {
     @Test
     @DataSet("datasets/publicationsUi.json")
     public void deletePublicationFails() {
-        open(url());
+        open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
         $("#publicationId").setValue("888");
         $("#deletePublication").click();
@@ -111,7 +108,7 @@ public class EditPublicationsTests {
     @Test
     @DataSet("datasets/publicationsUi.json")
     public void addsNewPublication() {
-        open(url());
+        open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
         enterPublication();
         $("#addPublication").click();
@@ -122,7 +119,7 @@ public class EditPublicationsTests {
     @Test
     @DataSet("datasets/publicationsUi.json")
     public void addPublicationFails() {
-        open(url());
+        open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
         enterInvalidPublication();
         $("#addPublication").click();
@@ -133,7 +130,7 @@ public class EditPublicationsTests {
     @Test
     @DataSet("datasets/publicationsUi.json")
     public void replacesTheThirdPublication() {
-        open(url());
+        open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
         String thirdId = $("#ptbody tr:nth-child(3) td:first-child").getText();
         $("#publicationId").setValue(thirdId);
@@ -146,7 +143,7 @@ public class EditPublicationsTests {
     @Test
     @DataSet("datasets/publicationsUi.json")
     public void replacePublicationFails() {
-        open(url());
+        open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
         enterInvalidPublication();
         $("#replacePublication").click();
@@ -166,10 +163,6 @@ public class EditPublicationsTests {
         $("#publicationPeriod").setValue("-7");
         $("#publicationCost").setValue("10.5");
         $("#publicationDescription").setValue("-");
-    }
-
-    private String url() {
-        return "/edit";
     }
 
 }

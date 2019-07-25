@@ -6,12 +6,10 @@ import static com.codeborne.selenide.Selenide.open;
 public class UiTests {
 
     public static void loginAsAdmin() {
-        open("/login");
         loginWithCredentials("a", "p");
     }
 
     public static void loginAsUser() {
-        open("/login");
         loginWithCredentials("u", "p");
     }
 
@@ -19,10 +17,11 @@ public class UiTests {
         open("/logout");
     }
 
-    private static void loginWithCredentials(String name, String password) {
-        $("input[name=\"username\"]").setValue(name);
-        $("input[name=\"password\"]").setValue(password);
-        $("button[type=\"submit\"]").click();
+    public static void loginWithCredentials(String name, String password) {
+        open("/login");
+        $("#username").setValue(name);
+        $("#password").setValue(password);
+        $("#submit").click();
     }
 
 }
