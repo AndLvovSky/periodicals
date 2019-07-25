@@ -24,4 +24,8 @@ public class UiTests {
         $("#submit").click();
     }
 
+    public static String baseUrl(int port) {
+        return "http://localhost:" + port;
+    }
+
 }

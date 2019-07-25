@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.sql.DataSource;
@@ -21,11 +22,14 @@ import static com.codeborne.selenide.Condition.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment=SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment=SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE)
 public class EditPublicationsTests {
 
     private static final String URL = "/edit";
+
+    @LocalServerPort
+    private int port;
 
     @Autowired
     private DataSource dataSource;
@@ -40,6 +44,7 @@ public class EditPublicationsTests {
 
     @Before
     public void beforeEach() {
+        Configuration.baseUrl = baseUrl(port);
         loginAsAdmin();
     }
 
