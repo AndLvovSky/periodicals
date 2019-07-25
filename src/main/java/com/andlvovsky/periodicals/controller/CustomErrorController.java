@@ -14,7 +14,7 @@ import java.util.List;
 public class CustomErrorController implements ErrorController {
 
     private static final List<Integer> CUSTOM_ERROR_PAGES =
-            Arrays.asList(403, 500);
+            Arrays.asList(403, 404, 500);
 
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request, Model model) {

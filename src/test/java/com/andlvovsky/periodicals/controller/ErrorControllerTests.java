@@ -43,8 +43,13 @@ public class ErrorControllerTests {
     }
 
     @Test
+    public void showsNotFoundPage() throws Exception {
+        performError(404, "Page not found");
+    }
+
+    @Test
     public void showsAnotherErrorPage() throws Exception {
-        performError(404, "404");
+        performError(450, "450");
     }
 
     private void performError(Integer code, String stringToContain) throws Exception {
