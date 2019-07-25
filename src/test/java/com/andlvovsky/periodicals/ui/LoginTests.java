@@ -10,13 +10,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.codeborne.selenide.Selenide.$;
 import static com.andlvovsky.periodicals.ui.UiTests.*;
-import static com.codeborne.selenide.Selenide.Wait;
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Condition.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LoginTests {
+
+    private String homeUrl;
 
     @LocalServerPort
     private int port;
@@ -29,12 +31,25 @@ public class LoginTests {
     @Before
     public void beforeEach() {
         Configuration.baseUrl = baseUrl(port);
+        homeUrl = Configuration.baseUrl + "/";
     }
 
     @Test
-    public void successfulLogin() {
+    public void successfulLoginAsUser() {
         loginAsUser();
-        Wait().until(ExpectedConditions.urlToBe(Configuration.baseUrl + "/"));
+        backToHome();
+        $("#login").shouldNotHave(exist);
+        $("#logout").isDisplayed();
+        $("#edit").shouldNotHave(exist);
+    }
+
+    @Test
+    public void successfulLoginAsAdmin() {
+        loginAsAdmin();
+        backToHome();
+        $("#login").shouldNotHave(exist);
+        $("#logout").isDisplayed();
+        $("#edit").isDisplayed();
     }
 
     @Test
@@ -47,7 +62,24 @@ public class LoginTests {
     public void successfulLogout() {
         loginAsUser();
         logout();
-        $("logout-message").isDisplayed();
+        backToHome();
+        checkUnauthenticatedHomePageElements();
+    }
+
+    @Test
+    public void unauthenticatedHomePage() {
+        open("");
+        checkUnauthenticatedHomePageElements();
+    }
+
+    private void checkUnauthenticatedHomePageElements() {
+        $("#login").isDisplayed();
+        $("#logout").shouldNotHave(exist);
+        $("#edit").shouldNotHave(exist);
+    }
+
+    private void backToHome() {
+        Wait().until(ExpectedConditions.urlToBe(homeUrl));
     }
 
 }

@@ -8,7 +8,6 @@
     <h1>Login page</h1>
     <form th:action="@{/login}" method="post">
         <div id="error-credentials" th:if="${param.error}" style="color:red">Wrong username and password</div>
-        <div id="logout-message" th:if="${param.logout}" style="color:green">Successfully logged out</div>
         <label for="username">Username: </label>
         <input id="username" name="username" type="text">
         <label for="password">Password: </label>
