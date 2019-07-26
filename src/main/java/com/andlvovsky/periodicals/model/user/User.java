@@ -9,11 +9,11 @@ import java.util.Collection;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name="user_entity")
+@Table(name = "user_entity")
 public class User {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
