@@ -12,6 +12,4 @@ spring:
       hibernate:
         jdbc.lob.non_contextual_creation: true
         hbm2ddl:
-          auto: create-drop
-          import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
-
+          auto: none
