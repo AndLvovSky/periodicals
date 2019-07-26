@@ -23,10 +23,4 @@ public class User {
     @ManyToMany
     private Collection<Role> roles;
 
-    public User(String name, String password, Collection<Role> roles) {
-        this.name = name;
-        this.password = password;
-        this.roles = roles;
-    }
-
 }

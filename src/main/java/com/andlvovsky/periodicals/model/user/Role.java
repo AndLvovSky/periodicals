@@ -23,9 +23,4 @@ public class Role {
     @ManyToMany
     private Collection<Privilege> privileges;
 
-    public Role(String name, Collection<Privilege> privileges) {
-        this.name = name;
-        this.privileges = privileges;
-    }
-
 }
