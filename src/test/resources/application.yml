@@ -9,4 +9,7 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        ddl-auto: none
+        ddl-auto: create-drop
+
+  flyway:
+    enabled: false

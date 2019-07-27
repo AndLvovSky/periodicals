@@ -1,0 +1,58 @@
+{
+  "PRIVILEGE": [
+    {
+      "id": 1,
+      "name": "READ_PUBLICATIONS"
+    },
+    {
+      "id": 2,
+      "name": "EDIT_PUBLICATIONS"
+    }
+  ],
+  "ROLE": [
+    {
+      "id": 1,
+      "name": "ROLE_ADMIN"
+    },
+    {
+      "id": 2,
+      "name": "ROLE_USER"
+    }
+  ],
+  "ROLE_PRIVILEGES": [
+    {
+      "roles_id": 1,
+      "privileges_id": 2
+    },
+    {
+      "roles_id": 2,
+      "privileges_id": 1
+    }
+  ],
+  "USER_ENTITY": [
+    {
+      "id": 1,
+      "name": "a",
+      "password": "p"
+    },
+    {
+      "id": 2,
+      "name": "u",
+      "password": "p"
+    }
+  ],
+  "USER_ENTITY_ROLES": [
+    {
+      "users_id": 1,
+      "roles_id": 1
+    },
+    {
+      "users_id": 1,
+      "roles_id": 2
+    },
+    {
+      "users_id": 2,
+      "roles_id": 2
+    }
+  ]
+}

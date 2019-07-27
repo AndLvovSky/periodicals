@@ -1,22 +1,15 @@
 package com.andlvovsky.periodicals.ui;
 
-import com.codeborne.selenide.Configuration;
-import com.github.database.rider.core.DBUnitRule;
 import com.github.database.rider.core.api.dataset.DataSet;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.sql.DataSource;
-
-import static com.andlvovsky.periodicals.ui.UiTests.*;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,32 +17,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class EditPublicationsTests {
+public class EditPublicationsTests extends UiTests {
 
     private static final String URL = "/edit";
 
     @LocalServerPort
     private int port;
 
-    @Autowired
-    private DataSource dataSource;
-
-    @Rule
-    public DBUnitRule dbUnitRule = DBUnitRule.instance(() -> dataSource.getConnection());
-
     @BeforeClass
     public static void setup() {
-        Configuration.timeout = 10000;
+        UiTests.setup();
     }
 
     @Before
     public void beforeEach() {
-        Configuration.baseUrl = baseUrl(port);
+        super.beforeEach();
         loginAsAdmin();
     }
 
     @Test
-    @DataSet("datasets/publicationsUi.json")
+    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
     public void showsAllPublications() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
@@ -64,7 +51,7 @@ public class EditPublicationsTests {
     }
 
     @Test
-    @DataSet("datasets/publicationsUi.json")
+    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
     public void selectsTheSecondPublication() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
@@ -77,7 +64,7 @@ public class EditPublicationsTests {
     }
 
     @Test
-    @DataSet("datasets/publicationsUi.json")
+    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
     public void selectPublicationFails() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
@@ -88,7 +75,7 @@ public class EditPublicationsTests {
     }
 
     @Test
-    @DataSet("datasets/publicationsUi.json")
+    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
     public void deletesTheForthPublication() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
@@ -100,7 +87,7 @@ public class EditPublicationsTests {
     }
 
     @Test
-    @DataSet("datasets/publicationsUi.json")
+    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
     public void deletePublicationFails() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
@@ -111,7 +98,7 @@ public class EditPublicationsTests {
     }
 
     @Test
-    @DataSet("datasets/publicationsUi.json")
+    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
     public void addsNewPublication() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
@@ -122,7 +109,7 @@ public class EditPublicationsTests {
     }
 
     @Test
-    @DataSet("datasets/publicationsUi.json")
+    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
     public void addPublicationFails() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
@@ -133,7 +120,7 @@ public class EditPublicationsTests {
     }
 
     @Test
-    @DataSet("datasets/publicationsUi.json")
+    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
     public void replacesTheThirdPublication() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
@@ -146,7 +133,7 @@ public class EditPublicationsTests {
     }
 
     @Test
-    @DataSet("datasets/publicationsUi.json")
+    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
     public void replacePublicationFails() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
@@ -154,6 +141,10 @@ public class EditPublicationsTests {
         $("#replacePublication").click();
         $$("#ptbody tr").shouldHaveSize(6);
         $("#periodPublicationError").shouldNotBe(empty);
+    }
+
+    public int getPort() {
+        return port;
     }
 
     private void enterPublication() {
