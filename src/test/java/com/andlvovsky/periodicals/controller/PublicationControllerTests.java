@@ -17,7 +17,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -32,7 +33,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
 public class PublicationControllerTests {
 
     @Autowired
@@ -75,19 +75,37 @@ public class PublicationControllerTests {
 
 
     @Test
+    @WithMockUser(authorities = {"READ_PUBLICATIONS"})
     public void getsOne() throws Exception {
         mvc.perform(get(url("1"))).andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("The Guardian")).andDo(print());
     }
 
     @Test
-    public void getsOneFail() throws Exception {
+    @WithMockUser(authorities = {"READ_PUBLICATIONS"})
+    public void getOneFails() throws Exception {
         mvc.perform(get(url("99"))).andExpect(status().isNotFound())
                 .andExpect(content().string(allOf(Matchers.containsString("cannot find"),
                         Matchers.containsString("99")))).andDo(print());
     }
 
     @Test
+    @WithMockUser(authorities = {})
+    public void getOneFailsUnauthorized() throws Exception {
+        mvc.perform(get(url("1")))
+                .andExpect(status().isForbidden())
+                .andDo(print());
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void getOneFailsUnauthenticated() throws Exception {
+        mvc.perform(get(url("1")))
+                .andExpect(redirectedUrlPattern("**/login")).andDo(print());
+    }
+
+    @Test
+    @WithMockUser(authorities = {"READ_PUBLICATIONS"})
     public void getsAll() throws Exception {
         mvc.perform(get(url("")))
                 .andExpect(jsonPath("$.length()").value(3))
@@ -95,6 +113,7 @@ public class PublicationControllerTests {
     }
 
     @Test
+    @WithMockUser(authorities = {"EDIT_PUBLICATIONS"})
     public void adds() throws Exception {
         String publicationJson = jsonMapper.writeValueAsString(publicationDtos[3]);
         mvc.perform(post(url("")).content(publicationJson)
@@ -104,6 +123,7 @@ public class PublicationControllerTests {
     }
 
     @Test
+    @WithMockUser(authorities = {"EDIT_PUBLICATIONS"})
     public void additionFails() throws Exception {
         String publicationJson = jsonMapper.writeValueAsString(publicationDtos[5]);
         mvc.perform(post(url("")).content(publicationJson)
@@ -113,6 +133,17 @@ public class PublicationControllerTests {
     }
 
     @Test
+    @WithMockUser(authorities = {"READ_PUBLICATIONS"})
+    public void additionFailsUnauthorized() throws Exception {
+        String publicationJson = jsonMapper.writeValueAsString(publicationDtos[3]);
+        mvc.perform(post(url("")).content(publicationJson)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isForbidden())
+                .andDo(print());
+    }
+
+    @Test
+    @WithMockUser(authorities = {"EDIT_PUBLICATIONS"})
     public void replaces() throws Exception {
         String publicationJson = jsonMapper.writeValueAsString(publicationDtos[4]);
         mvc.perform(put(url("2")).content(publicationJson)
@@ -122,6 +153,7 @@ public class PublicationControllerTests {
     }
 
     @Test
+    @WithMockUser(authorities = {"EDIT_PUBLICATIONS"})
     public void replacementFails() throws Exception {
         String publicationJson = jsonMapper.writeValueAsString(publicationDtos[5]);
         mvc.perform(put(url("2")).content(publicationJson)
@@ -131,16 +163,36 @@ public class PublicationControllerTests {
     }
 
     @Test
+    @WithMockUser(authorities = {"READ_PUBLICATIONS"})
+    public void replacementFailsUnauthorized() throws Exception {
+        String publicationJson = jsonMapper.writeValueAsString(publicationDtos[4]);
+        mvc.perform(put(url("2")).content(publicationJson)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isForbidden())
+                .andDo(print());
+    }
+
+    @Test
+    @WithMockUser(authorities = {"EDIT_PUBLICATIONS"})
     public void deletes() throws Exception {
         mvc.perform(delete(url("3"))).andExpect(status().isNoContent());
         verify(service).delete(3L);
     }
 
     @Test
+    @WithMockUser(authorities = {"EDIT_PUBLICATIONS"})
     public void deletionFails() throws Exception {
         mvc.perform(delete(url("88"))).andExpect(status().isNotFound())
                 .andExpect(content().string(allOf(Matchers.containsString("cannot find"),
                         Matchers.containsString("88")))).andDo(print());
+    }
+
+    @Test
+    @WithMockUser(authorities = {"READ_PUBLICATIONS"})
+    public void deletionFailsUnauthorized() throws Exception {
+        mvc.perform(delete(url("3")))
+                .andExpect(status().isForbidden())
+                .andDo(print());
     }
 
     private String url(String suffix) {

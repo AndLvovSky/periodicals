@@ -1,4 +1,4 @@
-const PUBLICATIONS_URL = "http://localhost:8080/publications/";
+const PUBLICATIONS_URL = "/publications/";
 
 $(document).ready(function() {
     $('#selectPublication').click(function () {

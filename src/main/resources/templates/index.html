@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Periodicals - Home</title>
+</head>
+<body>
+    <h1>Periodicals</h1>
+    <h2>Subscribe to magazines, scholarly journals, newspapers, newsletters and a lot more.</h2>
+    <h3 id="username" sec:authorize="isAuthenticated()">
+        Logged in user: <span sec:authentication="name">JohnDoe404</span>
+    </h3>
+    <h3 id="edit" sec:authorize="hasAuthority('EDIT_PUBLICATIONS')">
+        <a th:href="@{/edit}">Edit publications</a>
+    </h3>
+    <div style="font-size:25px">
+        <span id="logout" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></span>
+        <span id="login" sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></span>
+    </div>
+</body>
+</html>

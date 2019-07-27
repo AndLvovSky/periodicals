@@ -3,10 +3,7 @@ package com.andlvovsky.periodicals.model.publication;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -14,7 +11,13 @@ import javax.persistence.Id;
 public class Publication {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "publication_generator")
+    @SequenceGenerator(
+            name = "publication_generator",
+            sequenceName = "publication_sequence",
+            allocationSize = 1)
     private Long id;
 
     private String name;
