@@ -33,12 +33,12 @@
     {
       "id": 1,
       "name": "a",
-      "password": "p"
+      "password": "$2a$06$/uT9p0RJW13N4cMb1DCj3.Rvh.G2OSw7C1NF6cVcbgDIzeheiwxeW"
     },
     {
       "id": 2,
       "name": "u",
-      "password": "p"
+      "password": "$2a$06$/uT9p0RJW13N4cMb1DCj3.Rvh.G2OSw7C1NF6cVcbgDIzeheiwxeW"
     }
   ],
   "USER_ENTITY_ROLES": [
