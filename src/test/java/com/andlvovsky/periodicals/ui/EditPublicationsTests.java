@@ -43,6 +43,7 @@ public class EditPublicationsTests extends UiTests {
     }
 
     @Test
+    @DataSet("datasets/users.json")
     public void notAdminShouldNotSeeEditPage() {
         logout();
         loginAsUser();

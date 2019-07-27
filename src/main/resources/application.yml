@@ -4,7 +4,6 @@ spring:
     driverClassName: org.postgresql.Driver
     username: postgres
     password: password
-    initialization-mode: always
 
   jpa:
     show-sql: true
