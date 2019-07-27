@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class PublicationRepositoryTests {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -35,7 +35,7 @@ public class PublicationRepositoryTests {
     @Test
     @DataSet("datasets/publications.json")
     public void findsById() {
-        Publication publication = repository.findById(2L).get();
+        Publication publication = repository.findById(101L).get();
         assertEquals("New York Times", publication.getName());
     }
 
@@ -57,9 +57,9 @@ public class PublicationRepositoryTests {
     @Test
     @DataSet("datasets/publications.json")
     public void deletes() {
-        repository.deleteById(2L);
+        repository.deleteById(101L);
         assertEquals(1, repository.count());
-        Publication publication = repository.findById(3L).get();
+        Publication publication = repository.findById(102L).get();
         assertEquals("New Yorker", publication.getName());
     }
 
