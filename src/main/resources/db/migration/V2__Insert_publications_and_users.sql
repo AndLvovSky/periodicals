@@ -22,6 +22,9 @@ INSERT INTO user_entity (id, name, password) VALUES
 (1,	'a', 'p'),
 (2,	'u', 'p');
 
+CREATE EXTENSION pgcrypto;
+UPDATE user_entity SET password = crypt(password, gen_salt('bf'));
+
 INSERT INTO user_entity_roles (users_id, roles_id) VALUES
 (1,	1),
 (1,	2),
