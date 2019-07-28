@@ -1,0 +1,39 @@
+{
+  "USER_ENTITY": [
+    {
+      "id": 1,
+      "name": "u",
+      "password": "$2a$06$/uT9p0RJW13N4cMb1DCj3.Rvh.G2OSw7C1NF6cVcbgDIzeheiwxeW"
+    }
+  ],
+  "PUBLICATION": [
+    {
+      "id": 1,
+      "name": "New York Times",
+      "period": 7,
+      "cost": 15.0,
+      "description": "-"
+    },
+    {
+      "id": 2,
+      "name": "New Yorker",
+      "period": 30,
+      "cost": 10.0,
+      "description": "-"
+    }
+  ],
+  "SUBSCRIPTION": [
+    {
+      "id": 1,
+      "owner_id": 1,
+      "publication_id": 2,
+      "number": 5
+    },
+    {
+      "id": 2,
+      "owner_id": 1,
+      "publication_id": 1,
+      "number": 10
+    }
+  ]
+}

@@ -11,4 +11,4 @@ spring:
       hibernate:
         jdbc.lob.non_contextual_creation: true
         hbm2ddl:
-          auto: none
+          auto: validate

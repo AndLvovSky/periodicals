@@ -35,3 +35,7 @@ CREATE TABLE user_entity_roles (
     FOREIGN KEY (roles_id) REFERENCES role(id),
     FOREIGN KEY (users_id) REFERENCES user_entity(id)
 );
+
+CREATE SEQUENCE hibernate_sequence
+    START WITH 101
+    INCREMENT BY 1;

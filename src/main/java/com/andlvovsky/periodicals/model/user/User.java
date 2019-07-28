@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.model.user;
 
+import com.andlvovsky.periodicals.model.subscription.Subscription;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,5 +23,8 @@ public class User {
 
     @ManyToMany
     private Collection<Role> roles;
+
+    @OneToMany(mappedBy = "owner")
+    private Collection<Subscription> subscriptions;
 
 }
