@@ -25,4 +25,10 @@ public class Subscription {
 
     private Integer number;
 
+    public Subscription(Publication publication, User owner, Integer number) {
+        this.publication = publication;
+        this.owner = owner;
+        this.number = number;
+    }
+
 }

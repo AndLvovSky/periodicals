@@ -1,0 +1,40 @@
+package com.andlvovsky.periodicals.service;
+
+import com.andlvovsky.periodicals.model.user.User;
+import com.andlvovsky.periodicals.repository.UserRepository;
+import com.andlvovsky.periodicals.service.impl.UserServiceImpl;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
+
+@RunWith(SpringRunner.class)
+@WithMockUser(username = "u")
+public class UserServiceTests {
+
+    @InjectMocks
+    private UserServiceImpl service;
+
+    @Mock
+    private UserRepository repository;
+
+    private User user = new User(1L, "u", "p", null, null);
+
+    @Before
+    public void beforeEach() {
+        when(repository.findByName("u")).thenReturn(user);
+    }
+
+    @Test
+    public void getsLoggedInUser() {
+        User user = service.getLoggedUser();
+        assertEquals(user, this.user);
+    }
+
+}
