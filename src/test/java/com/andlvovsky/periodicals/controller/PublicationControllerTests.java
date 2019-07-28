@@ -4,7 +4,6 @@ import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
 import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.model.publication.PublicationDto;
 import com.andlvovsky.periodicals.model.publication.PublicationMapper;
-import com.andlvovsky.periodicals.service.PublicationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -12,15 +11,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 
@@ -33,13 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest
 @AutoConfigureMockMvc
-public class PublicationControllerTests {
-
-    @Autowired
-    private MockMvc mvc;
-
-    @MockBean
-    private PublicationService service;
+public class PublicationControllerTests extends ControllerTests {
 
     private ObjectMapper jsonMapper = new ObjectMapper();
 
@@ -65,12 +55,12 @@ public class PublicationControllerTests {
 
     @Before
     public void defineRepositoryBehavior() {
-        when(service.getOne(1L)).thenReturn(publications[0]);
-        when(service.getOne(2L)).thenReturn(publications[1]);
-        when(service.getOne(3L)).thenReturn(publications[2]);
-        when(service.getAll()).thenReturn(Arrays.asList(publications[0], publications[1], publications[2]));
-        when(service.getOne(99L)).thenThrow(new PublicationNotFoundException(99L));
-        doThrow(new PublicationNotFoundException(88L)).when(service).delete(88L);
+        when(publicationService.getOne(1L)).thenReturn(publications[0]);
+        when(publicationService.getOne(2L)).thenReturn(publications[1]);
+        when(publicationService.getOne(3L)).thenReturn(publications[2]);
+        when(publicationService.getAll()).thenReturn(Arrays.asList(publications[0], publications[1], publications[2]));
+        when(publicationService.getOne(99L)).thenThrow(new PublicationNotFoundException(99L));
+        doThrow(new PublicationNotFoundException(88L)).when(publicationService).delete(88L);
     }
 
 
@@ -118,8 +108,8 @@ public class PublicationControllerTests {
         String publicationJson = jsonMapper.writeValueAsString(publicationDtos[3]);
         mvc.perform(post(url("")).content(publicationJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isCreated());
-        verify(service).add(publications[3]);
-        verifyNoMoreInteractions(service);
+        verify(publicationService).add(publications[3]);
+        verifyNoMoreInteractions(publicationService);
     }
 
     @Test
@@ -129,7 +119,7 @@ public class PublicationControllerTests {
         mvc.perform(post(url("")).content(publicationJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest()).andDo(print());
-        verifyNoMoreInteractions(service);
+        verifyNoMoreInteractions(publicationService);
     }
 
     @Test
@@ -148,8 +138,8 @@ public class PublicationControllerTests {
         String publicationJson = jsonMapper.writeValueAsString(publicationDtos[4]);
         mvc.perform(put(url("2")).content(publicationJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk());
-        verify(service).replace(2L, publications[4]);
-        verifyNoMoreInteractions(service);
+        verify(publicationService).replace(2L, publications[4]);
+        verifyNoMoreInteractions(publicationService);
     }
 
     @Test
@@ -159,7 +149,7 @@ public class PublicationControllerTests {
         mvc.perform(put(url("2")).content(publicationJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest()).andDo(print());
-        verifyNoMoreInteractions(service);
+        verifyNoMoreInteractions(publicationService);
     }
 
     @Test
@@ -176,7 +166,7 @@ public class PublicationControllerTests {
     @WithMockUser(authorities = {"EDIT_PUBLICATIONS"})
     public void deletes() throws Exception {
         mvc.perform(delete(url("3"))).andExpect(status().isNoContent());
-        verify(service).delete(3L);
+        verify(publicationService).delete(3L);
     }
 
     @Test

@@ -2,8 +2,10 @@ package com.andlvovsky.periodicals.mapper;
 
 import com.andlvovsky.periodicals.model.basket.Basket;
 import com.andlvovsky.periodicals.model.basket.BasketDto;
+import com.andlvovsky.periodicals.model.basket.BasketMapper;
 import com.andlvovsky.periodicals.model.basket.BasketMapperImpl;
 import com.andlvovsky.periodicals.model.publication.Publication;
+import com.andlvovsky.periodicals.service.PublicationService;
 import com.andlvovsky.periodicals.service.impl.PublicationServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +24,7 @@ public class BasketMapperTests {
     private BasketMapperImpl mapper;
 
     @Mock
-    private PublicationServiceImpl publicationService;
+    private PublicationService publicationService;
 
     private Publication publication = new Publication(1L,"The Guardian", 7, 10., "-");
 
