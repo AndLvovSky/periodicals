@@ -1,14 +1,12 @@
 package com.andlvovsky.periodicals.service;
 
 import com.andlvovsky.periodicals.model.publication.Publication;
-import com.andlvovsky.periodicals.model.subscription.Basket;
+import com.andlvovsky.periodicals.model.basket.Basket;
 import com.andlvovsky.periodicals.model.subscription.Subscription;
 import com.andlvovsky.periodicals.model.user.User;
 import com.andlvovsky.periodicals.repository.PublicationRepository;
 import com.andlvovsky.periodicals.repository.SubscriptionRepository;
-import com.andlvovsky.periodicals.repository.UserRepository;
 import com.andlvovsky.periodicals.service.impl.OrderServiceImpl;
-import com.andlvovsky.periodicals.service.impl.UserServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,23 +30,15 @@ public class OrderServiceTests {
     private UserService userService;
 
     @Mock
-    private PublicationRepository publicationRepository;
-
-    @Mock
     private SubscriptionRepository subscriptionRepository;
 
     private User user = new User(1L, "u", "p", null, null);
 
-    private Publication[] publications = {
-            new Publication("The Guardian", 7, 10., "-"),
-            new Publication("Daily Mail", 1, 5.5, "-")
-    };
+    private Publication publication = new Publication("The Guardian", 7, 10., "-");
 
     @Before
     public void beforeEach() {
         when(userService.getLoggedUser()).thenReturn(user);
-        when(publicationRepository.findById(1L)).thenReturn(Optional.ofNullable(publications[0]));
-        when(publicationRepository.findById(2L)).thenReturn(Optional.ofNullable(publications[1]));
     }
 
     @Test
@@ -62,9 +52,9 @@ public class OrderServiceTests {
 
     @Test
     public void registersOrder() {
-        Basket basket = new Basket(publications[0], 7);
+        Basket basket = new Basket(publication, 7);
         orderService.registerOrder(basket);
-        Subscription subscription = new Subscription(publications[0], user, 7);
+        Subscription subscription = new Subscription(publication, user, 7);
         verify(subscriptionRepository).save(subscription);
     }
 

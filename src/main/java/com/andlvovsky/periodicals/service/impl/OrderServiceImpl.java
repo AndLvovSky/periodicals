@@ -1,7 +1,7 @@
 package com.andlvovsky.periodicals.service.impl;
 
 import com.andlvovsky.periodicals.model.publication.Publication;
-import com.andlvovsky.periodicals.model.subscription.Basket;
+import com.andlvovsky.periodicals.model.basket.Basket;
 import com.andlvovsky.periodicals.model.subscription.Subscription;
 import com.andlvovsky.periodicals.model.user.User;
 import com.andlvovsky.periodicals.repository.SubscriptionRepository;
