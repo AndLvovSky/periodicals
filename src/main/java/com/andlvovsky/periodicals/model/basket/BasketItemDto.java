@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BasketDto {
+public class BasketItemDto {
 
-    private List<BasketItemDto> items;
+    private Long publicationId;
+
+    private Integer number;
 
 }

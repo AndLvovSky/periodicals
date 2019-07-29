@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.service.impl;
 
+import com.andlvovsky.periodicals.model.basket.BasketItem;
 import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.model.basket.Basket;
 import com.andlvovsky.periodicals.model.subscription.Subscription;
@@ -20,16 +21,23 @@ public class OrderServiceImpl implements OrderService {
     private SubscriptionRepository subscriptionRepository;
 
     public double calculateCost(Basket basket) {
-        Publication publication = basket.getPublication();
-        return basket.getNumber() * publication.getCost();
+        double cost = 0;
+        for (BasketItem item : basket.getItems()) {
+            Publication publication = item.getPublication();
+            cost += item.getNumber() * publication.getCost();
+        }
+        return cost;
+
     }
 
     public void registerOrder(Basket basket) {
         User user = userService.getLoggedUser();
-        Publication publication = basket.getPublication();
-        Integer number = basket.getNumber();
-        Subscription subscription = new Subscription(publication, user, number);
-        subscriptionRepository.save(subscription);
+        for (BasketItem item : basket.getItems()) {
+            Publication publication = item.getPublication();
+            Integer number = item.getNumber();
+            Subscription subscription = new Subscription(publication, user, number);
+            subscriptionRepository.save(subscription);
+        }
     }
 
 }

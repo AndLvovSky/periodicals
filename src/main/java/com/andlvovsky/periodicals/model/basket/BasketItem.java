@@ -1,16 +1,17 @@
 package com.andlvovsky.periodicals.model.basket;
 
+import com.andlvovsky.periodicals.model.publication.Publication;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Basket {
+public class BasketItem {
 
-    private List<BasketItem> items;
+    private Publication publication;
+
+    private Integer number;
 
 }

@@ -1,12 +1,8 @@
 package com.andlvovsky.periodicals.mapper;
 
-import com.andlvovsky.periodicals.model.basket.Basket;
-import com.andlvovsky.periodicals.model.basket.BasketDto;
-import com.andlvovsky.periodicals.model.basket.BasketMapper;
-import com.andlvovsky.periodicals.model.basket.BasketMapperImpl;
+import com.andlvovsky.periodicals.model.basket.*;
 import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.service.PublicationService;
-import com.andlvovsky.periodicals.service.impl.PublicationServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,15 +14,19 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
-public class BasketMapperTests {
+public class BasketItemMapperTests {
 
     @InjectMocks
-    private BasketMapperImpl mapper;
+    private BasketItemMapperImpl mapper;
 
     @Mock
     private PublicationService publicationService;
 
     private Publication publication = new Publication(1L,"The Guardian", 7, 10., "-");
+
+    private BasketItem basketItem = new BasketItem(publication, 5);
+
+    private BasketItemDto basketItemDto = new BasketItemDto(1L, 5);
 
     @Before
     public void beforeEach() {
@@ -35,16 +35,14 @@ public class BasketMapperTests {
 
     @Test
     public void mapsDtoToEntity() {
-        BasketDto basketDto = new BasketDto(1L, 5);
-        Basket basket = mapper.fromDto(basketDto);
-        assertEquals(new Basket(publication, 5), basket);
+        BasketItem actualBasketItem = mapper.fromDto(basketItemDto);
+        assertEquals(basketItem, actualBasketItem);
     }
 
     @Test
     public void mapsEntityToDto() {
-        Basket basket = new Basket(publication, 5);
-        BasketDto basketDto = mapper.toDto(basket);
-        assertEquals(new BasketDto(1L, 5), basketDto);
+        BasketItemDto actualBasketItemDto = mapper.toDto(basketItem);
+        assertEquals(basketItemDto, actualBasketItemDto);
     }
 
 }

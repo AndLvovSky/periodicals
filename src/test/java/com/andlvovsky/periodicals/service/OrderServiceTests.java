@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.service;
 
+import com.andlvovsky.periodicals.model.basket.BasketItem;
 import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.model.basket.Basket;
 import com.andlvovsky.periodicals.model.subscription.Subscription;
@@ -14,11 +15,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Optional;
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 public class OrderServiceTests {
@@ -34,7 +34,15 @@ public class OrderServiceTests {
 
     private User user = new User(1L, "u", "p", null, null);
 
-    private Publication publication = new Publication("The Guardian", 7, 10., "-");
+    private Publication[] publications = {
+            new Publication(1L,"The Guardian", 7, 10., "-"),
+            new Publication(2L, "Daily Mail", 1, 5., "-")
+    };
+
+    private Basket basket = new Basket(Arrays.asList(
+            new BasketItem(publications[0], 5),
+            new BasketItem(publications[1], 10)
+    ));
 
     @Before
     public void beforeEach() {
@@ -43,19 +51,20 @@ public class OrderServiceTests {
 
     @Test
     public void calculatesBasketCost() {
-        Publication publication = new Publication();
-        publication.setCost(20.0);
-        Basket basket = new Basket(publication, 5);
         double cost = orderService.calculateCost(basket);
         assertEquals(100.0, cost, 0.0);
     }
 
     @Test
     public void registersOrder() {
-        Basket basket = new Basket(publication, 7);
         orderService.registerOrder(basket);
-        Subscription subscription = new Subscription(publication, user, 7);
-        verify(subscriptionRepository).save(subscription);
+        Subscription[] subscriptions = {
+                new Subscription(publications[0], user, 5),
+                new Subscription(publications[1], user, 10)
+        };
+        verify(subscriptionRepository).save(subscriptions[0]);
+        verify(subscriptionRepository).save(subscriptions[1]);
+        verifyNoMoreInteractions(subscriptionRepository);
     }
 
 }
