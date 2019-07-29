@@ -1,7 +1,7 @@
 package com.andlvovsky.periodicals.controller;
 
+import com.andlvovsky.periodicals.model.basket.BasketItemMapper;
 import com.andlvovsky.periodicals.model.basket.BasketMapper;
-import com.andlvovsky.periodicals.model.basket.BasketMapperImpl;
 import com.andlvovsky.periodicals.service.OrderService;
 import com.andlvovsky.periodicals.service.PublicationService;
 import com.andlvovsky.periodicals.service.UserService;
@@ -29,5 +29,8 @@ public class ControllerTests {
 
     @MockBean
     protected BasketMapper basketMapper;
+
+    @MockBean
+    protected BasketItemMapper basketItemMapper;
 
 }
