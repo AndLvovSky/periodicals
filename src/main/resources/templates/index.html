@@ -13,6 +13,9 @@
     <h3 id="edit" sec:authorize="hasAuthority('EDIT_PUBLICATIONS')">
         <a th:href="@{/edit}">Edit publications</a>
     </h3>
+    <h3 id="catalog" sec:authorize="hasAuthority('READ_PUBLICATIONS')">
+        <a th:href="@{/catalog}">Choose publications</a>
+    </h3>
     <div style="font-size:25px">
         <span id="logout" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></span>
         <span id="login" sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></span>

@@ -22,6 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.POST, "/publications/**").hasAuthority("EDIT_PUBLICATIONS")
                     .antMatchers(HttpMethod.PUT, "/publications/**").hasAuthority("EDIT_PUBLICATIONS")
                     .antMatchers(HttpMethod.DELETE, "/publications/**").hasAuthority("EDIT_PUBLICATIONS")
+                    .antMatchers("/catalog/**", "/order/**").hasAuthority("READ_PUBLICATIONS")
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()

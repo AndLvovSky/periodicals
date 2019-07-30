@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Catalog</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/src/catalog.css}" href="../static/css/src/catalog.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/src/catalog.js}" src="../static/js/src/catalog.js"></script>
+</head>
+<body>
+<div class="jumbotron text-center">
+    <h1>Periodicals catalog</h1>
+</div>
+<div class="container">
+    <h3><a href="#">Go to basket (<span id="basketItemsNumber">0</span>)</a></h3>
+    <div class="list-group mb-3" id="publications">
+        <div class="publication list-group-item">
+            <h3 class="title">The New York Times</h3>
+            <div class="about">
+                <div class="period">Period: 7</div>
+                <div class="cost">Cost: 15</div>
+                <div class="description">-</div>
+            </div>
+            <div class="add-to-basket-div justify-content-center d-flex">
+                <div>
+                    <input class="publications-number" type="number" min="1" value="1">
+                    <button class="add-to-basket btn btn-primary" type="button">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
