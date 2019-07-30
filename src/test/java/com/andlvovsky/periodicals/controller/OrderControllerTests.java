@@ -15,6 +15,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest
 @AutoConfigureMockMvc
-@WithMockUser
+@WithMockUser(authorities = {"READ_PUBLICATIONS"})
 public class OrderControllerTests extends ControllerTests {
 
     private ObjectMapper jsonMapper = new ObjectMapper();
@@ -49,7 +50,12 @@ public class OrderControllerTests extends ControllerTests {
             new BasketItemDto(2L, 2)
     };
 
-    private Basket basket = new Basket(Arrays.asList(basketItems));
+    private Basket basket = new Basket(new ArrayList<>());
+    {
+        for (BasketItem item: basketItems) {
+            basket.getItems().add(item);
+        }
+    }
 
     private BasketDto basketDto = new BasketDto(Arrays.asList(basketItemDtos));
 
@@ -81,9 +87,8 @@ public class OrderControllerTests extends ControllerTests {
     @Test
     public void registersOrder() throws Exception {
         mvc.perform(post(url("/register")).sessionAttrs(sessionAttr))
-                .andExpect(status().isOk()).andDo(print());
-        verify(orderService).registerOrder(basket);
-        verifyNoMoreInteractions(orderService);
+                .andExpect(status().is3xxRedirection()).andDo(print());
+        verify(orderService, times(1)).registerOrder(basket);
     }
 
     @Test

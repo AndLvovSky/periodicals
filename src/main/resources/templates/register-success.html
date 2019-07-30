@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register success</title>
+</head>
+<body>
+    <h2>Order registered</h2>
+    <h3>Total cost: <span th:text="${basketCost.dollars + '.' + basketCost.cents}">0</span>$</h3>
+    <h3><a th:href="@{/}">Home</a></h3>
+</body>
+</html>
