@@ -65,10 +65,10 @@ function createAbout(publication) {
 
 function createAddToBasketDiv(publicationId) {
     return $('<div class="add-to-basket-div justify-content-center d-flex">')
-        .append('<div></div>')
-            .append('<input class="publications-number" type="number" min="1" value="1" id="pn' + publicationId + '">')
-            .append('<button class="add-to-basket btn btn-primary" type="button">Add</button>')
-                .click(addToBasketCallback(publicationId));
+        .append('<input class="publications-number" type="number" min="1" value="1" id="pn' + publicationId + '">')
+        .append('<button class="add-to-basket btn btn-primary" type="button" '
+            + 'id="ap' + publicationId + '">Add</button>')
+            .click(addToBasketCallback(publicationId));
 }
 
 function addToBasketCallback(publicationId) {
