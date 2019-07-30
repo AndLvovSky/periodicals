@@ -6,7 +6,7 @@
 </head>
 <body>
     <h2>Order registered</h2>
-    <h3>Total cost: <span th:text="${basketCost.dollars + '.' + basketCost.cents}">0</span>$</h3>
+    <h3>Total cost: <span id="basketCost" th:text="${basketCost.dollars + '.' + basketCost.cents}">0</span>$</h3>
     <h3><a th:href="@{/}">Home</a></h3>
 </body>
 </html>
