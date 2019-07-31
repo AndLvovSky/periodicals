@@ -1,11 +1,11 @@
 package com.andlvovsky.periodicals.service;
 
+import com.andlvovsky.periodicals.exception.EmptyBasketException;
 import com.andlvovsky.periodicals.model.basket.BasketItem;
 import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.model.basket.Basket;
 import com.andlvovsky.periodicals.model.subscription.Subscription;
 import com.andlvovsky.periodicals.model.user.User;
-import com.andlvovsky.periodicals.repository.PublicationRepository;
 import com.andlvovsky.periodicals.repository.SubscriptionRepository;
 import com.andlvovsky.periodicals.service.impl.OrderServiceImpl;
 import org.junit.Before;
@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
@@ -44,6 +45,8 @@ public class OrderServiceTests {
             new BasketItem(publications[1], 10)
     ));
 
+    private Basket emptyBasket = new Basket(new ArrayList<>());
+
     private Subscription[] subscriptions = {
             new Subscription(publications[0], user, 5),
             new Subscription(publications[1], user, 10)
@@ -61,11 +64,26 @@ public class OrderServiceTests {
     }
 
     @Test
+    public void calculatesEmptyBasketCost() {
+        double cost = orderService.calculateCost(emptyBasket);
+        assertEquals(0.0, cost, 0.0);
+    }
+
+    @Test
     public void registersOrder() {
         orderService.registerOrder(basket);
         verify(subscriptionRepository).save(subscriptions[0]);
         verify(subscriptionRepository).save(subscriptions[1]);
         verifyNoMoreInteractions(subscriptionRepository);
+    }
+
+    @Test(expected = EmptyBasketException.class)
+    public void registerOrderFailsEmptyBasket() {
+        try {
+            orderService.registerOrder(emptyBasket);
+        } finally {
+            verifyNoMoreInteractions(subscriptionRepository);
+        }
     }
 
 }

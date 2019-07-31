@@ -40,6 +40,9 @@
         <button class="btn btn-primary" id="register">Register order</button>
         </form>
     </div>
+    <div id="registrationError" th:if="${param.registrationError != null}" style="color: red">
+        Cannot register empty basket
+    </div>
 </div>
 </body>
 </html>

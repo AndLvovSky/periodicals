@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.service.impl;
 
+import com.andlvovsky.periodicals.exception.EmptyBasketException;
 import com.andlvovsky.periodicals.model.basket.BasketItem;
 import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.model.basket.Basket;
@@ -31,6 +32,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public void registerOrder(Basket basket) {
+        if (basket.getItems().isEmpty()) {
+            throw new EmptyBasketException();
+        }
         User user = userService.getLoggedUser();
         for (BasketItem item : basket.getItems()) {
             Publication publication = item.getPublication();
