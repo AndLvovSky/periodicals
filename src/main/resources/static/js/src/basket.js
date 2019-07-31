@@ -3,7 +3,7 @@ const PUBLICATIONS_URL = "/publications/";
 
 $(document).ready(function() {
     updateBasket();
-    updateCost();
+    $("#clear").click(deleteAllItems);
 });
 
 function updateBasket() {
@@ -11,7 +11,8 @@ function updateBasket() {
         getPublications(function(publications) {
             showBasket(basket, publications);
         })
-    })
+    });
+    updateCost();
 }
 
 function updateCost() {
@@ -19,6 +20,28 @@ function updateCost() {
         if (cost.cents < 10) cost.cents = "0" + cost.cents;
         $("#basketCost").text(cost.dollars + "." + cost.cents + "$");
     })
+}
+
+function deleteItem(index) {
+    $.ajax({
+        url: ORDER_URL + "delete/" + index,
+        method: "DELETE"
+    }).then(
+        function() {
+            updateBasket();
+        }
+    )
+}
+
+function deleteAllItems() {
+    $.ajax({
+        url: ORDER_URL + "delete/",
+        method: "DELETE"
+    }).then(
+        function() {
+            updateBasket();
+        }
+    )
 }
 
 function getCost(handler) {
@@ -35,7 +58,8 @@ function showBasket(basket, publications) {
     $("#basketItems").html("");
     basket.items.forEach(function(item) {
         var name = getPublicationName(item.publicationId, publications);
-        $("#basketItems").append(createBasketItem(name, item.number));
+        var deleteButton = createDeleteButton();
+        $("#basketItems").append(createBasketItem(name, item.number, deleteButton));
     })
 }
 
@@ -59,10 +83,11 @@ function getPublications(handler) {
     );
 }
 
-function createBasketItem(name, number) {
+function createBasketItem(name, number, deleteButton) {
     return $('<tr></tr>').append(
         $('<td></td>').html(name),
-        $('<td></td>').html(number));
+        $('<td></td>').html(number),
+        $('<td></td>').html(deleteButton));
 }
 
 function getPublicationName(id, publications) {
@@ -72,4 +97,14 @@ function getPublicationName(id, publications) {
             return publication.name;
         }
     }
+}
+
+function createDeleteButton() {
+    return $('<button type="button" class="btn btn-danger"></button>')
+        .html('&#x2715')
+        .click(onDeleteItemClicked);
+}
+
+function onDeleteItemClicked() {
+    deleteItem($(this).parent().parent().index() + 1);
 }

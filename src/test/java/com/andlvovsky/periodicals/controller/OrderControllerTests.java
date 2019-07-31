@@ -22,8 +22,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -107,14 +106,28 @@ public class OrderControllerTests extends ControllerTests {
         for (BasketItemDto item : basketDto.getItems()) {
             String basketItemJson = jsonMapper.writeValueAsString(item);
             mvc.perform(post(url("/add")).session(session)
-                    .content(basketItemJson).contentType(MediaType.APPLICATION_JSON_UTF8)).andReturn();
+                    .content(basketItemJson).contentType(MediaType.APPLICATION_JSON_UTF8)).andDo(print());
         }
-        MvcResult result = mvc.perform(get(url("/basket")).session(session))
-                .andExpect(status().isOk()).andDo(print())
-                .andReturn();
-        String jsonContent = result.getResponse().getContentAsString();
-        BasketDto actualBasketDto = jsonMapper.readValue(jsonContent, BasketDto.class);
-        assertEquals(basketDto, actualBasketDto);
+        assertEquals(basket, session.getAttribute("basket"));
+    }
+
+    @Test
+    public void deletesTheSecondItemFromBasket() throws Exception {
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("basket", basket);
+        mvc.perform(delete(url("/delete/2")).session(session)).andDo(print());
+        Basket basket = (Basket)session.getAttribute("basket");
+        assertEquals(1, basket.getItems().size());
+        assertEquals((Integer)3, basket.getItems().get(0).getNumber());
+    }
+
+    @Test
+    public void deletesAllItemsFromBasket() throws Exception {
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("basket", basket);
+        mvc.perform(delete(url("/delete/")).session(session)).andDo(print());
+        Basket basket = (Basket)session.getAttribute("basket");
+        assertEquals(0, basket.getItems().size());
     }
 
     private String url(String suffix) {

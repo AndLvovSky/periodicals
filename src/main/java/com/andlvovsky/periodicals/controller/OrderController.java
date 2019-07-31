@@ -32,6 +32,18 @@ public class OrderController {
         basket.getItems().add(basketItem);
     }
 
+    @DeleteMapping("/delete/{index}")
+    @ResponseBody
+    public void deleteItem(@PathVariable int index, @ModelAttribute Basket basket) {
+        basket.getItems().remove(index - 1);
+    }
+
+    @DeleteMapping("/delete/")
+    @ResponseBody
+    public void deleteAllItems(@ModelAttribute Basket basket) {
+        basket.getItems().clear();
+    }
+
     @GetMapping("/basket")
     @ResponseBody
     public BasketDto basket(@ModelAttribute Basket basket) {

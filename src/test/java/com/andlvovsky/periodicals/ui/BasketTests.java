@@ -73,6 +73,27 @@ public class BasketTests extends UiTests {
         $("#basketCost").shouldHave(text("50.0"));
     }
 
+    @Test
+    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    public void deletesTheSecondBasketItem() {
+        addBasketItems();
+        open(BASKET_URL);
+        $$("#basketItems tr").shouldHaveSize(2);
+        $("#basketItems tr:nth-child(2) td:nth-child(3) button").click();
+        $$("#basketItems tr").shouldHaveSize(1);
+        $("#basketItems tr:nth-child(1) td:nth-child(2)").shouldHave(text("6"));
+    }
+
+    @Test
+    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    public void deletesAllBasketItems() {
+        addBasketItems();
+        open(BASKET_URL);
+        $$("#basketItems tr").shouldHaveSize(2);
+        $("#clear").click();
+        $$("#basketItems tr").shouldHaveSize(0);
+    }
+
     public int getPort() {
         return port;
     }
