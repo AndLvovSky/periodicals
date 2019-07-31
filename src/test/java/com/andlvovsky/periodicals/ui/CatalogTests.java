@@ -35,14 +35,14 @@ public class CatalogTests extends UiTests {
     }
 
     @Test
-    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    @DataSet("datasets/dataUi.json")
     public void showsAllPublications() {
         open(URL);
         $$("div.publication").shouldHaveSize(6);
     }
 
     @Test
-    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    @DataSet("datasets/dataUi.json")
     public void addsItemsToBasket() {
         open(URL);
         $("#pn102").setValue("3");

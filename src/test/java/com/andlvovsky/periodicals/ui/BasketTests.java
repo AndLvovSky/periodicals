@@ -37,6 +37,7 @@ public class BasketTests extends UiTests {
     public void beforeEach() {
         super.beforeEach();
         loginAsUser();
+        addBasketItems();
     }
 
     @After
@@ -45,9 +46,8 @@ public class BasketTests extends UiTests {
     }
 
     @Test
-    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    @DataSet("datasets/dataUi.json")
     public void showsBasketContent() {
-        addBasketItems();
         open(BASKET_URL);
         $$("#basketItems tr").shouldHaveSize(2);
         $("#basketItems tr:nth-child(2) td:nth-child(1)").shouldHave(text("Philadelphia Inquirer"));
@@ -55,18 +55,16 @@ public class BasketTests extends UiTests {
     }
 
     @Test
-    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    @DataSet("datasets/dataUi.json")
     public void showsBasketCost() {
-        addBasketItems();
         open(BASKET_URL);
         $$("#basketItems tr").shouldHaveSize(2);
         $("#basketCost").shouldHave(text("50.00$"));
     }
 
     @Test
-    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    @DataSet("datasets/dataUi.json")
     public void redirectsToRegisterSuccess() {
-        addBasketItems();
         open(BASKET_URL);
         $("#register").click();
         redirectsTo("/register-success");
@@ -74,9 +72,8 @@ public class BasketTests extends UiTests {
     }
 
     @Test
-    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    @DataSet("datasets/dataUi.json")
     public void deletesTheSecondBasketItem() {
-        addBasketItems();
         open(BASKET_URL);
         $$("#basketItems tr").shouldHaveSize(2);
         $("#basketItems tr:nth-child(2) td:nth-child(3) button").click();
@@ -85,9 +82,8 @@ public class BasketTests extends UiTests {
     }
 
     @Test
-    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    @DataSet("datasets/dataUi.json")
     public void deletesAllBasketItems() {
-        addBasketItems();
         open(BASKET_URL);
         $$("#basketItems tr").shouldHaveSize(2);
         $("#clear").click();

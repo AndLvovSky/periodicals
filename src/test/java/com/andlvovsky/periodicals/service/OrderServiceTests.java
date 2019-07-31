@@ -44,6 +44,11 @@ public class OrderServiceTests {
             new BasketItem(publications[1], 10)
     ));
 
+    private Subscription[] subscriptions = {
+            new Subscription(publications[0], user, 5),
+            new Subscription(publications[1], user, 10)
+    };
+
     @Before
     public void beforeEach() {
         when(userService.getLoggedUser()).thenReturn(user);
@@ -58,10 +63,6 @@ public class OrderServiceTests {
     @Test
     public void registersOrder() {
         orderService.registerOrder(basket);
-        Subscription[] subscriptions = {
-                new Subscription(publications[0], user, 5),
-                new Subscription(publications[1], user, 10)
-        };
         verify(subscriptionRepository).save(subscriptions[0]);
         verify(subscriptionRepository).save(subscriptions[1]);
         verifyNoMoreInteractions(subscriptionRepository);

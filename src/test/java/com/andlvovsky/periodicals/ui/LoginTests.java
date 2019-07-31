@@ -37,7 +37,7 @@ public class LoginTests extends UiTests {
     }
 
     @Test
-    @DataSet("datasets/users.json")
+    @DataSet("datasets/dataUi.json")
     public void successfulLoginAsUser() {
         loginAsUser();
         backToHome();
@@ -47,7 +47,7 @@ public class LoginTests extends UiTests {
     }
 
     @Test
-    @DataSet("datasets/users.json")
+    @DataSet("datasets/dataUi.json")
     public void successfulLoginAsAdmin() {
         loginAsAdmin();
         backToHome();
@@ -57,14 +57,14 @@ public class LoginTests extends UiTests {
     }
 
     @Test
-    @DataSet("datasets/users.json")
+    @DataSet("datasets/dataUi.json")
     public void loginFails() {
         loginWithCredentials("wrong-name", "wrong-password");
         $("error-credentials").isDisplayed();
     }
 
     @Test
-    @DataSet("datasets/users.json")
+    @DataSet("datasets/dataUi.json")
     public void successfulLogout() {
         loginAsUser();
         logout();
@@ -73,7 +73,7 @@ public class LoginTests extends UiTests {
     }
 
     @Test
-    @DataSet("datasets/users.json")
+    @DataSet("datasets/dataUi.json")
     public void unauthenticatedHomePage() {
         open("");
         checkUnauthenticatedHomePageElements();
