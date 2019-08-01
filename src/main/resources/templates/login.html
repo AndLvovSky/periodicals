@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/main-layout :: head">
-    <title id="pageTitle">Login</title>
-    <link id="customCss" rel="stylesheet" th:href="@{/css/src/login.css}" href="../static/css/src/login.css">
-    <script id="customJs" th:src="@{/js/src/login.js}" src="../static/js/src/login.js"></script>
+<head>
+    <div th:replace="fragments/main-layout :: head (pageTitle = 'Login')" th:remove="tag"></div>
+    <link rel="stylesheet" th:href="@{/css/src/login.css}" href="../static/css/src/login.css">
 </head>
 <body>
     <div class="container d-flex justify-content-center" id="content">

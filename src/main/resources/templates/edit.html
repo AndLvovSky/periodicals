@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/main-layout :: head">
-    <title id="pageTitle">Edit</title>
-    <link id="customCss" rel="stylesheet" th:href="@{/css/src/edit.css}" href="../static/css/src/edit.css">
-    <script id="customJs" th:src="@{/js/src/edit.js}" src="../static/js/src/edit.js"></script>
+<head>
+    <div th:replace="fragments/main-layout :: head (pageTitle = 'Edit')" th:remove="tag"></div>
+    <link rel="stylesheet" th:href="@{/css/src/edit.css}" href="../static/css/src/edit.css">
+    <script th:src="@{/js/src/edit.js}" src="../static/js/src/edit.js"></script>
 </head>
 <body>
 <header th:replace="fragments/main-layout :: header"></header>

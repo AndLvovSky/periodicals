@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:fragment="head">
+<head th:fragment="head (pageTitle)">
     <meta charset="UTF-8">
-    <title th:replace=":: #pageTitle">Main layout</title>
+    <title th:text="${pageTitle}">Main layout</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
           integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/src/fragments/main-layout.css}"
           href="../../static/css/src/fragments/main-layout.css">
-    <link th:replace=":: #customCss">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script th:src="@{/js/src/fragments/main-layout.js}" src="../../static/js/src/fragments/main-layout.js"></script>
-    <script th:replace=":: #customJs"></script>
 </head>
 <body>
     <header th:fragment="header" class="header jumbotron mb-0">

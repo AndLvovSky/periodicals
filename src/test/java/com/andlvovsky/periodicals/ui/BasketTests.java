@@ -77,7 +77,7 @@ public class BasketTests extends UiTests {
     @DataSet("datasets/dataUi.json")
     public void registrationFailsEmptyBasket() {
         open(BASKET_URL);
-        $("#register").click();
+        $("#register").submit();
         redirectsTo(BASKET_URL + "?registrationError");
         $("#registrationError").isDisplayed();
     }
