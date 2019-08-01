@@ -17,19 +17,22 @@
 </head>
 <body>
     <header th:fragment="header" class="header jumbotron mb-0">
-        <h1>Periodicals</h1>
+        <h1><a th:href="@{/}" href="#" id="homeTitle">Periodicals</a></h1>
         <p style="text-indent: 0">Subscribe to magazines, scholarly journals, newspapers, newsletters and a lot more.</p>
     </header>
     <nav th:fragment="menu" class="navbar navbar-expand-sm navbar-dark sticky-top">
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" id="edit" sec:authorize="hasAuthority('EDIT_PUBLICATIONS')"
-                       th:href="@{/edit}" href="#">Edit</a>
+                    <a class="nav-link"  id="home" th:href="@{/}" href="#">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link"  id="catalog" sec:authorize="hasAuthority('READ_PUBLICATIONS')"
                        th:href="@{/catalog}" href="#">Catalog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="edit" sec:authorize="hasAuthority('EDIT_PUBLICATIONS')"
+                       th:href="@{/edit}" href="#">Edit</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">

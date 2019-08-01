@@ -1,7 +1,5 @@
-const ORDER_URL = "/order/";
-const PUBLICATIONS_URL = "/publications/";
-
 $(document).ready(function() {
+    $("#basket").addClass("active");
     updateBasket();
     $("#clear").click(deleteAllItems);
 });
@@ -13,6 +11,7 @@ function updateBasket() {
         })
     });
     updateCost();
+    updateBasketItemsNumber();
 }
 
 function updateCost() {

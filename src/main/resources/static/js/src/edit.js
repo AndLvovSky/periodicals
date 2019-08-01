@@ -1,6 +1,5 @@
-const PUBLICATIONS_URL = "/publications/";
-
 $(document).ready(function() {
+    $("#edit").addClass("active");
     $('#selectPublication').click(function () {
         var id = $('#publicationId').val();
         getPublication(id, selectPublication);

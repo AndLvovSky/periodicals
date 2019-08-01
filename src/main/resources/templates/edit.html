@@ -1,20 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit publications</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" th:href="@{/css/src/edit.css}" href="../static/css/src/edit.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script th:src="@{/js/src/edit.js}" src="../static/js/src/edit.js"></script>
+<head th:replace="fragments/main-layout :: head">
+    <title id="pageTitle">Edit</title>
+    <link id="customCss" rel="stylesheet" th:href="@{/css/src/edit.css}" href="../static/css/src/edit.css">
+    <script id="customJs" th:src="@{/js/src/edit.js}" src="../static/js/src/edit.js"></script>
 </head>
 <body>
-<div class="jumbotron text-center">
-    <h1>Publications editing</h1>
-</div>
-<div class="container">
+<header th:replace="fragments/main-layout :: header"></header>
+<nav th:replace="fragments/main-layout :: menu"></nav>
+<div class="container" id="content">
     <div class="form-group">
         <label for="publicationId">Publication id:</label>
         <input id="publicationId" type="number" min=-5 value=1 step=1>
@@ -72,5 +66,6 @@
         </table>
     </div>
 </div>
+<footer th:replace="fragments/main-layout :: footer"></footer>
 </body>
 </html>

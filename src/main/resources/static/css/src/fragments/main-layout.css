@@ -37,3 +37,11 @@ body {
 .title {
     font-family: sans-serif;
 }
+
+#homeTitle {
+    color: inherit !important;
+}
+
+p {
+    font-size: 1.125rem;
+}

@@ -1,4 +1,5 @@
 const ORDER_URL = "/order/";
+const PUBLICATIONS_URL = "/publications/";
 
 $(document).ready(function() {
     updateBasketItemsNumber();
