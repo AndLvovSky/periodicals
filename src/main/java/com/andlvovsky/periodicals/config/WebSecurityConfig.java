@@ -16,7 +16,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/").permitAll()
+                    .antMatchers("/", "/js/**", "/css/**").permitAll()
                     .antMatchers("/edit").hasAuthority("EDIT_PUBLICATIONS")
                     .antMatchers(HttpMethod.GET, "/publications/**").hasAuthority("READ_PUBLICATIONS")
                     .antMatchers(HttpMethod.POST, "/publications/**").hasAuthority("EDIT_PUBLICATIONS")

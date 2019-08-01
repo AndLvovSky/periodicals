@@ -114,6 +114,7 @@ public class BasketTests extends UiTests {
         $("#ap101").click();
         $("#pn103").setValue("2");
         $("#ap103").click();
+        $("#basketItemsNumber").shouldHave(text("2"));
     }
 
     private void redirectsTo(String url) {
