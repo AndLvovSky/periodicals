@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Basket</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/src/basket.css}" href="../static/css/src/basket.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/src/basket.js}" src="../static/js/src/basket.js"></script>
+</head>
+<body>
+<div class="jumbotron text-center">
+    <h1>Basket</h1>
+</div>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Number</th>
+            <th style="width: 6rem">Delete</th>
+        </tr>
+        </thead>
+        <tbody id="basketItems">
+        <tr>
+            <td>The New York Times</td>
+            <td>3</td>
+            <td><button type="button" class="btn btn-danger">&#x2715</button></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-between mb-3">
+        <div>Total cost: <span id="basketCost">45</span></div>
+        <button class="btn btn-danger" id="clear">Clear</button>
+    </div>
+    <div class="d-flex justify-content-center">
+        <form method="POST" th:action="@{/order/register}">
+        <button class="btn btn-primary" id="register">Register order</button>
+        </form>
+    </div>
+    <div id="registrationError" th:if="${param.registrationError != null}" style="color: red">
+        Cannot register empty basket
+    </div>
+</div>
+</body>
+</html>

@@ -36,14 +36,14 @@ public class EditPublicationsTests extends UiTests {
     }
 
     @Test
-    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    @DataSet("datasets/dataUi.json")
     public void showsAllPublications() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
     }
 
     @Test
-    @DataSet("datasets/users.json")
+    @DataSet("datasets/dataUi.json")
     public void notAdminShouldNotSeeEditPage() {
         logout();
         loginAsUser();
@@ -52,7 +52,7 @@ public class EditPublicationsTests extends UiTests {
     }
 
     @Test
-    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    @DataSet("datasets/dataUi.json")
     public void selectsTheSecondPublication() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
@@ -65,7 +65,7 @@ public class EditPublicationsTests extends UiTests {
     }
 
     @Test
-    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    @DataSet("datasets/dataUi.json")
     public void selectPublicationFails() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
@@ -76,7 +76,7 @@ public class EditPublicationsTests extends UiTests {
     }
 
     @Test
-    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    @DataSet("datasets/dataUi.json")
     public void deletesTheForthPublication() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
@@ -88,7 +88,7 @@ public class EditPublicationsTests extends UiTests {
     }
 
     @Test
-    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    @DataSet("datasets/dataUi.json")
     public void deletePublicationFails() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
@@ -99,7 +99,7 @@ public class EditPublicationsTests extends UiTests {
     }
 
     @Test
-    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    @DataSet("datasets/dataUi.json")
     public void addsNewPublication() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
@@ -110,7 +110,7 @@ public class EditPublicationsTests extends UiTests {
     }
 
     @Test
-    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    @DataSet("datasets/dataUi.json")
     public void addPublicationFails() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
@@ -121,7 +121,7 @@ public class EditPublicationsTests extends UiTests {
     }
 
     @Test
-    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    @DataSet("datasets/dataUi.json")
     public void replacesTheThirdPublication() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);
@@ -134,7 +134,7 @@ public class EditPublicationsTests extends UiTests {
     }
 
     @Test
-    @DataSet({"datasets/publicationsUi.json", "datasets/users.json"})
+    @DataSet("datasets/dataUi.json")
     public void replacePublicationFails() {
         open(URL);
         $$("#ptbody tr").shouldHaveSize(6);

@@ -4,7 +4,6 @@ import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.model.publication.PublicationDto;
 import com.andlvovsky.periodicals.model.publication.PublicationMapper;
 import com.andlvovsky.periodicals.service.PublicationService;
-import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

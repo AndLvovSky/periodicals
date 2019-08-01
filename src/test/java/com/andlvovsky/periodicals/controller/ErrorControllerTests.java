@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.controller;
 
+import com.andlvovsky.periodicals.service.OrderService;
 import com.andlvovsky.periodicals.service.PublicationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,15 +23,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest
 @AutoConfigureMockMvc
 @WithMockUser
-public class ErrorControllerTests {
+public class ErrorControllerTests extends ControllerTests {
 
     private static final String URL = "/error";
-
-    @Autowired
-    private MockMvc mvc;
-
-    @MockBean
-    private PublicationService publicationService;
 
     @Test
     public void showsForbiddenPage() throws Exception {

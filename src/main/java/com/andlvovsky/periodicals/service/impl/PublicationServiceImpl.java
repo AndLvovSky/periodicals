@@ -1,8 +1,9 @@
-package com.andlvovsky.periodicals.service;
+package com.andlvovsky.periodicals.service.impl;
 
 import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
 import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.repository.PublicationRepository;
+import com.andlvovsky.periodicals.service.PublicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;

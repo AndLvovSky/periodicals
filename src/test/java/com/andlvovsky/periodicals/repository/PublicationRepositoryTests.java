@@ -1,9 +1,7 @@
 package com.andlvovsky.periodicals.repository;
 
 import com.andlvovsky.periodicals.model.publication.Publication;
-import com.github.database.rider.core.DBUnitRule;
 import com.github.database.rider.core.api.dataset.DataSet;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -20,14 +17,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class PublicationRepositoryTests {
-
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    @Autowired
-    DataSource dataSource;
-
-    @Rule
-    public DBUnitRule dbUnitRule = DBUnitRule.instance(() -> dataSource.getConnection());
+public class PublicationRepositoryTests extends RepositoryTests {
 
     @Autowired
     private PublicationRepository repository;

@@ -1,5 +1,7 @@
 package com.andlvovsky.periodicals.model.user;
 
+import com.andlvovsky.periodicals.model.subscription.Subscription;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +11,7 @@ import java.util.Collection;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user_entity")
 public class User {
 
@@ -22,5 +25,8 @@ public class User {
 
     @ManyToMany
     private Collection<Role> roles;
+
+    @OneToMany(mappedBy = "owner")
+    private Collection<Subscription> subscriptions;
 
 }

@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.model.publication;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,16 +9,12 @@ import javax.persistence.*;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 public class Publication {
 
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "publication_generator")
-    @SequenceGenerator(
-            name = "publication_generator",
-            sequenceName = "publication_sequence",
-            allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "publication_generator")
+    @SequenceGenerator(name = "publication_generator", sequenceName = "publication_sequence", allocationSize = 1)
     private Long id;
 
     private String name;

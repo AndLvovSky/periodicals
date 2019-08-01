@@ -1,4 +1,4 @@
-package com.andlvovsky.periodicals.service;
+package com.andlvovsky.periodicals.service.impl;
 
 import com.andlvovsky.periodicals.model.user.Privilege;
 import com.andlvovsky.periodicals.model.user.Role;
