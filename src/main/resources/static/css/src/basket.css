@@ -1,0 +1,17 @@
+#basketCost {
+    color: indianred;
+}
+
+#basketCostDiv {
+    font-size: 1.25rem;
+    font-style: italic;
+    font-family: sans-serif;
+}
+
+.table {
+    border: 1px solid lightgray;
+}
+
+.circle {
+    border-radius: 100%;
+}

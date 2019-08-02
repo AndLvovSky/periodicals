@@ -4,13 +4,15 @@
     <div th:replace="fragments/main-layout :: head (pageTitle = 'Registration success')" th:remove="tag"></div>
 </head>
 <body>
-    <div class="container" style="background-color: azure">
+    <header th:replace="fragments/main-layout :: header"></header>
+    <nav th:replace="fragments/main-layout :: menu"></nav>
+    <div class="container" id="content">
         <h2 class="mt-3" style="color: yellowgreen">Order registered!</h2>
         <h4 class="mt-4" style="font-style: oblique; font-family: sans-serif;">
             Total cost: <span id="basketCost" th:text="${basketCost.dollars == null ?
             '0.00$' : basketCost.dollars + '.' + (basketCost.cents < 10 ? '0' : '') + basketCost.cents + '$'}"></span>
         </h4>
-        <h3 class="text-right"><a th:href="@{/}">Home</a></h3>
     </div>
+    <footer th:replace="fragments/main-layout :: footer"></footer>
 </body>
 </html>
