@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Register success</title>
+    <div th:replace="fragments/main-layout :: head (pageTitle = 'Registration success')" th:remove="tag"></div>
 </head>
 <body>
-    <h2>Order registered</h2>
-    <h3>Total cost: <span id="basketCost" th:text="${basketCost.dollars + '.' + basketCost.cents}">0</span>$</h3>
-    <h3><a th:href="@{/}">Home</a></h3>
+    <div class="container" style="background-color: azure">
+        <h2 class="mt-3" style="color: yellowgreen">Order registered!</h2>
+        <h4 class="mt-4" style="font-style: oblique; font-family: sans-serif;">
+            Total cost: <span id="basketCost" th:text="${basketCost.dollars == null ?
+            '0.00$' : basketCost.dollars + '.' + basketCost.cents + (basketCost.cents < 10 ? '0' : '') + '$'}"></span>
+        </h4>
+        <h3 class="text-right"><a th:href="@{/}">Home</a></h3>
+    </div>
 </body>
 </html>

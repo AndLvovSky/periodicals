@@ -70,7 +70,7 @@ public class BasketTests extends UiTests {
         open(BASKET_URL);
         $("#register").click();
         redirectsTo("/register-success");
-        $("#basketCost").shouldHave(text("50.0"));
+        $("#basketCost").shouldHave(text("50.00$"));
     }
 
     @Test

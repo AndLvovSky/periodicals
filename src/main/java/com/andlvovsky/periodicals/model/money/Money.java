@@ -19,7 +19,7 @@ public class Money {
 
     public static Money fromDouble(Double number) {
         Integer dollars = number.intValue();
-        Integer cents = (int)Math.round((number - dollars) * 100) / 100;
+        Integer cents = (int)Math.round((number - dollars) * 100);
         return new Money(dollars, cents);
     }
 
