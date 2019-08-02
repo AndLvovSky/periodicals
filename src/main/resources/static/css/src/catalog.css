@@ -1,12 +1,29 @@
-.publication {
-    margin-top: 1rem;
-}
-
 .about {
     margin-left: 2rem;
 }
 
 .publications-number {
-    width: 3rem;
+    width: 4rem;
     margin-right: 1rem;
+}
+
+.publication {
+    font-size: 1.25rem;
+}
+
+.period,.cost {
+    font-size: 1.5rem;
+}
+
+.period,.cost,.description {
+    font-family: sans-serif;
+}
+
+.cost {
+    font-style: italic;
+    color: indianred;
+}
+
+.period {
+    color: darkcyan;
 }

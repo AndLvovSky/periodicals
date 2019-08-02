@@ -5,10 +5,10 @@ CREATE TABLE privilege (
 
 CREATE TABLE publication (
     id bigint NOT NULL PRIMARY KEY,
-    cost double precision,
-    description character varying(255),
     name character varying(255),
-    period integer
+    period integer,
+    cost double precision,
+    description character varying(1000)
 );
 
 CREATE TABLE role (
