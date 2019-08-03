@@ -1,55 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Edit publications</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <div th:replace="fragments/main-layout :: head (pageTitle = 'Edit')" th:remove="tag"></div>
     <link rel="stylesheet" th:href="@{/css/src/edit.css}" href="../static/css/src/edit.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script th:src="@{/js/src/edit.js}" src="../static/js/src/edit.js"></script>
 </head>
 <body>
-<div class="jumbotron text-center">
-    <h1>Publications editing</h1>
-</div>
-<div class="container">
-    <div class="form-group">
-        <label for="publicationId">Publication id:</label>
-        <input id="publicationId" type="number" min=-5 value=1 step=1>
-    </div>
-    <button class="btn btn-primary" id="selectPublication">Select</button>
-    <button class="btn btn-primary" id="deletePublication">Delete</button>
-    <button class="btn btn-primary" id="showAllPublications">Show All</button>
-    <h3 class="mt-4">Publication</h3>
+<header th:replace="fragments/main-layout :: header"></header>
+<nav th:replace="fragments/main-layout :: menu"></nav>
+<div class="container" id="content">
+    <div class="row">
+    <div class="col">
+    <h3 class="title">Publication form</h3>
     <form name="publication">
+        <div class="form-group">
+            <label for="publicationId">Id:</label>
+            <input class="form-control" id="publicationId" type="number" min=-5 value=1 step=1>
+        </div>
         <div class="form-group">
             <label for="publicationName">Name:</label>
             <span class="validationError" id="namePublicationError"></span><br>
-            <input id="publicationName" name="name" type="text">
+            <input class="form-control" id="publicationName" name="name" type="text">
         </div>
         <div class="form-group">
             <label for="publicationPeriod">Period:</label>
             <span class="validationError" id="periodPublicationError"></span><br>
-            <input id="publicationPeriod" name="period" type="text">
+            <input class="form-control" id="publicationPeriod" name="period" type="text">
         </div>
         <div class="form-group">
             <label for="publicationCost">Cost:</label>
             <span class="validationError" id="costPublicationError"></span><br>
-            <input id="publicationCost" name="cost" type="text">
+            <input class="form-control" id="publicationCost" name="cost" type="text">
         </div>
         <div class="form-group">
             <label for="publicationDescription">Description:</label>
             <span class="validationError" id="descriptionPublicationError"></span><br>
-            <input id="publicationDescription" name="description" type="text">
+            <input class="form-control" id="publicationDescription" name="description" type="text">
         </div>
     </form>
-    <button class="btn btn-primary" id="addPublication">Add</button>
-    <button class="btn btn-primary" id="replacePublication">Replace</button>
+    </div>
+    <div class="col-sm-2 d-flex flex-column">
+        <h3 class="title">Actions</h3>
+        <button class="btn btn-primary" id="selectPublication">Select</button>
+        <button class="btn btn-primary" id="deletePublication">Delete</button>
+        <button class="btn btn-primary" id="showAllPublications">Show All</button>
+        <button class="btn btn-primary" id="addPublication">Add</button>
+        <button class="btn btn-primary" id="replacePublication">Replace</button>
+    </div>
+    </div>
     <div class="fixed-bottom p-3 d-none" id="info">editing...</div>
-    <h2 class="mt-5 text-center">Publications</h2>
-    <div class="container-fluid">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -70,7 +69,7 @@
             </tr>
             </tbody>
         </table>
-    </div>
 </div>
+<footer th:replace="fragments/main-layout :: footer"></footer>
 </body>
 </html>

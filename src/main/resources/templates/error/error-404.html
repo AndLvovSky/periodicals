@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Not found</title>
+    <div th:replace="fragments/main-layout :: head (pageTitle = 'Not found')" th:remove="tag"></div>
+    <div th:replace="fragments/error :: head" th:remove="tag"></div>
 </head>
 <body>
-    <h1>Page not found on this site</h1>
+    <div th:replace="fragments/error :: error">
+        <div id="errorBody">
+            <h1>Page not found on this site</h1>
+        </div>
+    </div>
 </body>
 </html>

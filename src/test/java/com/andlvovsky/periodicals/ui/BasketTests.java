@@ -70,14 +70,14 @@ public class BasketTests extends UiTests {
         open(BASKET_URL);
         $("#register").click();
         redirectsTo("/register-success");
-        $("#basketCost").shouldHave(text("50.0"));
+        $("#basketCost").shouldHave(text("50.00$"));
     }
 
     @Test
     @DataSet("datasets/dataUi.json")
     public void registrationFailsEmptyBasket() {
         open(BASKET_URL);
-        $("#register").click();
+        $("#register").submit();
         redirectsTo(BASKET_URL + "?registrationError");
         $("#registrationError").isDisplayed();
     }
@@ -114,6 +114,7 @@ public class BasketTests extends UiTests {
         $("#ap101").click();
         $("#pn103").setValue("2");
         $("#ap103").click();
+        $("#basketItemsNumber").shouldHave(text("2"));
     }
 
     private void redirectsTo(String url) {

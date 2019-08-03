@@ -12,3 +12,6 @@ spring:
         jdbc.lob.non_contextual_creation: true
         hbm2ddl:
           auto: validate
+
+  thymeleaf:
+    cache: false

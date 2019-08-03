@@ -23,7 +23,7 @@ public class PublicationServiceImpl implements PublicationService {
 
     @Override
     public List<Publication> getAll() {
-        return repository.findAll();
+        return repository.findAllByOrderById();
     }
 
     @Override

@@ -1,24 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Periodicals - Home</title>
+    <div th:replace="fragments/main-layout :: head (pageTitle = 'Periodicals - Home')" th:remove="tag"></div>
+    <link rel="stylesheet" th:href="@{/css/src/index.css}" href="../static/css/src/index.css">
+    <script th:src="@{/js/src/index.js}" src="../static/js/src/index.js"></script>
 </head>
 <body>
-    <h1>Periodicals</h1>
-    <h2>Subscribe to magazines, scholarly journals, newspapers, newsletters and a lot more.</h2>
-    <h3 id="username" sec:authorize="isAuthenticated()">
-        Logged in user: <span sec:authentication="name">JohnDoe404</span>
-    </h3>
-    <h3 id="edit" sec:authorize="hasAuthority('EDIT_PUBLICATIONS')">
-        <a th:href="@{/edit}">Edit publications</a>
-    </h3>
-    <h3 id="catalog" sec:authorize="hasAuthority('READ_PUBLICATIONS')">
-        <a th:href="@{/catalog}">Choose publications</a>
-    </h3>
-    <div style="font-size:25px">
-        <span id="logout" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></span>
-        <span id="login" sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></span>
+    <header th:replace="fragments/main-layout :: header"></header>
+    <nav th:replace="fragments/main-layout :: menu"></nav>
+    <div class="container" id="content">
+        <h2 class="title text-center">What is a periodical?</h2>
+        <p>Whenever you read an issue of Time, Sports Illustrated or the Fairbanks Daily News Miner, you are using a periodical. Periodicals are magazines, scholarly journals, newspapers, and newsletters. They are publications that are published at regular intervals. Daily newspapers, weekly magazines, and quarterly journals are all periodicals.</p>
+        <p>Many periodicals are written for a general audience whose readers are not expected to have specialized knowledge or training. We usually call these periodicals magazines. However, probably even more periodicals are written for specialists and have articles that are difficult for readers who lack that background. These periodicals, written for a scholarly audience, are called journals. For a better understanding of how to identify different types of periodicals, see Scholarly vs. Popular Periodicals at the end of this lesson.</p>
+        <h3 class="title text-center">Why use periodicals?</h3>
+        <p><b>Timeliness</b>: The chief advantage that magazines have over books is time. Information comes out more quickly in periodicals than it can in books. Often times, an article that will eventually appear in book form, originally appears in an article in a magazine or journal. Some disciplines, especially the science and technology fields such as engineering, rely very heavily on periodicals for the latest developments in their rapidly changing fields.</p>
+        <p><b>Original sources</b>: Results of original research are often printed in periodicals first. Reviews of new books, works of art and performances often only appear in periodicals. Often the information contained in a periodical article will never appear elsewhere, either in a book or other work.</p>
+        <p><b>Ease of use</b>: Periodicals can often provide good summary information on a field. For a short research paper, information from articles may be easier to manage than a lengthy book. Consider how in-depth you want your information to be.</p>
     </div>
+    <footer th:replace="fragments/main-layout :: footer"></footer>
 </body>
 </html>

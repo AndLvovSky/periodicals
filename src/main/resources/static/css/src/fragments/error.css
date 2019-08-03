@@ -1,0 +1,12 @@
+body {
+    background-color: blanchedalmond;
+}
+
+#errorLogo {
+    font-size: 10rem;
+    color: orangered;
+}
+
+#errorBody {
+    font-family: monospace;
+}

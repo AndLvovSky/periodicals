@@ -1,7 +1,5 @@
-const ORDER_URL = "/order/";
-const PUBLICATIONS_URL = "/publications/";
-
 $(document).ready(function() {
+    $("#basket").addClass("active");
     updateBasket();
     $("#clear").click(deleteAllItems);
 });
@@ -13,6 +11,7 @@ function updateBasket() {
         })
     });
     updateCost();
+    updateBasketItemsNumber();
 }
 
 function updateCost() {
@@ -56,6 +55,11 @@ function getCost(handler) {
 
 function showBasket(basket, publications) {
     $("#basketItems").html("");
+    if (basket.items.length === 0) {
+        $(".table").hide();
+    } else {
+        $(".table").show();
+    }
     basket.items.forEach(function(item) {
         var name = getPublicationName(item.publicationId, publications);
         var deleteButton = createDeleteButton();
@@ -100,7 +104,7 @@ function getPublicationName(id, publications) {
 }
 
 function createDeleteButton() {
-    return $('<button type="button" class="btn btn-danger"></button>')
+    return $('<button type="button" class="btn btn-danger circle"></button>')
         .html('&#x2715')
         .click(onDeleteItemClicked);
 }

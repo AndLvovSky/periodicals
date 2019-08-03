@@ -31,8 +31,8 @@ public class PublicationRepositoryTests extends RepositoryTests {
 
     @Test
     @DataSet("datasets/publications.json")
-    public void findsAll() {
-        List<Publication> publications = repository.findAll();
+    public void findsAllOrderedById() {
+        List<Publication> publications = repository.findAllByOrderById();
         assertEquals(2, publications.size());
         assertThat(publications.get(1).getPeriod()).isEqualTo(30);
     }

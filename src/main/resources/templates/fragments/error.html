@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <link rel="stylesheet" th:href="@{/css/src/fragments/error.css}" href="../../static/css/src/fragments/error.css">
+</head>
+<body>
+    <div th:fragment="error" class="container">
+        <div id="errorLogo"><i class="fas fa-exclamation-circle"></i></div>
+        <div th:replace=":: #errorBody"></div>
+        <h2 class="text-right"><a th:href="@{/}">Home page</a></h2>
+    </div>
+</body>
+</html>
