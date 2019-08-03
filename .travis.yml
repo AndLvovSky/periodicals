@@ -5,3 +5,7 @@ services:
 addons:
   chrome: stable
 script: mvn test -B
+deploy:
+  provider: heroku
+  api_key:
+    secure: "e8715342-f30d-4730-b203-7604ac3f196b"
