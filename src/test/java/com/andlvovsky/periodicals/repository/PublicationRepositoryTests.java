@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class PublicationRepositoryTests extends RepositoryTests {
     @Test
     @DataSet("datasets/publications.json")
     public void findsAllOrderedById() {
-        List<Publication> publications = repository.findAllByOrderById();
+        List<Publication> publications = repository.findAll(Sort.by("id"));
         assertEquals(2, publications.size());
         assertThat(publications.get(1).getPeriod()).isEqualTo(30);
     }

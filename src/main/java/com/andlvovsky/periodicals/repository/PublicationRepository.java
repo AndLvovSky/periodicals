@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface PublicationRepository extends JpaRepository<Publication, Long> {
 
-    List<Publication> findAllByOrderById();
-
 }

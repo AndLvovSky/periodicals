@@ -9,6 +9,7 @@ import com.andlvovsky.periodicals.service.PublicationService;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     public List<PublicationDto> getAll() {
-        List<Publication> publications = repository.findAllByOrderById();
+        List<Publication> publications = repository.findAll(Sort.by("id"));
         List<PublicationDto> publicationDtos = new ArrayList<>();
         for (Publication publication : publications) {
             publicationDtos.add(mapper.toDto(publication));
