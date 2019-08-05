@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.controller;
 
+import com.andlvovsky.periodicals.exception.BasketItemNotFoundException;
 import com.andlvovsky.periodicals.exception.EmptyBasketException;
 import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
 import com.andlvovsky.periodicals.meta.ClientPages;
@@ -91,6 +92,9 @@ public class BasketControllerTests extends ControllerTests {
         when(orderService.calculateCost(basket)).thenReturn(50.0);
         doThrow(new EmptyBasketException()).when(orderService).registerOrder(new Basket());
         when(basketService.getBasket(basket)).thenReturn(basketDto);
+        doThrow(new PublicationNotFoundException(99L)).when(basketService).addItem(
+                any(Basket.class), eq(basketItemDtoNotExistingPublication));
+        doThrow(new BasketItemNotFoundException(88)).when(basketService).deleteItem(any(Basket.class), eq(88));
     }
 
     @Test
@@ -111,7 +115,6 @@ public class BasketControllerTests extends ControllerTests {
         verify(orderService, times(1)).registerOrder(basket);
     }
 
-    @Ignore
     @Test
     public void registerOrderFailsEmptyBasket() throws Exception {
         mvc.perform(post(Endpoints.BASKET_REGISTRATION).sessionAttrs(sessionAttrEmpty))
@@ -143,13 +146,12 @@ public class BasketControllerTests extends ControllerTests {
         verifyNoMoreInteractions(basketService);
     }
 
-    @Ignore
     @Test
     public void addItemToBasketFailsNotExistingPublication() throws Exception {
         String basketItemJson = jsonMapper.writeValueAsString(basketItemDtoNotExistingPublication);
         mvc.perform(post(Endpoints.BASKET_ITEMS).sessionAttrs(sessionAttrEmpty)
                 .content(basketItemJson).contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isNotFound())
                 .andExpect(content().string(new PublicationNotFoundException(99L).getMessage()))
                 .andDo(print());
     }
@@ -172,14 +174,13 @@ public class BasketControllerTests extends ControllerTests {
         verify(basketService).deleteItem(any(Basket.class), eq(2));
     }
 
-    @Ignore
     @Test
     public void deleteItemFromBasketFailsInvalidIndex() throws Exception {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("basket", basket);
         mvc.perform(delete(Endpoints.BASKET_ITEMS  + "/88").session(session))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string("Invalid item index"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(new BasketItemNotFoundException(88).getMessage()))
                 .andDo(print());
     }
 

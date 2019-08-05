@@ -27,7 +27,7 @@ public class PublicationValidationTest {
 
     @Test
     public void nameIsTooShort() {
-        PublicationDto publication = new PublicationDto("A", 7, 10.0, "-");
+        PublicationDto publication = new PublicationDto(1L, "A", 7, 10.0, "-");
         Set<ConstraintViolation<PublicationDto>> constraintViolations = validator.validate(publication);
         assertEquals(1, constraintViolations.size());
         assertEquals("A", constraintViolations.iterator().next().getInvalidValue());
@@ -35,7 +35,7 @@ public class PublicationValidationTest {
 
     @Test
     public void periodMustBePositive() {
-        PublicationDto publication = new PublicationDto("The Guardian", 0, 15.5, "-");
+        PublicationDto publication = new PublicationDto(2L, "The Guardian", 0, 15.5, "-");
         Set<ConstraintViolation<PublicationDto>> constraintViolations = validator.validate(publication);
         assertEquals(1, constraintViolations.size());
         assertEquals(0, constraintViolations.iterator().next().getInvalidValue());
@@ -43,7 +43,7 @@ public class PublicationValidationTest {
 
     @Test
     public void costMustNotBeNegative() {
-        PublicationDto publication = new PublicationDto("The Sun", 30, -5.0, "-");
+        PublicationDto publication = new PublicationDto(1L, "The Sun", 30, -5.0, "-");
         Set<ConstraintViolation<PublicationDto>> constraintViolations = validator.validate(publication);
         assertEquals(1, constraintViolations.size());
         assertEquals(-5.0, constraintViolations.iterator().next().getInvalidValue());
@@ -52,7 +52,7 @@ public class PublicationValidationTest {
     @Test
     public void publicationIsValid() {
         PublicationDto publication = new PublicationDto(
-                "The New York Times", 14, 20.25, null);
+                1L, "The New York Times", 14, 20.25, null);
         Set<ConstraintViolation<PublicationDto>> constraintViolations = validator.validate(publication);
         assertEquals(0, constraintViolations.size());
     }

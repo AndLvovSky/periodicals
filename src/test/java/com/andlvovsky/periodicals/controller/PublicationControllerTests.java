@@ -46,12 +46,12 @@ public class PublicationControllerTests extends ControllerTests {
     @BeforeClass
     public static void initializePublicationsAndCorrespondingDtos() {
         publications = new Publication[6];
-        publications[0] = new Publication("The Guardian", 7, 10., "-");
-        publications[1] = new Publication("Daily Mail", 1, 5.5, "-");
-        publications[2] = new Publication("The Washington Post", 14, 17., "-");
-        publications[3] = new Publication("The Sun", 30, 20., "-");
-        publications[4] = new Publication("The Wall Street Journal", 7, 15., "-");
-        publications[5] = new Publication("The New Yorker", -5, 10., "-");
+        publications[0] = new Publication(1L,"The Guardian", 7, 10., "-");
+        publications[1] = new Publication(2L,"Daily Mail", 1, 5.5, "-");
+        publications[2] = new Publication(3L,"The Washington Post", 14, 17., "-");
+        publications[3] = new Publication(4L,"The Sun", 30, 20., "-");
+        publications[4] = new Publication(5L,"The Wall Street Journal", 7, 15., "-");
+        publications[5] = new Publication(6L,"The New Yorker", -5, 10., "-");
         publicationDtos = new PublicationDto[publications.length];
         PublicationMapper publicationDtoMapper = Mappers.getMapper(PublicationMapper.class);
         for (int i = 0; i < publications.length; i++) {

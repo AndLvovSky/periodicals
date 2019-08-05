@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.service.impl;
 
+import com.andlvovsky.periodicals.exception.BasketItemNotFoundException;
 import com.andlvovsky.periodicals.model.basket.*;
 import com.andlvovsky.periodicals.service.BasketService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,11 @@ public class BasketServiceImpl implements BasketService {
     }
 
     public void deleteItem(Basket basket, int index) {
-        basket.getItems().remove(index - 1);
+        try {
+            basket.getItems().remove(index - 1);
+        } catch (IndexOutOfBoundsException ex) {
+            throw new BasketItemNotFoundException(index);
+        }
     }
 
     public void deleteAllItems(Basket basket) {

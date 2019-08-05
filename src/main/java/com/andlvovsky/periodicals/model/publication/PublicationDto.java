@@ -14,6 +14,8 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class PublicationDto {
 
+    private Long id;
+
     @NotNull
     @Size(min = 2, max = 1000)
     private String name;
@@ -27,5 +29,12 @@ public class PublicationDto {
     private Double cost; /** cost per publication in dollars */
 
     private String description;
+
+    public PublicationDto(String name, Integer period, Double cost, String description) {
+        this.name = name;
+        this.period = period;
+        this.cost = cost;
+        this.description = description;
+    }
 
 }

@@ -1,16 +1,20 @@
 package com.andlvovsky.periodicals.service;
 
+import com.andlvovsky.periodicals.exception.BasketItemNotFoundException;
 import com.andlvovsky.periodicals.model.basket.*;
 import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.service.impl.BasketServiceImpl;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -24,6 +28,9 @@ public class BasketServiceTests {
 
     @MockBean
     private BasketItemMapper itemMapper;
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     private Publication[] publications = {
             new Publication(1L,"The Guardian", 7, 10., "-"),
@@ -73,6 +80,14 @@ public class BasketServiceTests {
         basketService.deleteItem(basket, 2);
         assertEquals(basket.getItems().size(), 1);
         assertEquals(basket.getItems().get(0), basketItems[0]);
+    }
+
+    @Test
+    public void deleteNotExistingItemFromBasketFails() {
+        expectedException.expect(BasketItemNotFoundException.class);
+        expectedException.expectMessage(containsString("99"));
+        Basket basket = new Basket();
+        basketService.deleteItem(basket, 99);
     }
 
     @Test
