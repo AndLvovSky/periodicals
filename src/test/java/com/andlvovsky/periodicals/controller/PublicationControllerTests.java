@@ -5,6 +5,7 @@ import com.andlvovsky.periodicals.meta.Endpoints;
 import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.model.publication.PublicationDto;
 import com.andlvovsky.periodicals.model.publication.PublicationMapper;
+import com.andlvovsky.periodicals.service.PublicationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.mapstruct.factory.Mappers;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -28,9 +30,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest
+@WebMvcTest(PublicationController.class)
 @AutoConfigureMockMvc
 public class PublicationControllerTests extends ControllerTests {
+
+    @MockBean
+    private PublicationService publicationService;
 
     private ObjectMapper jsonMapper = new ObjectMapper();
 

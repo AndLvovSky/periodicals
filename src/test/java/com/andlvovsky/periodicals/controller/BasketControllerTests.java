@@ -7,12 +7,15 @@ import com.andlvovsky.periodicals.meta.Endpoints;
 import com.andlvovsky.periodicals.model.basket.*;
 import com.andlvovsky.periodicals.model.money.Money;
 import com.andlvovsky.periodicals.model.publication.Publication;
+import com.andlvovsky.periodicals.service.OrderService;
+import com.andlvovsky.periodicals.service.PublicationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -31,10 +34,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest
+@WebMvcTest(BasketController.class)
 @AutoConfigureMockMvc
 @WithMockUser(authorities = {"READ_PUBLICATIONS"})
 public class BasketControllerTests extends ControllerTests {
+
+    @MockBean
+    private OrderService orderService;
+
+    @MockBean
+    private PublicationService publicationService;
+
+    @MockBean
+    private BasketMapper basketMapper;
+
+    @MockBean
+    private BasketItemMapper basketItemMapper;
 
     private ObjectMapper jsonMapper = new ObjectMapper();
 

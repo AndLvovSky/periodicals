@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest
+@WebMvcTest(CustomErrorController.class)
 @AutoConfigureMockMvc
 public class ErrorControllerTests extends ControllerTests {
 
