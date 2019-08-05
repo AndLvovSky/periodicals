@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest
 @AutoConfigureMockMvc
 @WithMockUser(authorities = {"READ_PUBLICATIONS"})
-public class OrderControllerTests extends ControllerTests {
+public class BasketControllerTests extends ControllerTests {
 
     private ObjectMapper jsonMapper = new ObjectMapper();
 
@@ -132,7 +132,7 @@ public class OrderControllerTests extends ControllerTests {
         MockHttpSession session = new MockHttpSession();
         for (BasketItemDto item : basketDto.getItems()) {
             String basketItemJson = jsonMapper.writeValueAsString(item);
-            mvc.perform(post(Endpoints.BASKET_ITEMS  + "/add").session(session)
+            mvc.perform(post(Endpoints.BASKET_ITEMS).session(session)
                     .content(basketItemJson).contentType(MediaType.APPLICATION_JSON_UTF8)).andDo(print());
         }
         assertEquals(basket, session.getAttribute("basket"));
@@ -141,7 +141,7 @@ public class OrderControllerTests extends ControllerTests {
     @Test
     public void addItemToBasketFailsNotExistingPublication() throws Exception {
         String basketItemJson = jsonMapper.writeValueAsString(basketItemDtoNotExistingPublication);
-        mvc.perform(post(Endpoints.BASKET_ITEMS  + "/add").sessionAttrs(sessionAttrEmpty)
+        mvc.perform(post(Endpoints.BASKET_ITEMS).sessionAttrs(sessionAttrEmpty)
                 .content(basketItemJson).contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(new PublicationNotFoundException(99L).getMessage()))
@@ -151,7 +151,7 @@ public class OrderControllerTests extends ControllerTests {
     @Test
     public void addItemToBasketFailsNotPositiveNumber() throws Exception {
         String basketItemJson = jsonMapper.writeValueAsString(basketItemDtoNotPositiveNumber);
-        mvc.perform(post(Endpoints.BASKET_ITEMS  + "/add").sessionAttrs(sessionAttrEmpty)
+        mvc.perform(post(Endpoints.BASKET_ITEMS).sessionAttrs(sessionAttrEmpty)
                 .content(basketItemJson).contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Invalid basket item"))
@@ -162,7 +162,7 @@ public class OrderControllerTests extends ControllerTests {
     public void deletesTheSecondItemFromBasket() throws Exception {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("basket", basket);
-        mvc.perform(delete(Endpoints.BASKET_ITEMS  + "/delete/2").session(session)).andDo(print());
+        mvc.perform(delete(Endpoints.BASKET_ITEMS  + "/2").session(session)).andDo(print());
         Basket basket = (Basket)session.getAttribute("basket");
         assertEquals(1, basket.getItems().size());
         assertEquals((Integer)3, basket.getItems().get(0).getNumber());
@@ -172,7 +172,7 @@ public class OrderControllerTests extends ControllerTests {
     public void deleteItemFromBasketFailsInvalidIndex() throws Exception {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("basket", basket);
-        mvc.perform(delete(Endpoints.BASKET_ITEMS  + "/delete/88").session(session))
+        mvc.perform(delete(Endpoints.BASKET_ITEMS  + "/88").session(session))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Invalid item index"))
                 .andDo(print());
@@ -182,7 +182,7 @@ public class OrderControllerTests extends ControllerTests {
     public void deletesAllItemsFromBasket() throws Exception {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("basket", basket);
-        mvc.perform(delete(Endpoints.BASKET_ITEMS  + "/delete").session(session)).andDo(print());
+        mvc.perform(delete(Endpoints.BASKET_ITEMS).session(session)).andDo(print());
         Basket basket = (Basket)session.getAttribute("basket");
         assertEquals(0, basket.getItems().size());
     }

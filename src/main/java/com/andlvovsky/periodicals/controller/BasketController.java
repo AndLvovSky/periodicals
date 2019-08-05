@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 @RestController
 @SessionAttributes("basket")
-public class OrderController {
+public class BasketController {
 
     @Autowired
     private OrderService service;
@@ -32,7 +32,7 @@ public class OrderController {
     @Autowired
     private BasketMapper mapper;
 
-    @PostMapping(Endpoints.BASKET_ITEMS + "/add")
+    @PostMapping(Endpoints.BASKET_ITEMS)
     public ResponseEntity<String> addItem(
             @Valid @RequestBody BasketItemDto basketItemDto, Errors validationResult, @ModelAttribute Basket basket) {
         if (validationResult.hasErrors()) {
@@ -48,7 +48,7 @@ public class OrderController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @DeleteMapping(Endpoints.BASKET_ITEMS + "/delete/{index}")
+    @DeleteMapping(Endpoints.BASKET_ITEMS + "/{index}")
     public ResponseEntity<String> deleteItem(@PathVariable int index, @ModelAttribute Basket basket) {
         try {
             basket.getItems().remove(index - 1);
@@ -58,7 +58,7 @@ public class OrderController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping(Endpoints.BASKET_ITEMS + "/delete")
+    @DeleteMapping(Endpoints.BASKET_ITEMS)
     public void deleteAllItems(@ModelAttribute Basket basket) {
         basket.getItems().clear();
     }

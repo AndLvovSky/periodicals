@@ -24,7 +24,7 @@ function updateCost() {
 
 function deleteItem(index) {
     $.ajax({
-        url: BASKET_ITEMS_URL + "/delete/" + index,
+        url: BASKET_ITEMS_URL + "/" + index,
         method: "DELETE"
     }).then(
         function() {
@@ -35,7 +35,7 @@ function deleteItem(index) {
 
 function deleteAllItems() {
     $.ajax({
-        url: BASKET_ITEMS_URL + "/delete",
+        url: BASKET_ITEMS_URL,
         method: "DELETE"
     }).then(
         function() {
