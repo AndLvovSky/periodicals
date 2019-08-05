@@ -10,6 +10,8 @@ import org.mockito.Mock;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -27,7 +29,7 @@ public class UserServiceTests {
     @Before
     public void beforeEach() {
         service = new UserServiceImpl(repository);
-        when(repository.findByName("u")).thenReturn(user);
+        when(repository.findByName("u")).thenReturn(Optional.ofNullable(user));
     }
 
     @Test

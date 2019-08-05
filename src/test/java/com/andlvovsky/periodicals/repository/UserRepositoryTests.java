@@ -28,7 +28,7 @@ public class UserRepositoryTests extends RepositoryTests {
     @Test
     @DataSet("datasets/subscriptions.json")
     public void loadsCorrectSubscriptions() {
-        User user = userRepository.findByName("u");
+        User user = userRepository.findByName("u").get();
         Collection<Subscription> subscriptions = user.getSubscriptions();
         assertEquals(2, subscriptions.size());
         Subscription subscription = subscriptions.iterator().next();

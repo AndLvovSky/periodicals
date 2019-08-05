@@ -26,10 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Transactional
     public UserDetails loadUserByUsername(String name) {
-        User user = repository.findByName(name);
-        if (user == null) {
-            throw new UsernameNotFoundException(name);
-        }
+        User user = repository.findByName(name).orElseThrow(() -> new UsernameNotFoundException(name));
         return org.springframework.security.core.userdetails.User
                 .withUsername(name)
                 .password(user.getPassword())
