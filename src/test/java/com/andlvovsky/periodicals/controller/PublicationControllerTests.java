@@ -61,10 +61,11 @@ public class PublicationControllerTests extends ControllerTests {
 
     @Before
     public void defineRepositoryBehavior() {
-        when(publicationService.getOne(1L)).thenReturn(publications[0]);
-        when(publicationService.getOne(2L)).thenReturn(publications[1]);
-        when(publicationService.getOne(3L)).thenReturn(publications[2]);
-        when(publicationService.getAll()).thenReturn(Arrays.asList(publications[0], publications[1], publications[2]));
+        when(publicationService.getOne(1L)).thenReturn(publicationDtos[0]);
+        when(publicationService.getOne(2L)).thenReturn(publicationDtos[1]);
+        when(publicationService.getOne(3L)).thenReturn(publicationDtos[2]);
+        when(publicationService.getAll()).thenReturn(Arrays.asList(
+                publicationDtos[0], publicationDtos[1], publicationDtos[2]));
         when(publicationService.getOne(99L)).thenThrow(new PublicationNotFoundException(99L));
         doThrow(new PublicationNotFoundException(88L)).when(publicationService).delete(88L);
     }
@@ -114,7 +115,7 @@ public class PublicationControllerTests extends ControllerTests {
         String publicationJson = jsonMapper.writeValueAsString(publicationDtos[3]);
         mvc.perform(post(Endpoints.PUBLICATIONS).content(publicationJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isCreated());
-        verify(publicationService).add(publications[3]);
+        verify(publicationService).add(publicationDtos[3]);
         verifyNoMoreInteractions(publicationService);
     }
 
@@ -144,7 +145,7 @@ public class PublicationControllerTests extends ControllerTests {
         String publicationJson = jsonMapper.writeValueAsString(publicationDtos[4]);
         mvc.perform(put(Endpoints.PUBLICATIONS + "/2").content(publicationJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk());
-        verify(publicationService).replace(2L, publications[4]);
+        verify(publicationService).replace(2L, publicationDtos[4]);
         verifyNoMoreInteractions(publicationService);
     }
 

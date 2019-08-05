@@ -1,13 +1,11 @@
 package com.andlvovsky.periodicals.controller;
 
 import com.andlvovsky.periodicals.meta.Endpoints;
-import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.model.publication.PublicationDto;
 import com.andlvovsky.periodicals.model.publication.PublicationMapper;
 import com.andlvovsky.periodicals.service.PublicationService;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -24,15 +22,13 @@ public class PublicationController {
 
     private final PublicationService publicationService;
 
-    private PublicationMapper publicationMapper = Mappers.getMapper(PublicationMapper.class);
-
     @GetMapping("/{id}")
-    public Publication getOne(@PathVariable Long id) {
+    public PublicationDto getOne(@PathVariable Long id) {
         return publicationService.getOne(id);
     }
 
     @GetMapping("")
-    public List<Publication> getAll() {
+    public List<PublicationDto> getAll() {
         return publicationService.getAll();
     }
 
@@ -42,8 +38,7 @@ public class PublicationController {
         if (validationResult.hasErrors()) {
             return new ResponseEntity<>(validationResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        Publication publication = publicationMapper.fromDto(publicationDto);
-        publicationService.add(publication);
+        publicationService.add(publicationDto);
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
@@ -53,8 +48,7 @@ public class PublicationController {
         if (validationResult.hasErrors()) {
             return new ResponseEntity<>(validationResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        Publication newPublication = publicationMapper.fromDto(newPublicationDto);
-        publicationService.replace(id, newPublication);
+        publicationService.replace(id, newPublicationDto);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 

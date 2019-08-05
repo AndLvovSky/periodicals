@@ -2,13 +2,15 @@ package com.andlvovsky.periodicals.mapper;
 
 import com.andlvovsky.periodicals.model.basket.*;
 import com.andlvovsky.periodicals.model.publication.Publication;
-import com.andlvovsky.periodicals.service.PublicationService;
+import com.andlvovsky.periodicals.repository.PublicationRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -20,7 +22,7 @@ public class BasketItemMapperTests {
     private BasketItemMapperImpl mapper;
 
     @Mock
-    private PublicationService publicationService;
+    private PublicationRepository publicationRepository;
 
     private Publication publication = new Publication(1L,"The Guardian", 7, 10., "-");
 
@@ -30,7 +32,7 @@ public class BasketItemMapperTests {
 
     @Before
     public void beforeEach() {
-        when(publicationService.getOne(1L)).thenReturn(publication);
+        when(publicationRepository.findById(1L)).thenReturn(Optional.ofNullable(publication));
     }
 
     @Test

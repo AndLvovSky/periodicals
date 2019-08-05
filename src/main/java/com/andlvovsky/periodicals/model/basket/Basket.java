@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -11,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Basket {
 
-    private List<BasketItem> items;
+    private List<BasketItem> items = new ArrayList<>();
 
 }

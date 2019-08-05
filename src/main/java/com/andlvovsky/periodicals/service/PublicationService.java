@@ -1,19 +1,19 @@
 package com.andlvovsky.periodicals.service;
 
-import com.andlvovsky.periodicals.model.publication.Publication;
+import com.andlvovsky.periodicals.model.publication.PublicationDto;
 
 import java.util.List;
 
 public interface PublicationService {
 
-    Publication getOne(Long id);
+    PublicationDto getOne(Long id);
 
-    List<Publication> getAll();
+    List<PublicationDto> getAll();
 
-    void add(Publication publication);
+    void add(PublicationDto publication);
 
     // if publication with specified id does not exist, creates a new entity
-    void replace(Long id, Publication newPublication);
+    void replace(Long id, PublicationDto newPublication);
 
     void delete(Long id);
 

@@ -1,0 +1,34 @@
+package com.andlvovsky.periodicals.service.impl;
+
+import com.andlvovsky.periodicals.model.basket.*;
+import com.andlvovsky.periodicals.service.BasketService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class BasketServiceImpl implements BasketService {
+
+    private final BasketMapper mapper;
+
+    private final BasketItemMapper itemMapper;
+
+    public void addItem(Basket basket, BasketItemDto basketItemDto) {
+        BasketItem basketItem;
+        basketItem = itemMapper.fromDto(basketItemDto);
+        basket.getItems().add(basketItem);
+    }
+
+    public void deleteItem(Basket basket, int index) {
+        basket.getItems().remove(index - 1);
+    }
+
+    public void deleteAllItems(Basket basket) {
+        basket.getItems().clear();
+    }
+
+    public BasketDto getBasket(Basket basket) {
+        return mapper.toDto(basket);
+    }
+
+}

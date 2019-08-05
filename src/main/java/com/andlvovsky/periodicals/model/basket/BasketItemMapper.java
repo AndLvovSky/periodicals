@@ -1,16 +1,27 @@
 package com.andlvovsky.periodicals.model.basket;
 
-import com.andlvovsky.periodicals.service.PublicationService;
+import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
+import com.andlvovsky.periodicals.model.publication.Publication;
+import com.andlvovsky.periodicals.repository.PublicationRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper(uses = {PublicationService.class}, componentModel = "spring")
-public interface BasketItemMapper {
+@Mapper(componentModel = "spring")
+public abstract class BasketItemMapper {
+
+    @Autowired
+    private PublicationRepository publicationRepository;
 
     @Mapping(source = "publicationId", target = "publication")
-    BasketItem fromDto(BasketItemDto basketItemDto);
+    public abstract BasketItem fromDto(BasketItemDto basketItemDto);
 
     @Mapping(source = "publication.id", target = "publicationId")
-    BasketItemDto toDto(BasketItem basketItem);
+    public abstract BasketItemDto toDto(BasketItem basketItem);
+
+    public Publication publicationIdToPublication(Long publicationId) {
+        return publicationRepository.findById(publicationId)
+                .orElseThrow(() -> new PublicationNotFoundException(publicationId));
+    }
 
 }

@@ -10,7 +10,6 @@ import com.andlvovsky.periodicals.repository.SubscriptionRepository;
 import com.andlvovsky.periodicals.service.OrderService;
 import com.andlvovsky.periodicals.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

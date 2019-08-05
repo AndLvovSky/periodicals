@@ -43,8 +43,6 @@ public class OrderServiceTests {
             new BasketItem(publications[1], 10)
     ));
 
-    private Basket emptyBasket = new Basket(new ArrayList<>());
-
     private Subscription[] subscriptions = {
             new Subscription(publications[0], user, 5),
             new Subscription(publications[1], user, 10)
@@ -64,7 +62,7 @@ public class OrderServiceTests {
 
     @Test
     public void calculatesEmptyBasketCost() {
-        double cost = orderService.calculateCost(emptyBasket);
+        double cost = orderService.calculateCost(new Basket());
         assertEquals(0.0, cost, 0.0);
     }
 
@@ -79,7 +77,7 @@ public class OrderServiceTests {
     @Test(expected = EmptyBasketException.class)
     public void registerOrderFailsEmptyBasket() {
         try {
-            orderService.registerOrder(emptyBasket);
+            orderService.registerOrder(new Basket());
         } finally {
             verifyNoMoreInteractions(subscriptionRepository);
         }
