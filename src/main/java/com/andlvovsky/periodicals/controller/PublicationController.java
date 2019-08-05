@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.controller;
 
+import com.andlvovsky.periodicals.meta.Endpoints;
 import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.model.publication.PublicationDto;
 import com.andlvovsky.periodicals.model.publication.PublicationMapper;
@@ -16,7 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/publications")
+@RequestMapping(Endpoints.PUBLICATIONS)
 public class PublicationController {
 
     @Autowired
@@ -29,12 +30,12 @@ public class PublicationController {
         return publicationService.getOne(id);
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<Publication> getAll() {
         return publicationService.getAll();
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<List<ObjectError>> add(
             @Valid @RequestBody PublicationDto publicationDto, Errors validationResult) {
         if (validationResult.hasErrors()) {

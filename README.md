@@ -17,7 +17,7 @@ The system calculates the amount to pay and registers order.
 
 - Apache Maven 3.6.1
 
-- PostreSQL 11.3
+- PostgreSQL 11.3
 
 ## Running app
 

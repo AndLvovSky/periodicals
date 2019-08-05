@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.ui;
 
+import com.andlvovsky.periodicals.meta.ClientPages;
 import com.andlvovsky.periodicals.repository.RepositoryTests;
 import com.codeborne.selenide.Configuration;
 
@@ -27,11 +28,11 @@ public abstract class UiTests extends RepositoryTests {
     }
 
     public static void logout() {
-        open("/logout");
+        open(ClientPages.LOGOUT);
     }
 
     public static void loginWithCredentials(String name, String password) {
-        open("/login");
+        open(ClientPages.LOGIN);
         $("#username").setValue(name);
         $("#password").setValue(password);
         $("#submit").click();

@@ -46,7 +46,7 @@ function createCell(text) {
 
 function getPublication(id, handler) {
     $.ajax({
-        url: PUBLICATIONS_URL + id
+        url: PUBLICATIONS_URL + "/" + id
     }).then(
         function(data) {
             handler(data);
@@ -67,7 +67,7 @@ function getPublications(handler) {
 
 function deletePublication(id) {
     $.ajax({
-        url: PUBLICATIONS_URL + id,
+        url: PUBLICATIONS_URL + "/" + id,
         method: "DELETE"
     }).then(
         function() {
@@ -98,7 +98,7 @@ function addPublication() {
 
 function replacePublication(id) {
     $.ajax({
-        url: PUBLICATIONS_URL + id,
+        url: PUBLICATIONS_URL + "/" + id,
         method: "PUT",
         data: getPublicationData(),
         contentType: "application/json"

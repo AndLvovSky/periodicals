@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.controller;
 
+import com.andlvovsky.periodicals.meta.ClientPages;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,8 +18,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest
 @AutoConfigureMockMvc
 public class ErrorControllerTests extends ControllerTests {
-
-    private static final String URL = "/error";
 
     @Test
     public void showsForbiddenPage() throws Exception {
@@ -41,7 +40,7 @@ public class ErrorControllerTests extends ControllerTests {
     }
 
     private void performError(Integer code, String stringToContain) throws Exception {
-        mvc.perform(get(URL).requestAttr(RequestDispatcher.ERROR_STATUS_CODE, code))
+        mvc.perform(get(ClientPages.ERROR).requestAttr(RequestDispatcher.ERROR_STATUS_CODE, code))
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
                 .andExpect(content().string(containsString(stringToContain)))
                 .andDo(print());

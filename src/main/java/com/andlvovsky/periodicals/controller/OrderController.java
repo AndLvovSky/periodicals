@@ -2,6 +2,8 @@ package com.andlvovsky.periodicals.controller;
 
 import com.andlvovsky.periodicals.exception.EmptyBasketException;
 import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
+import com.andlvovsky.periodicals.meta.ClientPages;
+import com.andlvovsky.periodicals.meta.Endpoints;
 import com.andlvovsky.periodicals.model.basket.*;
 import com.andlvovsky.periodicals.model.money.Money;
 import com.andlvovsky.periodicals.service.OrderService;
@@ -14,10 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
+import javax.xml.ws.Endpoint;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/order")
 @SessionAttributes("basket")
 public class OrderController {
 
@@ -30,7 +32,7 @@ public class OrderController {
     @Autowired
     private BasketMapper mapper;
 
-    @PostMapping("/add")
+    @PostMapping(Endpoints.BASKET_ITEMS + "/add")
     public ResponseEntity<String> addItem(
             @Valid @RequestBody BasketItemDto basketItemDto, Errors validationResult, @ModelAttribute Basket basket) {
         if (validationResult.hasErrors()) {
@@ -46,7 +48,7 @@ public class OrderController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/delete/{index}")
+    @DeleteMapping(Endpoints.BASKET_ITEMS + "/delete/{index}")
     public ResponseEntity<String> deleteItem(@PathVariable int index, @ModelAttribute Basket basket) {
         try {
             basket.getItems().remove(index - 1);
@@ -56,31 +58,31 @@ public class OrderController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/delete/")
+    @DeleteMapping(Endpoints.BASKET_ITEMS + "/delete")
     public void deleteAllItems(@ModelAttribute Basket basket) {
         basket.getItems().clear();
     }
 
-    @GetMapping("/basket")
+    @GetMapping(Endpoints.BASKET)
     public BasketDto basket(@ModelAttribute Basket basket) {
         return mapper.toDto(basket);
     }
 
-    @GetMapping("/cost")
+    @GetMapping(Endpoints.BASKET_COST)
     public Money cost(@ModelAttribute Basket basket) {
         return Money.fromDouble(service.calculateCost(basket));
     }
 
-    @PostMapping("/register")
+    @PostMapping(Endpoints.BASKET_REGISTRATION)
     public RedirectView registerOrder(@ModelAttribute Basket basket, RedirectAttributes attributes) {
         try {
             service.registerOrder(basket);
         } catch (EmptyBasketException ex) {
-            return new RedirectView("/basket?registrationError");
+            return new RedirectView(ClientPages.BASKET + "?registrationError");
         }
         attributes.addFlashAttribute("basketCost", Money.fromDouble(service.calculateCost(basket)));
         basket.getItems().clear();
-        return new RedirectView("/register-success");
+        return new RedirectView(ClientPages.REGISTRATION_SUCCESS);
     }
 
     @ModelAttribute("basket")

@@ -2,6 +2,8 @@ package com.andlvovsky.periodicals.controller;
 
 import com.andlvovsky.periodicals.exception.EmptyBasketException;
 import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
+import com.andlvovsky.periodicals.meta.ClientPages;
+import com.andlvovsky.periodicals.meta.Endpoints;
 import com.andlvovsky.periodicals.model.basket.*;
 import com.andlvovsky.periodicals.model.money.Money;
 import com.andlvovsky.periodicals.model.publication.Publication;
@@ -91,7 +93,7 @@ public class OrderControllerTests extends ControllerTests {
 
     @Test
     public void returnsBasketCost() throws Exception {
-        MvcResult result = mvc.perform(get(url("/cost")).sessionAttrs(sessionAttr))
+        MvcResult result = mvc.perform(get(Endpoints.BASKET_COST).sessionAttrs(sessionAttr))
                 .andExpect(status().isOk()).andDo(print())
                 .andReturn();
         String jsonContent = result.getResponse().getContentAsString();
@@ -101,23 +103,23 @@ public class OrderControllerTests extends ControllerTests {
 
     @Test
     public void registersOrder() throws Exception {
-        mvc.perform(post(url("/register")).sessionAttrs(sessionAttr))
+        mvc.perform(post(Endpoints.BASKET_REGISTRATION).sessionAttrs(sessionAttr))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/register-success")).andDo(print());
+                .andExpect(redirectedUrl(ClientPages.REGISTRATION_SUCCESS)).andDo(print());
         verify(orderService, times(1)).registerOrder(basket);
     }
 
     @Test
     public void registerOrderFailsEmptyBasket() throws Exception {
-        mvc.perform(post(url("/register")).sessionAttrs(sessionAttrEmpty))
+        mvc.perform(post(Endpoints.BASKET_REGISTRATION).sessionAttrs(sessionAttrEmpty))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/basket?registrationError")).andDo(print());
+                .andExpect(redirectedUrl(ClientPages.BASKET + "?registrationError")).andDo(print());
         verify(orderService, times(0)).registerOrder(basket);
     }
 
     @Test
     public void returnsBasket() throws Exception {
-        MvcResult result = mvc.perform(get(url("/basket")).sessionAttrs(sessionAttr))
+        MvcResult result = mvc.perform(get(Endpoints.BASKET).sessionAttrs(sessionAttr))
                 .andExpect(status().isOk()).andDo(print())
                 .andReturn();
         String jsonContent = result.getResponse().getContentAsString();
@@ -130,7 +132,7 @@ public class OrderControllerTests extends ControllerTests {
         MockHttpSession session = new MockHttpSession();
         for (BasketItemDto item : basketDto.getItems()) {
             String basketItemJson = jsonMapper.writeValueAsString(item);
-            mvc.perform(post(url("/add")).session(session)
+            mvc.perform(post(Endpoints.BASKET_ITEMS  + "/add").session(session)
                     .content(basketItemJson).contentType(MediaType.APPLICATION_JSON_UTF8)).andDo(print());
         }
         assertEquals(basket, session.getAttribute("basket"));
@@ -139,7 +141,7 @@ public class OrderControllerTests extends ControllerTests {
     @Test
     public void addItemToBasketFailsNotExistingPublication() throws Exception {
         String basketItemJson = jsonMapper.writeValueAsString(basketItemDtoNotExistingPublication);
-        mvc.perform(post(url("/add")).sessionAttrs(sessionAttrEmpty)
+        mvc.perform(post(Endpoints.BASKET_ITEMS  + "/add").sessionAttrs(sessionAttrEmpty)
                 .content(basketItemJson).contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(new PublicationNotFoundException(99L).getMessage()))
@@ -149,7 +151,7 @@ public class OrderControllerTests extends ControllerTests {
     @Test
     public void addItemToBasketFailsNotPositiveNumber() throws Exception {
         String basketItemJson = jsonMapper.writeValueAsString(basketItemDtoNotPositiveNumber);
-        mvc.perform(post(url("/add")).sessionAttrs(sessionAttrEmpty)
+        mvc.perform(post(Endpoints.BASKET_ITEMS  + "/add").sessionAttrs(sessionAttrEmpty)
                 .content(basketItemJson).contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Invalid basket item"))
@@ -160,7 +162,7 @@ public class OrderControllerTests extends ControllerTests {
     public void deletesTheSecondItemFromBasket() throws Exception {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("basket", basket);
-        mvc.perform(delete(url("/delete/2")).session(session)).andDo(print());
+        mvc.perform(delete(Endpoints.BASKET_ITEMS  + "/delete/2").session(session)).andDo(print());
         Basket basket = (Basket)session.getAttribute("basket");
         assertEquals(1, basket.getItems().size());
         assertEquals((Integer)3, basket.getItems().get(0).getNumber());
@@ -170,7 +172,7 @@ public class OrderControllerTests extends ControllerTests {
     public void deleteItemFromBasketFailsInvalidIndex() throws Exception {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("basket", basket);
-        mvc.perform(delete(url("/delete/88")).session(session))
+        mvc.perform(delete(Endpoints.BASKET_ITEMS  + "/delete/88").session(session))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Invalid item index"))
                 .andDo(print());
@@ -180,13 +182,9 @@ public class OrderControllerTests extends ControllerTests {
     public void deletesAllItemsFromBasket() throws Exception {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("basket", basket);
-        mvc.perform(delete(url("/delete/")).session(session)).andDo(print());
+        mvc.perform(delete(Endpoints.BASKET_ITEMS  + "/delete").session(session)).andDo(print());
         Basket basket = (Basket)session.getAttribute("basket");
         assertEquals(0, basket.getItems().size());
-    }
-
-    private String url(String suffix) {
-        return "/order" + suffix;
     }
 
 }

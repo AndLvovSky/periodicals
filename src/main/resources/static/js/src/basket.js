@@ -2,6 +2,7 @@ $(document).ready(function() {
     $("#basket").addClass("active");
     updateBasket();
     $("#clear").click(deleteAllItems);
+    $("form").attr("action", BASKET_REGISTRATION_URL);
 });
 
 function updateBasket() {
@@ -23,7 +24,7 @@ function updateCost() {
 
 function deleteItem(index) {
     $.ajax({
-        url: ORDER_URL + "delete/" + index,
+        url: BASKET_ITEMS_URL + "/delete/" + index,
         method: "DELETE"
     }).then(
         function() {
@@ -34,7 +35,7 @@ function deleteItem(index) {
 
 function deleteAllItems() {
     $.ajax({
-        url: ORDER_URL + "delete/",
+        url: BASKET_ITEMS_URL + "/delete",
         method: "DELETE"
     }).then(
         function() {
@@ -45,7 +46,7 @@ function deleteAllItems() {
 
 function getCost(handler) {
     $.ajax({
-        url: ORDER_URL + "cost"
+        url: BASKET_COST_URL
     }).then(
         function(data) {
             handler(data);
@@ -69,7 +70,7 @@ function showBasket(basket, publications) {
 
 function getBasket(handler) {
     $.ajax({
-        url: ORDER_URL + "basket"
+        url: BASKET_URL
     }).then(
         function(data) {
             handler(data);

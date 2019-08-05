@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.ui;
 
+import com.andlvovsky.periodicals.meta.ClientPages;
 import com.codeborne.selenide.Configuration;
 import com.github.database.rider.core.api.dataset.DataSet;
 import org.junit.After;
@@ -20,10 +21,6 @@ import static com.codeborne.selenide.Selenide.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class BasketTests extends UiTests {
-
-    private static final String BASKET_URL = "/basket";
-
-    private static final String CATALOG_URL = "/catalog";
 
     @LocalServerPort
     private int port;
@@ -48,7 +45,7 @@ public class BasketTests extends UiTests {
     @DataSet("datasets/dataUi.json")
     public void showsBasketContent() {
         addBasketItems();
-        open(BASKET_URL);
+        open(ClientPages.BASKET);
         $$("#basketItems tr").shouldHaveSize(2);
         $("#basketItems tr:nth-child(2) td:nth-child(1)").shouldHave(text("Philadelphia Inquirer"));
         $("#basketItems tr:nth-child(2) td:nth-child(2)").shouldHave(text("2"));
@@ -58,7 +55,7 @@ public class BasketTests extends UiTests {
     @DataSet("datasets/dataUi.json")
     public void showsBasketCost() {
         addBasketItems();
-        open(BASKET_URL);
+        open(ClientPages.BASKET);
         $$("#basketItems tr").shouldHaveSize(2);
         $("#basketCost").shouldHave(text("50.00$"));
     }
@@ -67,18 +64,18 @@ public class BasketTests extends UiTests {
     @DataSet("datasets/dataUi.json")
     public void redirectsToRegisterSuccess() {
         addBasketItems();
-        open(BASKET_URL);
+        open(ClientPages.BASKET);
         $("#register").click();
-        redirectsTo("/register-success");
+        redirectsTo(ClientPages.REGISTRATION_SUCCESS);
         $("#basketCost").shouldHave(text("50.00$"));
     }
 
     @Test
     @DataSet("datasets/dataUi.json")
     public void registrationFailsEmptyBasket() {
-        open(BASKET_URL);
+        open(ClientPages.BASKET);
         $("#register").submit();
-        redirectsTo(BASKET_URL + "?registrationError");
+        redirectsTo(ClientPages.BASKET + "?registrationError");
         $("#registrationError").isDisplayed();
     }
 
@@ -86,7 +83,7 @@ public class BasketTests extends UiTests {
     @DataSet("datasets/dataUi.json")
     public void deletesTheSecondBasketItem() {
         addBasketItems();
-        open(BASKET_URL);
+        open(ClientPages.BASKET);
         $$("#basketItems tr").shouldHaveSize(2);
         $("#basketItems tr:nth-child(2) td:nth-child(3) button").click();
         $$("#basketItems tr").shouldHaveSize(1);
@@ -97,7 +94,7 @@ public class BasketTests extends UiTests {
     @DataSet("datasets/dataUi.json")
     public void deletesAllBasketItems() {
         addBasketItems();
-        open(BASKET_URL);
+        open(ClientPages.BASKET);
         $$("#basketItems tr").shouldHaveSize(2);
         $("#clear").click();
         $$("#basketItems tr").shouldHaveSize(0);
@@ -108,7 +105,7 @@ public class BasketTests extends UiTests {
     }
 
     private void addBasketItems() {
-        open(CATALOG_URL);
+        open(ClientPages.PUBLICATIONS_VIEW);
         $$("div.publication").shouldHaveSize(6);
         $("#pn101").setValue("6");
         $("#ap101").click();

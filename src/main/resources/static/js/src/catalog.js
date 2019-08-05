@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 function addToBasket(publicationId, number) {
     $.ajax({
-        url: ORDER_URL + "add",
+        url: BASKET_ITEMS_URL + "/add",
         method: "POST",
         data: JSON.stringify({
             "publicationId": publicationId,

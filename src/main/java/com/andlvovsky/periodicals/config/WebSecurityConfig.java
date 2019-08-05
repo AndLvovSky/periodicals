@@ -1,5 +1,7 @@
 package com.andlvovsky.periodicals.config;
 
+import com.andlvovsky.periodicals.meta.ClientPages;
+import com.andlvovsky.periodicals.meta.Endpoints;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,17 +18,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/js/**", "/css/**", "/error").permitAll()
-                    .antMatchers("/edit").hasAuthority("EDIT_PUBLICATIONS")
-                    .antMatchers(HttpMethod.GET, "/publications/**").hasAuthority("READ_PUBLICATIONS")
-                    .antMatchers(HttpMethod.POST, "/publications/**").hasAuthority("EDIT_PUBLICATIONS")
-                    .antMatchers(HttpMethod.PUT, "/publications/**").hasAuthority("EDIT_PUBLICATIONS")
-                    .antMatchers(HttpMethod.DELETE, "/publications/**").hasAuthority("EDIT_PUBLICATIONS")
-                    .antMatchers("/catalog/", "/order/**", "/basket/").hasAuthority("READ_PUBLICATIONS")
+                    .antMatchers("/", "/js/**", "/css/**", ClientPages.ERROR).permitAll()
+                    .antMatchers(ClientPages.PUBLICATIONS_EDIT).hasAuthority("EDIT_PUBLICATIONS")
+                    .antMatchers(HttpMethod.GET, Endpoints.PUBLICATIONS).hasAuthority("READ_PUBLICATIONS")
+                    .antMatchers(HttpMethod.GET, Endpoints.PUBLICATIONS + "/*").hasAuthority("READ_PUBLICATIONS")
+                    .antMatchers(HttpMethod.POST, Endpoints.PUBLICATIONS).hasAuthority("EDIT_PUBLICATIONS")
+                    .antMatchers(HttpMethod.PUT, Endpoints.PUBLICATIONS + "/*").hasAuthority("EDIT_PUBLICATIONS")
+                    .antMatchers(HttpMethod.DELETE, Endpoints.PUBLICATIONS + "/*").hasAuthority("EDIT_PUBLICATIONS")
+                    .antMatchers(ClientPages.PUBLICATIONS_VIEW, Endpoints.BASKET,
+                            Endpoints.BASKET + "/**", ClientPages.BASKET).hasAuthority("READ_PUBLICATIONS")
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
-                    .loginPage("/login")
+                    .loginPage(ClientPages.LOGIN)
                     .permitAll()
                     .and()
                 .logout()
