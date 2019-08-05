@@ -1,6 +1,6 @@
 package com.andlvovsky.periodicals.util;
 
-import com.andlvovsky.periodicals.model.publication.PublicationDto;
+import com.andlvovsky.periodicals.dto.PublicationDto;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,6 +1,6 @@
 package com.andlvovsky.periodicals.repository;
 
-import com.andlvovsky.periodicals.model.publication.Publication;
+import com.andlvovsky.periodicals.model.Publication;
 import com.github.database.rider.core.api.dataset.DataSet;
 import org.junit.Test;
 import org.junit.runner.RunWith;

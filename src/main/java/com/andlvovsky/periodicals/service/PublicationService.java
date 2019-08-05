@@ -1,6 +1,6 @@
 package com.andlvovsky.periodicals.service;
 
-import com.andlvovsky.periodicals.model.publication.PublicationDto;
+import com.andlvovsky.periodicals.dto.PublicationDto;
 
 import java.util.List;
 

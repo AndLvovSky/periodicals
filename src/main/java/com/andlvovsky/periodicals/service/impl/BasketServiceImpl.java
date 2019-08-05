@@ -1,6 +1,10 @@
 package com.andlvovsky.periodicals.service.impl;
 
+import com.andlvovsky.periodicals.dto.BasketDto;
+import com.andlvovsky.periodicals.dto.BasketItemDto;
 import com.andlvovsky.periodicals.exception.BasketItemNotFoundException;
+import com.andlvovsky.periodicals.mapper.BasketItemMapper;
+import com.andlvovsky.periodicals.mapper.BasketMapper;
 import com.andlvovsky.periodicals.model.basket.*;
 import com.andlvovsky.periodicals.service.BasketService;
 import lombok.RequiredArgsConstructor;

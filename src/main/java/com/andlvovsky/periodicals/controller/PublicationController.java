@@ -1,11 +1,9 @@
 package com.andlvovsky.periodicals.controller;
 
 import com.andlvovsky.periodicals.meta.Endpoints;
-import com.andlvovsky.periodicals.model.publication.PublicationDto;
-import com.andlvovsky.periodicals.model.publication.PublicationMapper;
+import com.andlvovsky.periodicals.dto.PublicationDto;
 import com.andlvovsky.periodicals.service.PublicationService;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;

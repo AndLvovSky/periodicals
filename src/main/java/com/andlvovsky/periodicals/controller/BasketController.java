@@ -1,10 +1,12 @@
 package com.andlvovsky.periodicals.controller;
 
 
+import com.andlvovsky.periodicals.dto.BasketDto;
+import com.andlvovsky.periodicals.dto.BasketItemDto;
 import com.andlvovsky.periodicals.meta.ClientPages;
 import com.andlvovsky.periodicals.meta.Endpoints;
 import com.andlvovsky.periodicals.model.basket.*;
-import com.andlvovsky.periodicals.model.money.Money;
+import com.andlvovsky.periodicals.model.Money;
 import com.andlvovsky.periodicals.service.BasketService;
 import com.andlvovsky.periodicals.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 
 @RestController
 @SessionAttributes("basket")

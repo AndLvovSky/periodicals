@@ -1,8 +1,12 @@
 package com.andlvovsky.periodicals.service;
 
+import com.andlvovsky.periodicals.dto.BasketDto;
+import com.andlvovsky.periodicals.dto.BasketItemDto;
 import com.andlvovsky.periodicals.exception.BasketItemNotFoundException;
+import com.andlvovsky.periodicals.mapper.BasketItemMapper;
+import com.andlvovsky.periodicals.mapper.BasketMapper;
 import com.andlvovsky.periodicals.model.basket.*;
-import com.andlvovsky.periodicals.model.publication.Publication;
+import com.andlvovsky.periodicals.model.Publication;
 import com.andlvovsky.periodicals.service.impl.BasketServiceImpl;
 import org.junit.Before;
 import org.junit.Rule;

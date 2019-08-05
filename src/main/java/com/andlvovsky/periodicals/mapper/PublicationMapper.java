@@ -1,5 +1,7 @@
-package com.andlvovsky.periodicals.model.publication;
+package com.andlvovsky.periodicals.mapper;
 
+import com.andlvovsky.periodicals.model.Publication;
+import com.andlvovsky.periodicals.dto.PublicationDto;
 import org.mapstruct.Mapper;
 
 @Mapper

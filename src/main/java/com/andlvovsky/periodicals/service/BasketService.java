@@ -1,8 +1,8 @@
 package com.andlvovsky.periodicals.service;
 
 import com.andlvovsky.periodicals.model.basket.Basket;
-import com.andlvovsky.periodicals.model.basket.BasketDto;
-import com.andlvovsky.periodicals.model.basket.BasketItemDto;
+import com.andlvovsky.periodicals.dto.BasketDto;
+import com.andlvovsky.periodicals.dto.BasketItemDto;
 
 public interface BasketService {
 

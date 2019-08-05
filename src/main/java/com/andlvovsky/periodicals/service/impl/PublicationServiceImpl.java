@@ -1,14 +1,13 @@
 package com.andlvovsky.periodicals.service.impl;
 
 import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
-import com.andlvovsky.periodicals.model.publication.Publication;
-import com.andlvovsky.periodicals.model.publication.PublicationDto;
-import com.andlvovsky.periodicals.model.publication.PublicationMapper;
+import com.andlvovsky.periodicals.model.Publication;
+import com.andlvovsky.periodicals.dto.PublicationDto;
+import com.andlvovsky.periodicals.mapper.PublicationMapper;
 import com.andlvovsky.periodicals.repository.PublicationRepository;
 import com.andlvovsky.periodicals.service.PublicationService;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 

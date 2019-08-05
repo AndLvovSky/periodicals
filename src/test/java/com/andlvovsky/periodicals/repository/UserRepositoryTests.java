@@ -1,6 +1,6 @@
 package com.andlvovsky.periodicals.repository;
 
-import com.andlvovsky.periodicals.model.subscription.Subscription;
+import com.andlvovsky.periodicals.model.Subscription;
 import com.andlvovsky.periodicals.model.user.User;
 import com.github.database.rider.core.api.dataset.DataSet;
 import org.junit.Test;

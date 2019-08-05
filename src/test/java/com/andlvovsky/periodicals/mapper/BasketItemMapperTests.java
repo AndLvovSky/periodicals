@@ -1,8 +1,9 @@
 package com.andlvovsky.periodicals.mapper;
 
+import com.andlvovsky.periodicals.dto.BasketItemDto;
 import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
 import com.andlvovsky.periodicals.model.basket.*;
-import com.andlvovsky.periodicals.model.publication.Publication;
+import com.andlvovsky.periodicals.model.Publication;
 import com.andlvovsky.periodicals.repository.PublicationRepository;
 import org.junit.Before;
 import org.junit.Rule;

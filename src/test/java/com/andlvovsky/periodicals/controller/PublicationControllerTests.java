@@ -2,9 +2,9 @@ package com.andlvovsky.periodicals.controller;
 
 import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
 import com.andlvovsky.periodicals.meta.Endpoints;
-import com.andlvovsky.periodicals.model.publication.Publication;
-import com.andlvovsky.periodicals.model.publication.PublicationDto;
-import com.andlvovsky.periodicals.model.publication.PublicationMapper;
+import com.andlvovsky.periodicals.model.Publication;
+import com.andlvovsky.periodicals.dto.PublicationDto;
+import com.andlvovsky.periodicals.mapper.PublicationMapper;
 import com.andlvovsky.periodicals.service.PublicationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;

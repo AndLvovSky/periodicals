@@ -1,18 +1,19 @@
 package com.andlvovsky.periodicals.controller;
 
+import com.andlvovsky.periodicals.dto.BasketDto;
+import com.andlvovsky.periodicals.dto.BasketItemDto;
 import com.andlvovsky.periodicals.exception.BasketItemNotFoundException;
 import com.andlvovsky.periodicals.exception.EmptyBasketException;
 import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
 import com.andlvovsky.periodicals.meta.ClientPages;
 import com.andlvovsky.periodicals.meta.Endpoints;
 import com.andlvovsky.periodicals.model.basket.*;
-import com.andlvovsky.periodicals.model.money.Money;
-import com.andlvovsky.periodicals.model.publication.Publication;
+import com.andlvovsky.periodicals.model.Money;
+import com.andlvovsky.periodicals.model.Publication;
 import com.andlvovsky.periodicals.service.BasketService;
 import com.andlvovsky.periodicals.service.OrderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,7 +25,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

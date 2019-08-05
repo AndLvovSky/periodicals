@@ -2,9 +2,9 @@ package com.andlvovsky.periodicals.service.impl;
 
 import com.andlvovsky.periodicals.exception.EmptyBasketException;
 import com.andlvovsky.periodicals.model.basket.BasketItem;
-import com.andlvovsky.periodicals.model.publication.Publication;
+import com.andlvovsky.periodicals.model.Publication;
 import com.andlvovsky.periodicals.model.basket.Basket;
-import com.andlvovsky.periodicals.model.subscription.Subscription;
+import com.andlvovsky.periodicals.model.Subscription;
 import com.andlvovsky.periodicals.model.user.User;
 import com.andlvovsky.periodicals.repository.SubscriptionRepository;
 import com.andlvovsky.periodicals.service.OrderService;

@@ -1,4 +1,4 @@
-package com.andlvovsky.periodicals.model.basket;
+package com.andlvovsky.periodicals.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

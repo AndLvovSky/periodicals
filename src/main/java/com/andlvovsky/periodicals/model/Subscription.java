@@ -1,6 +1,5 @@
-package com.andlvovsky.periodicals.model.subscription;
+package com.andlvovsky.periodicals.model;
 
-import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.model.user.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
