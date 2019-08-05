@@ -9,17 +9,17 @@ import com.andlvovsky.periodicals.model.user.User;
 import com.andlvovsky.periodicals.repository.SubscriptionRepository;
 import com.andlvovsky.periodicals.service.OrderService;
 import com.andlvovsky.periodicals.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private SubscriptionRepository subscriptionRepository;
+    private final SubscriptionRepository subscriptionRepository;
 
     public double calculateCost(Basket basket) {
         double cost = 0;

@@ -4,6 +4,7 @@ import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
 import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.repository.PublicationRepository;
 import com.andlvovsky.periodicals.service.PublicationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PublicationServiceImpl implements PublicationService {
 
-    @Autowired
-    private PublicationRepository repository;
+    private final PublicationRepository repository;
 
     @Override
     public Publication getOne(Long id) {

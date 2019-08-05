@@ -7,6 +7,7 @@ import com.andlvovsky.periodicals.meta.Endpoints;
 import com.andlvovsky.periodicals.model.basket.*;
 import com.andlvovsky.periodicals.model.money.Money;
 import com.andlvovsky.periodicals.service.OrderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,16 +22,14 @@ import java.util.ArrayList;
 
 @RestController
 @SessionAttributes("basket")
+@RequiredArgsConstructor
 public class BasketController {
 
-    @Autowired
-    private OrderService service;
+    private final OrderService service;
 
-    @Autowired
-    private BasketItemMapper itemMapper;
+    private final BasketItemMapper itemMapper;
 
-    @Autowired
-    private BasketMapper mapper;
+    private final BasketMapper mapper;
 
     @PostMapping(Endpoints.BASKET_ITEMS)
     public ResponseEntity<String> addItem(

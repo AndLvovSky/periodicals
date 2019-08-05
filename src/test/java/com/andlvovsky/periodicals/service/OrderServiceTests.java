@@ -11,7 +11,6 @@ import com.andlvovsky.periodicals.service.impl.OrderServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -24,7 +23,6 @@ import static org.mockito.Mockito.*;
 @RunWith(SpringRunner.class)
 public class OrderServiceTests {
 
-    @InjectMocks
     private OrderServiceImpl orderService;
 
     @Mock
@@ -54,6 +52,7 @@ public class OrderServiceTests {
 
     @Before
     public void beforeEach() {
+        orderService = new OrderServiceImpl(userService, subscriptionRepository);
         when(userService.getLoggedUser()).thenReturn(user);
     }
 

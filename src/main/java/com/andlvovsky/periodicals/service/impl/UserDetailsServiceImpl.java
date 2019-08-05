@@ -4,6 +4,7 @@ import com.andlvovsky.periodicals.model.user.Privilege;
 import com.andlvovsky.periodicals.model.user.Role;
 import com.andlvovsky.periodicals.model.user.User;
 import com.andlvovsky.periodicals.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,10 +19,10 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
 
     @Transactional
     public UserDetails loadUserByUsername(String name) {

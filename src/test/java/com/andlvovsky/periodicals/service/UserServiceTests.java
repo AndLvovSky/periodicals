@@ -6,7 +6,6 @@ import com.andlvovsky.periodicals.service.impl.UserServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -18,7 +17,6 @@ import static org.mockito.Mockito.when;
 @WithMockUser(username = "u")
 public class UserServiceTests {
 
-    @InjectMocks
     private UserServiceImpl service;
 
     @Mock
@@ -28,6 +26,7 @@ public class UserServiceTests {
 
     @Before
     public void beforeEach() {
+        service = new UserServiceImpl(repository);
         when(repository.findByName("u")).thenReturn(user);
     }
 

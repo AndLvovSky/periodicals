@@ -5,6 +5,7 @@ import com.andlvovsky.periodicals.model.publication.Publication;
 import com.andlvovsky.periodicals.model.publication.PublicationDto;
 import com.andlvovsky.periodicals.model.publication.PublicationMapper;
 import com.andlvovsky.periodicals.service.PublicationService;
+import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +19,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(Endpoints.PUBLICATIONS)
+@RequiredArgsConstructor
 public class PublicationController {
 
-    @Autowired
-    private PublicationService publicationService;
+    private final PublicationService publicationService;
 
     private PublicationMapper publicationMapper = Mappers.getMapper(PublicationMapper.class);
 
