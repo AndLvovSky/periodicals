@@ -89,7 +89,7 @@ public class BasketControllerTests extends ControllerTests {
 
     @Before
     public void beforeEach() {
-        when(orderService.calculateCost(basket)).thenReturn(50.0);
+        when(orderService.calculateCost(basket)).thenReturn(Money.fromDouble(50.0));
         doThrow(new EmptyBasketException()).when(orderService).registerOrder(new Basket());
         when(basketService.getBasket(basket)).thenReturn(basketDto);
         doThrow(new PublicationNotFoundException(99L)).when(basketService).addItem(

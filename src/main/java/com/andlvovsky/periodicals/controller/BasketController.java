@@ -56,13 +56,13 @@ public class BasketController {
 
     @GetMapping(Endpoints.BASKET_COST)
     public Money cost(@ModelAttribute Basket basket) {
-        return Money.fromDouble(orderService.calculateCost(basket));
+        return orderService.calculateCost(basket);
     }
 
     @PostMapping(Endpoints.BASKET_REGISTRATION)
     public RedirectView registerOrder(@ModelAttribute Basket basket, RedirectAttributes attributes) {
         orderService.registerOrder(basket);
-        attributes.addFlashAttribute("basketCost", Money.fromDouble(orderService.calculateCost(basket)));
+        attributes.addFlashAttribute("basketCost", orderService.calculateCost(basket));
         basketService.deleteAllItems(basket);
         return new RedirectView(ClientPages.REGISTRATION_SUCCESS);
     }

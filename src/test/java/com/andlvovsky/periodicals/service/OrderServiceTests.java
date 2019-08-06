@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.service;
 
+import com.andlvovsky.periodicals.dto.Money;
 import com.andlvovsky.periodicals.exception.EmptyBasketException;
 import com.andlvovsky.periodicals.model.basket.BasketItem;
 import com.andlvovsky.periodicals.model.Publication;
@@ -55,14 +56,14 @@ public class OrderServiceTests {
 
     @Test
     public void calculatesBasketCost() {
-        double cost = orderService.calculateCost(basket);
-        assertEquals(100.0, cost, 0.0);
+        Money cost = orderService.calculateCost(basket);
+        assertEquals(100, cost.toDouble(), 0.0);
     }
 
     @Test
     public void calculatesEmptyBasketCost() {
-        double cost = orderService.calculateCost(new Basket());
-        assertEquals(0.0, cost, 0.0);
+        Money cost = orderService.calculateCost(new Basket());
+        assertEquals(0.0, cost.toDouble(), 0.0);
     }
 
     @Test

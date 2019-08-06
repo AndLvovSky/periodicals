@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.service.impl;
 
+import com.andlvovsky.periodicals.dto.Money;
 import com.andlvovsky.periodicals.exception.EmptyBasketException;
 import com.andlvovsky.periodicals.model.Publication;
 import com.andlvovsky.periodicals.model.basket.Basket;
@@ -20,12 +21,13 @@ public class OrderServiceImpl implements OrderService {
 
     private final SubscriptionRepository subscriptionRepository;
 
-    public double calculateCost(Basket basket) {
-        return basket.getItems().stream()
+    public Money calculateCost(Basket basket) {
+        double cost = basket.getItems().stream()
                 .mapToDouble(item -> {
                     Publication publication = item.getPublication();
                     return item.getNumber() * publication.getCost();
                 }).sum();
+        return Money.fromDouble(cost);
     }
 
     @Transactional
