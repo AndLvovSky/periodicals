@@ -6,7 +6,7 @@ import com.andlvovsky.periodicals.dto.BasketItemDto;
 import com.andlvovsky.periodicals.meta.ClientPages;
 import com.andlvovsky.periodicals.meta.Endpoints;
 import com.andlvovsky.periodicals.model.basket.*;
-import com.andlvovsky.periodicals.model.Money;
+import com.andlvovsky.periodicals.dto.Money;
 import com.andlvovsky.periodicals.service.BasketService;
 import com.andlvovsky.periodicals.service.OrderService;
 import lombok.RequiredArgsConstructor;

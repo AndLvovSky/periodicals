@@ -8,7 +8,7 @@ import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
 import com.andlvovsky.periodicals.meta.ClientPages;
 import com.andlvovsky.periodicals.meta.Endpoints;
 import com.andlvovsky.periodicals.model.basket.*;
-import com.andlvovsky.periodicals.model.Money;
+import com.andlvovsky.periodicals.dto.Money;
 import com.andlvovsky.periodicals.model.Publication;
 import com.andlvovsky.periodicals.service.BasketService;
 import com.andlvovsky.periodicals.service.OrderService;

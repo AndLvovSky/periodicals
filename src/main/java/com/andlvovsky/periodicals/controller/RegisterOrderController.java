@@ -1,7 +1,7 @@
 package com.andlvovsky.periodicals.controller;
 
 import com.andlvovsky.periodicals.meta.ClientPages;
-import com.andlvovsky.periodicals.model.Money;
+import com.andlvovsky.periodicals.dto.Money;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;

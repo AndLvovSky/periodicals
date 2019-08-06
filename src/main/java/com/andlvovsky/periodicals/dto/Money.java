@@ -1,4 +1,4 @@
-package com.andlvovsky.periodicals.model;
+package com.andlvovsky.periodicals.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
