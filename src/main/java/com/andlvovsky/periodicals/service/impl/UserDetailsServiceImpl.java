@@ -5,7 +5,6 @@ import com.andlvovsky.periodicals.model.user.Role;
 import com.andlvovsky.periodicals.model.user.User;
 import com.andlvovsky.periodicals.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,18 +12,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository repository;
 
-    @Transactional
     public UserDetails loadUserByUsername(String name) {
         User user = repository.findByName(name).orElseThrow(() -> new UsernameNotFoundException(name));
         return org.springframework.security.core.userdetails.User

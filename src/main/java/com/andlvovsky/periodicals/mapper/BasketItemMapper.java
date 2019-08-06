@@ -9,6 +9,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @Mapper(componentModel = "spring")
 public abstract class BasketItemMapper {
 
@@ -21,6 +23,7 @@ public abstract class BasketItemMapper {
     @Mapping(source = "publication.id", target = "publicationId")
     public abstract BasketItemDto toDto(BasketItem basketItem);
 
+    @Transactional
     public Publication publicationIdToPublication(Long publicationId) {
         return publicationRepository.findById(publicationId)
                 .orElseThrow(() -> new PublicationNotFoundException(publicationId));
