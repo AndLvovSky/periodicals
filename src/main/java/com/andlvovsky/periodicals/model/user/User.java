@@ -23,10 +23,10 @@ public class User {
 
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private Collection<Role> roles;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private Collection<Subscription> subscriptions;
 
 }
