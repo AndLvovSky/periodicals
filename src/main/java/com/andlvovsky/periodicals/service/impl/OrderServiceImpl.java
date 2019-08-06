@@ -1,7 +1,6 @@
 package com.andlvovsky.periodicals.service.impl;
 
 import com.andlvovsky.periodicals.exception.EmptyBasketException;
-import com.andlvovsky.periodicals.model.basket.BasketItem;
 import com.andlvovsky.periodicals.model.Publication;
 import com.andlvovsky.periodicals.model.basket.Basket;
 import com.andlvovsky.periodicals.model.Subscription;
@@ -22,13 +21,11 @@ public class OrderServiceImpl implements OrderService {
     private final SubscriptionRepository subscriptionRepository;
 
     public double calculateCost(Basket basket) {
-        double cost = 0;
-        for (BasketItem item : basket.getItems()) {
-            Publication publication = item.getPublication();
-            cost += item.getNumber() * publication.getCost();
-        }
-        return cost;
-
+        return basket.getItems().stream()
+                .mapToDouble(item -> {
+                    Publication publication = item.getPublication();
+                    return item.getNumber() * publication.getCost();
+                }).sum();
     }
 
     @Transactional
@@ -37,12 +34,13 @@ public class OrderServiceImpl implements OrderService {
             throw new EmptyBasketException();
         }
         User user = userService.getLoggedUser();
-        for (BasketItem item : basket.getItems()) {
-            Publication publication = item.getPublication();
-            Integer number = item.getNumber();
-            Subscription subscription = new Subscription(publication, user, number);
-            subscriptionRepository.save(subscription);
-        }
+        basket.getItems()
+                .forEach(item -> {
+                    Publication publication = item.getPublication();
+                    Integer number = item.getNumber();
+                    Subscription subscription = new Subscription(publication, user, number);
+                    subscriptionRepository.save(subscription);
+                });
     }
 
 }

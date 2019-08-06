@@ -13,8 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,11 +33,9 @@ public class PublicationServiceImpl implements PublicationService {
 
     public List<PublicationDto> getAll() {
         List<Publication> publications = repository.findAll(Sort.by("id"));
-        List<PublicationDto> publicationDtos = new ArrayList<>();
-        for (Publication publication : publications) {
-            publicationDtos.add(mapper.toDto(publication));
-        }
-        return publicationDtos;
+        return publications.stream()
+                .map(publication -> mapper.toDto(publication))
+                .collect(Collectors.toList());
     }
 
     public void add(PublicationDto publicationDto) {

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,19 +35,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     private List<GrantedAuthority> getAllAuthorities(Collection<Role> roles) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roles) {
-            authorities.addAll(getRoleAuthorities(role));
-        }
-        return authorities;
-    }
-
-    private List<GrantedAuthority> getRoleAuthorities(Role role) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (Privilege privilege : role.getPrivileges()) {
-            authorities.add(new SimpleGrantedAuthority(privilege.getName()));
-        }
-        return authorities;
+        return roles.stream()
+                .flatMap(role -> role.getPrivileges().stream())
+                .map(Privilege::getName)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
 }
