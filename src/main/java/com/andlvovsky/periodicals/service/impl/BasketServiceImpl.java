@@ -18,12 +18,14 @@ public class BasketServiceImpl implements BasketService {
 
     private final BasketItemMapper itemMapper;
 
+    @Override
     public void addItem(Basket basket, BasketItemDto basketItemDto) {
         BasketItem basketItem;
         basketItem = itemMapper.fromDto(basketItemDto);
         basket.getItems().add(basketItem);
     }
 
+    @Override
     public void deleteItem(Basket basket, int index) {
         try {
             basket.getItems().remove(index - 1);
@@ -32,10 +34,12 @@ public class BasketServiceImpl implements BasketService {
         }
     }
 
+    @Override
     public void deleteAllItems(Basket basket) {
         basket.getItems().clear();
     }
 
+    @Override
     public BasketDto getBasket(Basket basket) {
         return mapper.toDto(basket);
     }

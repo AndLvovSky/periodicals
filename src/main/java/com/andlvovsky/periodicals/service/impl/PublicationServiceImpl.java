@@ -25,12 +25,14 @@ public class PublicationServiceImpl implements PublicationService {
 
     private PublicationMapper mapper = Mappers.getMapper(PublicationMapper.class);
 
+    @Override
     public PublicationDto getOne(Long id) {
         Publication publication = repository.findById(id)
                 .orElseThrow(() -> new PublicationNotFoundException(id));
         return mapper.toDto(publication);
     }
 
+    @Override
     public List<PublicationDto> getAll() {
         List<Publication> publications = repository.findAll(Sort.by("id"));
         return publications.stream()
@@ -38,17 +40,20 @@ public class PublicationServiceImpl implements PublicationService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public void add(PublicationDto publicationDto) {
         Publication publication = mapper.fromDto(publicationDto);
         repository.save(publication);
     }
 
+    @Override
     public void replace(Long id, PublicationDto newPublicationDto) {
         Publication newPublication = mapper.fromDto(newPublicationDto);
         newPublication.setId(id);
         repository.save(newPublication);
     }
 
+    @Override
     public void delete(Long id) {
         try {
             repository.deleteById(id);

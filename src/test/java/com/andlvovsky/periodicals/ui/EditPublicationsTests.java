@@ -143,6 +143,7 @@ public class EditPublicationsTests extends UiTests {
         $("#periodPublicationError").shouldNotBe(empty);
     }
 
+    @Override
     public int getPort() {
         return port;
     }

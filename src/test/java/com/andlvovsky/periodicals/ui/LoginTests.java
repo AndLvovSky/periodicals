@@ -79,6 +79,7 @@ public class LoginTests extends UiTests {
         checkUnauthenticatedHomePageElements();
     }
 
+    @Override
     public int getPort() {
         return port;
     }

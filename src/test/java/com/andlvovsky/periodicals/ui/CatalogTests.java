@@ -51,6 +51,7 @@ public class CatalogTests extends UiTests {
         $("#basketItemsNumber").shouldHave(text("2"));
     }
 
+    @Override
     public int getPort() {
         return port;
     }

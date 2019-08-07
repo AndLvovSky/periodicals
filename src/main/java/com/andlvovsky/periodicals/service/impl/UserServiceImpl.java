@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
 
+    @Override
     public User getLoggedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();

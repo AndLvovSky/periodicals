@@ -100,6 +100,7 @@ public class BasketTests extends UiTests {
         $$("#basketItems tr").shouldHaveSize(0);
     }
 
+    @Override
     public int getPort() {
         return port;
     }

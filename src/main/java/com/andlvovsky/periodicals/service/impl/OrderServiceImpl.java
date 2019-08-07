@@ -21,6 +21,7 @@ public class OrderServiceImpl implements OrderService {
 
     private final SubscriptionRepository subscriptionRepository;
 
+    @Override
     public Money calculateCost(Basket basket) {
         double cost = basket.getItems().stream()
                 .mapToDouble(item -> {
@@ -30,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
         return Money.fromDouble(cost);
     }
 
+    @Override
     @Transactional
     public void registerOrder(Basket basket) {
         if (basket.getItems().isEmpty()) {
