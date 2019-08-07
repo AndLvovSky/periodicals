@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.controller;
 
+import com.andlvovsky.periodicals.controller.exception.CustomErrorController;
 import com.andlvovsky.periodicals.meta.ClientPages;
 import org.junit.Test;
 import org.junit.runner.RunWith;

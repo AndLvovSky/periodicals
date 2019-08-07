@@ -1,4 +1,4 @@
-package com.andlvovsky.periodicals.controller;
+package com.andlvovsky.periodicals.controller.exception;
 
 import com.andlvovsky.periodicals.meta.ClientPages;
 import org.springframework.boot.web.servlet.error.ErrorController;

@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -36,6 +37,12 @@ public class UserServiceTests {
     public void getsLoggedInUser() {
         User user = service.getLoggedUser();
         assertEquals(user, this.user);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    @WithAnonymousUser
+    public void getLoggedInUserFails() {
+        service.getLoggedUser();
     }
 
 }

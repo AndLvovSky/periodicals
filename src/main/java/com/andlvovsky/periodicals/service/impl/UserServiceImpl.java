@@ -21,7 +21,8 @@ public class UserServiceImpl implements UserService {
     public User getLoggedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        return repository.findByName(username).get();
+        return repository.findByName(username)
+                .orElseThrow(() -> new IllegalStateException("User is not authenticated"));
     }
 
 }

@@ -8,6 +8,7 @@ import com.andlvovsky.periodicals.mapper.PublicationMapper;
 import com.andlvovsky.periodicals.service.PublicationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
+import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -68,6 +69,7 @@ public class PublicationControllerTests extends ControllerTests {
                 publicationDtos[0], publicationDtos[1], publicationDtos[2]));
         when(publicationService.getOne(99L)).thenThrow(new PublicationNotFoundException(99L));
         doThrow(new PublicationNotFoundException(88L)).when(publicationService).delete(88L);
+        doThrow(new ConstraintViolationException(null, null, null)).when(publicationService).delete(4L);
     }
 
 
@@ -178,10 +180,17 @@ public class PublicationControllerTests extends ControllerTests {
 
     @Test
     @WithMockUser(authorities = {"EDIT_PUBLICATIONS"})
-    public void deletionFails() throws Exception {
+    public void deletionFailsNotFound() throws Exception {
         mvc.perform(delete(Endpoints.PUBLICATIONS + "/88")).andExpect(status().isNotFound())
                 .andExpect(content().string(allOf(Matchers.containsString("cannot find"),
                         Matchers.containsString("88")))).andDo(print());
+    }
+
+    @Test
+    @WithMockUser(authorities = {"EDIT_PUBLICATIONS"})
+    public void deletionFailsConstraintViolation() throws Exception {
+        mvc.perform(delete(Endpoints.PUBLICATIONS + "/4")).andExpect(status().isBadRequest())
+                .andDo(print());
     }
 
     @Test
