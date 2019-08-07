@@ -16,4 +16,8 @@ public class ClientPages {
 
     public static final String REGISTRATION_SUCCESS = "/registration-success";
 
+    private ClientPages() {
+        throw new IllegalStateException("Utility class");
+    }
+
 }

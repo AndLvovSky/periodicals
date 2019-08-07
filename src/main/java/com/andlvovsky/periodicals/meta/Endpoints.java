@@ -14,4 +14,8 @@ public class Endpoints {
 
     public static final String BASKET_REGISTRATION = BASKET + "/registration";
 
+    private Endpoints() {
+        throw new IllegalStateException("Utility class");
+    }
+
 }
