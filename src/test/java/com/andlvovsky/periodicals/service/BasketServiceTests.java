@@ -82,8 +82,8 @@ public class BasketServiceTests {
         basket.getItems().add(basketItems[0]);
         basket.getItems().add(basketItems[1]);
         basketService.deleteItem(basket, 2);
-        assertEquals(basket.getItems().size(), 1);
-        assertEquals(basket.getItems().get(0), basketItems[0]);
+        assertEquals(1, basket.getItems().size());
+        assertEquals(basketItems[0], basket.getItems().get(0));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class BasketServiceTests {
         basket.getItems().add(basketItems[0]);
         basket.getItems().add(basketItems[1]);
         basketService.deleteAllItems(basket);
-        assertEquals(basket.getItems().size(), 0);
+        assertEquals(0, basket.getItems().size());
     }
 
     @Test
