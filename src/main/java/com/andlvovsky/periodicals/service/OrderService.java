@@ -1,11 +1,12 @@
 package com.andlvovsky.periodicals.service;
 
-import com.andlvovsky.periodicals.dto.Money;
 import com.andlvovsky.periodicals.model.basket.Basket;
+
+import java.math.BigDecimal;
 
 public interface OrderService {
 
-    Money calculateCost(Basket basket);
+    BigDecimal calculateCost(Basket basket);
 
     void registerOrder(Basket basket);
 

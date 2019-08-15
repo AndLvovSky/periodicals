@@ -6,7 +6,6 @@ import com.andlvovsky.periodicals.dto.BasketItemDto;
 import com.andlvovsky.periodicals.meta.ClientPages;
 import com.andlvovsky.periodicals.meta.Endpoints;
 import com.andlvovsky.periodicals.model.basket.*;
-import com.andlvovsky.periodicals.dto.Money;
 import com.andlvovsky.periodicals.service.BasketService;
 import com.andlvovsky.periodicals.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 
 @RestController
 @SessionAttributes("basket")
@@ -55,7 +55,7 @@ public class BasketController {
     }
 
     @GetMapping(Endpoints.BASKET_COST)
-    public Money cost(@ModelAttribute Basket basket) {
+    public BigDecimal cost(@ModelAttribute Basket basket) {
         return orderService.calculateCost(basket);
     }
 

@@ -8,7 +8,6 @@ import com.andlvovsky.periodicals.repository.PublicationRepository;
 import com.andlvovsky.periodicals.service.PublicationService;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

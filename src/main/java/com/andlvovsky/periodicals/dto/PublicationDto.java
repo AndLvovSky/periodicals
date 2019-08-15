@@ -8,6 +8,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
@@ -26,11 +27,11 @@ public class PublicationDto {
 
     @NotNull
     @DecimalMin("0.0")
-    private Double cost; /** cost per publication in dollars */
+    private BigDecimal cost; /** cost per publication in dollars */
 
     private String description;
 
-    public PublicationDto(String name, Integer period, Double cost, String description) {
+    public PublicationDto(String name, Integer period, BigDecimal cost, String description) {
         this.name = name;
         this.period = period;
         this.cost = cost;

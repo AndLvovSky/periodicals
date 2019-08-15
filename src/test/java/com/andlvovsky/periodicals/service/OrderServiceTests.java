@@ -1,6 +1,5 @@
 package com.andlvovsky.periodicals.service;
 
-import com.andlvovsky.periodicals.dto.Money;
 import com.andlvovsky.periodicals.exception.EmptyBasketException;
 import com.andlvovsky.periodicals.model.basket.BasketItem;
 import com.andlvovsky.periodicals.model.Publication;
@@ -15,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
@@ -34,8 +34,8 @@ public class OrderServiceTests {
     private User user = new User(1L, "u", "p", null, null);
 
     private Publication[] publications = {
-            new Publication(1L,"The Guardian", 7, 10., "-"),
-            new Publication(2L, "Daily Mail", 1, 5., "-")
+            new Publication(1L,"The Guardian", 7, new BigDecimal("10"), "-"),
+            new Publication(2L, "Daily Mail", 1, new BigDecimal("5"), "-")
     };
 
     private Basket basket = new Basket(Arrays.asList(
@@ -56,14 +56,14 @@ public class OrderServiceTests {
 
     @Test
     public void calculatesBasketCost() {
-        Money cost = orderService.calculateCost(basket);
-        assertEquals(100, cost.toDouble(), 0.0);
+        BigDecimal cost = orderService.calculateCost(basket);
+        assertEquals(new BigDecimal("100"), cost);
     }
 
     @Test
     public void calculatesEmptyBasketCost() {
-        Money cost = orderService.calculateCost(new Basket());
-        assertEquals(0.0, cost.toDouble(), 0.0);
+        BigDecimal cost = orderService.calculateCost(new Basket());
+        assertEquals(BigDecimal.ZERO, cost);
     }
 
     @Test

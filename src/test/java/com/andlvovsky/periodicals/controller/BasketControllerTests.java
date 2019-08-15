@@ -8,7 +8,6 @@ import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
 import com.andlvovsky.periodicals.meta.ClientPages;
 import com.andlvovsky.periodicals.meta.Endpoints;
 import com.andlvovsky.periodicals.model.basket.*;
-import com.andlvovsky.periodicals.dto.Money;
 import com.andlvovsky.periodicals.model.Publication;
 import com.andlvovsky.periodicals.service.BasketService;
 import com.andlvovsky.periodicals.service.OrderService;
@@ -25,6 +24,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,8 +50,8 @@ public class BasketControllerTests extends ControllerTests {
     private ObjectMapper jsonMapper = new ObjectMapper();
 
     private Publication[] publications = {
-            new Publication(1L,"The Guardian", 7, 10., "-"),
-            new Publication(2L, "Daily Mail", 1, 5., "-")
+            new Publication(1L,"The Guardian", 7, new BigDecimal("10"), "-"),
+            new Publication(2L, "Daily Mail", 1, new BigDecimal("5"), "-")
     };
 
     private BasketItem[] basketItems = {
@@ -89,7 +89,7 @@ public class BasketControllerTests extends ControllerTests {
 
     @Before
     public void beforeEach() {
-        when(orderService.calculateCost(basket)).thenReturn(Money.fromDouble(50.0));
+        when(orderService.calculateCost(basket)).thenReturn(new BigDecimal("50"));
         doThrow(new EmptyBasketException()).when(orderService).registerOrder(new Basket());
         when(basketService.getBasket(basket)).thenReturn(basketDto);
         doThrow(new PublicationNotFoundException(99L)).when(basketService).addItem(
@@ -103,8 +103,8 @@ public class BasketControllerTests extends ControllerTests {
                 .andExpect(status().isOk()).andDo(print())
                 .andReturn();
         String jsonContent = result.getResponse().getContentAsString();
-        Money cost = jsonMapper.readValue(jsonContent, Money.class);
-        assertEquals(50.0, cost.toDouble(), 0.0000000001);
+        BigDecimal cost = jsonMapper.readValue(jsonContent, BigDecimal.class);
+        assertEquals(new BigDecimal("50"), cost);
     }
 
     @Test

@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.containsString;
@@ -33,7 +34,7 @@ public class BasketItemMapperTests {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    private Publication publication = new Publication(1L,"The Guardian", 7, 10., "-");
+    private Publication publication = new Publication(1L,"The Guardian", 7, new BigDecimal("10"), "-");
 
     private BasketItem basketItem = new BasketItem(publication, 5);
 

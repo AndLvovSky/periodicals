@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.containsString;
@@ -37,8 +38,8 @@ public class BasketServiceTests {
     public ExpectedException expectedException = ExpectedException.none();
 
     private Publication[] publications = {
-            new Publication(1L,"The Guardian", 7, 10., "-"),
-            new Publication(2L, "Daily Mail", 1, 5., "-")
+            new Publication(1L,"The Guardian", 7, new BigDecimal("10"), "-"),
+            new Publication(2L, "Daily Mail", 1, new BigDecimal("5"), "-")
     };
 
     private BasketItem[] basketItems = {

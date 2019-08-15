@@ -17,8 +17,7 @@ function updateBasket() {
 
 function updateCost() {
     getCost(function(cost) {
-        if (cost.cents < 10) cost.cents = "0" + cost.cents;
-        $("#basketCost").text(cost.dollars + "." + cost.cents + "$");
+        $("#basketCost").text(formatDollars(cost));
     })
 }
 

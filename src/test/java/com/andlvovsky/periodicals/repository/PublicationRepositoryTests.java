@@ -7,11 +7,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -43,7 +43,7 @@ public class PublicationRepositoryTests extends RepositoryTests {
     @Test
     @DataSet("datasets/publications.json")
     public void saves() {
-        repository.save(new Publication("The Sun", 1, 5.5, "-"));
+        repository.save(new Publication("The Sun", 1, new BigDecimal("5.5"), "-"));
         assertEquals(3, repository.count());
     }
 
