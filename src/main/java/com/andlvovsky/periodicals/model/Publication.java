@@ -1,10 +1,11 @@
-package com.andlvovsky.periodicals.model.publication;
+package com.andlvovsky.periodicals.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -21,11 +22,12 @@ public class Publication {
 
     private Integer period;
 
-    private Double cost;
+    @Column(precision = 15, scale = 4)
+    private BigDecimal cost;
 
     private String description;
 
-    public Publication(String name, Integer period, Double cost, String description) {
+    public Publication(String name, Integer period, BigDecimal cost, String description) {
         this.name = name;
         this.period = period;
         this.cost = cost;

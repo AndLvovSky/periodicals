@@ -1,6 +1,6 @@
 package com.andlvovsky.periodicals.model.user;
 
-import com.andlvovsky.periodicals.model.subscription.Subscription;
+import com.andlvovsky.periodicals.model.Subscription;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,10 +23,10 @@ public class User {
 
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private Collection<Role> roles;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private Collection<Subscription> subscriptions;
 
 }

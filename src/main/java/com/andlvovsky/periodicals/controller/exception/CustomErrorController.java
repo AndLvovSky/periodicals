@@ -1,5 +1,6 @@
-package com.andlvovsky.periodicals.controller;
+package com.andlvovsky.periodicals.controller.exception;
 
+import com.andlvovsky.periodicals.meta.ClientPages;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,7 @@ public class CustomErrorController implements ErrorController {
     private static final List<Integer> CUSTOM_ERROR_PAGES =
             Arrays.asList(403, 404, 500);
 
-    @RequestMapping("/error")
+    @RequestMapping(ClientPages.ERROR)
     public String handleError(HttpServletRequest request, Model model) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         if (status == null) {
@@ -31,7 +32,7 @@ public class CustomErrorController implements ErrorController {
     }
 
     public String getErrorPath() {
-        return "/error";
+        return ClientPages.ERROR;
     }
 
 }

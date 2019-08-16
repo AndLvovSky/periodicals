@@ -1,4 +1,4 @@
-package com.andlvovsky.periodicals.model.publication;
+package com.andlvovsky.periodicals.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,11 +8,14 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PublicationDto {
+
+    private Long id;
 
     @NotNull
     @Size(min = 2, max = 1000)
@@ -24,8 +27,15 @@ public class PublicationDto {
 
     @NotNull
     @DecimalMin("0.0")
-    private Double cost; /** cost per publication in dollars */
+    private BigDecimal cost; /** cost per publication in dollars */
 
     private String description;
+
+    public PublicationDto(String name, Integer period, BigDecimal cost, String description) {
+        this.name = name;
+        this.period = period;
+        this.cost = cost;
+        this.description = description;
+    }
 
 }

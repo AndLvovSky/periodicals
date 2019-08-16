@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.ui;
 
+import com.andlvovsky.periodicals.meta.ClientPages;
 import com.github.database.rider.core.api.dataset.DataSet;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -18,8 +19,6 @@ import static com.codeborne.selenide.Selenide.*;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class CatalogTests extends UiTests {
 
-    private static final String URL = "/catalog";
-
     @LocalServerPort
     private int port;
 
@@ -37,14 +36,14 @@ public class CatalogTests extends UiTests {
     @Test
     @DataSet("datasets/dataUi.json")
     public void showsAllPublications() {
-        open(URL);
+        open(ClientPages.PUBLICATIONS_VIEW);
         $$("div.publication").shouldHaveSize(6);
     }
 
     @Test
     @DataSet("datasets/dataUi.json")
     public void addsItemsToBasket() {
-        open(URL);
+        open(ClientPages.PUBLICATIONS_VIEW);
         $("#pn102").setValue("3");
         $("#ap102").click();
         $("#pn104").setValue("1");
@@ -52,6 +51,7 @@ public class CatalogTests extends UiTests {
         $("#basketItemsNumber").shouldHave(text("2"));
     }
 
+    @Override
     public int getPort() {
         return port;
     }

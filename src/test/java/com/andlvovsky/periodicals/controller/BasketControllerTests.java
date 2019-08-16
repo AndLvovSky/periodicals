@@ -1,23 +1,30 @@
 package com.andlvovsky.periodicals.controller;
 
+import com.andlvovsky.periodicals.dto.BasketDto;
+import com.andlvovsky.periodicals.dto.BasketItemDto;
+import com.andlvovsky.periodicals.exception.BasketItemNotFoundException;
 import com.andlvovsky.periodicals.exception.EmptyBasketException;
 import com.andlvovsky.periodicals.exception.PublicationNotFoundException;
+import com.andlvovsky.periodicals.meta.ClientPages;
+import com.andlvovsky.periodicals.meta.Endpoints;
 import com.andlvovsky.periodicals.model.basket.*;
-import com.andlvovsky.periodicals.model.money.Money;
-import com.andlvovsky.periodicals.model.publication.Publication;
+import com.andlvovsky.periodicals.model.Publication;
+import com.andlvovsky.periodicals.service.BasketService;
+import com.andlvovsky.periodicals.service.OrderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,16 +36,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest
+@WebMvcTest(BasketController.class)
 @AutoConfigureMockMvc
 @WithMockUser(authorities = {"READ_PUBLICATIONS"})
-public class OrderControllerTests extends ControllerTests {
+public class BasketControllerTests extends ControllerTests {
+
+    @MockBean
+    private BasketService basketService;
+
+    @MockBean
+    private OrderService orderService;
 
     private ObjectMapper jsonMapper = new ObjectMapper();
 
     private Publication[] publications = {
-            new Publication(1L,"The Guardian", 7, 10., "-"),
-            new Publication(2L, "Daily Mail", 1, 5., "-")
+            new Publication(1L,"The Guardian", 7, new BigDecimal("10"), "-"),
+            new Publication(2L, "Daily Mail", 1, new BigDecimal("5"), "-")
     };
 
     private BasketItem[] basketItems = {
@@ -55,14 +68,12 @@ public class OrderControllerTests extends ControllerTests {
             new BasketItemDto(2L, 2)
     };
 
-    private Basket basket = new Basket(new ArrayList<>());
+    private Basket basket = new Basket();
     {
         for (BasketItem item: basketItems) {
             basket.getItems().add(item);
         }
     }
-
-    private Basket emptyBasket = new Basket(new ArrayList<>());
 
     private BasketDto basketDto = new BasketDto(Arrays.asList(basketItemDtos));
 
@@ -73,51 +84,48 @@ public class OrderControllerTests extends ControllerTests {
 
     private Map<String, Object> sessionAttrEmpty = new HashMap<>();
     {
-        sessionAttrEmpty.put("basket", emptyBasket);
+        sessionAttrEmpty.put("basket", new Basket());
     }
 
     @Before
     public void beforeEach() {
-        when(orderService.calculateCost(basket)).thenReturn(50.0);
-        when(publicationService.getOne(1L)).thenReturn(publications[0]);
-        when(publicationService.getOne(2L)).thenReturn(publications[1]);
-        when(basketMapper.toDto(basket)).thenReturn(basketDto);
-        when(basketItemMapper.fromDto(basketItemDtos[0])).thenReturn(basketItems[0]);
-        when(basketItemMapper.fromDto(basketItemDtos[1])).thenReturn(basketItems[1]);
-        doThrow(new PublicationNotFoundException(99L))
-                .when(basketItemMapper).fromDto(basketItemDtoNotExistingPublication);
-        doThrow(new EmptyBasketException()).when(orderService).registerOrder(emptyBasket);
+        when(orderService.calculateCost(basket)).thenReturn(new BigDecimal("50"));
+        doThrow(new EmptyBasketException()).when(orderService).registerOrder(new Basket());
+        when(basketService.getBasket(basket)).thenReturn(basketDto);
+        doThrow(new PublicationNotFoundException(99L)).when(basketService).addItem(
+                any(Basket.class), eq(basketItemDtoNotExistingPublication));
+        doThrow(new BasketItemNotFoundException(88)).when(basketService).deleteItem(any(Basket.class), eq(88));
     }
 
     @Test
     public void returnsBasketCost() throws Exception {
-        MvcResult result = mvc.perform(get(url("/cost")).sessionAttrs(sessionAttr))
+        MvcResult result = mvc.perform(get(Endpoints.BASKET_COST).sessionAttrs(sessionAttr))
                 .andExpect(status().isOk()).andDo(print())
                 .andReturn();
         String jsonContent = result.getResponse().getContentAsString();
-        Money cost = jsonMapper.readValue(jsonContent, Money.class);
-        assertEquals(50.0, cost.toDouble(), 0.0000000001);
+        BigDecimal cost = jsonMapper.readValue(jsonContent, BigDecimal.class);
+        assertEquals(new BigDecimal("50"), cost);
     }
 
     @Test
     public void registersOrder() throws Exception {
-        mvc.perform(post(url("/register")).sessionAttrs(sessionAttr))
+        mvc.perform(post(Endpoints.BASKET_REGISTRATION).sessionAttrs(sessionAttr))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/register-success")).andDo(print());
+                .andExpect(redirectedUrl(ClientPages.REGISTRATION_SUCCESS)).andDo(print());
         verify(orderService, times(1)).registerOrder(basket);
     }
 
     @Test
     public void registerOrderFailsEmptyBasket() throws Exception {
-        mvc.perform(post(url("/register")).sessionAttrs(sessionAttrEmpty))
+        mvc.perform(post(Endpoints.BASKET_REGISTRATION).sessionAttrs(sessionAttrEmpty))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/basket?registrationError")).andDo(print());
+                .andExpect(redirectedUrl(ClientPages.BASKET + "?registrationError")).andDo(print());
         verify(orderService, times(0)).registerOrder(basket);
     }
 
     @Test
     public void returnsBasket() throws Exception {
-        MvcResult result = mvc.perform(get(url("/basket")).sessionAttrs(sessionAttr))
+        MvcResult result = mvc.perform(get(Endpoints.BASKET).sessionAttrs(sessionAttr))
                 .andExpect(status().isOk()).andDo(print())
                 .andReturn();
         String jsonContent = result.getResponse().getContentAsString();
@@ -130,18 +138,20 @@ public class OrderControllerTests extends ControllerTests {
         MockHttpSession session = new MockHttpSession();
         for (BasketItemDto item : basketDto.getItems()) {
             String basketItemJson = jsonMapper.writeValueAsString(item);
-            mvc.perform(post(url("/add")).session(session)
+            mvc.perform(post(Endpoints.BASKET_ITEMS).session(session)
                     .content(basketItemJson).contentType(MediaType.APPLICATION_JSON_UTF8)).andDo(print());
         }
-        assertEquals(basket, session.getAttribute("basket"));
+        verify(basketService).addItem(any(Basket.class), eq(basketItemDtos[0]));
+        verify(basketService).addItem(any(Basket.class), eq(basketItemDtos[1]));
+        verifyNoMoreInteractions(basketService);
     }
 
     @Test
     public void addItemToBasketFailsNotExistingPublication() throws Exception {
         String basketItemJson = jsonMapper.writeValueAsString(basketItemDtoNotExistingPublication);
-        mvc.perform(post(url("/add")).sessionAttrs(sessionAttrEmpty)
+        mvc.perform(post(Endpoints.BASKET_ITEMS).sessionAttrs(sessionAttrEmpty)
                 .content(basketItemJson).contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isNotFound())
                 .andExpect(content().string(new PublicationNotFoundException(99L).getMessage()))
                 .andDo(print());
     }
@@ -149,7 +159,7 @@ public class OrderControllerTests extends ControllerTests {
     @Test
     public void addItemToBasketFailsNotPositiveNumber() throws Exception {
         String basketItemJson = jsonMapper.writeValueAsString(basketItemDtoNotPositiveNumber);
-        mvc.perform(post(url("/add")).sessionAttrs(sessionAttrEmpty)
+        mvc.perform(post(Endpoints.BASKET_ITEMS).sessionAttrs(sessionAttrEmpty)
                 .content(basketItemJson).contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Invalid basket item"))
@@ -160,19 +170,17 @@ public class OrderControllerTests extends ControllerTests {
     public void deletesTheSecondItemFromBasket() throws Exception {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("basket", basket);
-        mvc.perform(delete(url("/delete/2")).session(session)).andDo(print());
-        Basket basket = (Basket)session.getAttribute("basket");
-        assertEquals(1, basket.getItems().size());
-        assertEquals((Integer)3, basket.getItems().get(0).getNumber());
+        mvc.perform(delete(Endpoints.BASKET_ITEMS  + "/2").session(session)).andDo(print());
+        verify(basketService).deleteItem(any(Basket.class), eq(2));
     }
 
     @Test
     public void deleteItemFromBasketFailsInvalidIndex() throws Exception {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("basket", basket);
-        mvc.perform(delete(url("/delete/88")).session(session))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string("Invalid item index"))
+        mvc.perform(delete(Endpoints.BASKET_ITEMS  + "/88").session(session))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(new BasketItemNotFoundException(88).getMessage()))
                 .andDo(print());
     }
 
@@ -180,13 +188,8 @@ public class OrderControllerTests extends ControllerTests {
     public void deletesAllItemsFromBasket() throws Exception {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("basket", basket);
-        mvc.perform(delete(url("/delete/")).session(session)).andDo(print());
-        Basket basket = (Basket)session.getAttribute("basket");
-        assertEquals(0, basket.getItems().size());
-    }
-
-    private String url(String suffix) {
-        return "/order" + suffix;
+        mvc.perform(delete(Endpoints.BASKET_ITEMS).session(session)).andDo(print());
+        verify(basketService).deleteAllItems(any(Basket.class));
     }
 
 }

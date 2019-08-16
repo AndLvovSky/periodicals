@@ -1,5 +1,6 @@
 package com.andlvovsky.periodicals.ui;
 
+import com.andlvovsky.periodicals.meta.ClientPages;
 import com.github.database.rider.core.api.dataset.DataSet;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -19,8 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class EditPublicationsTests extends UiTests {
 
-    private static final String URL = "/edit";
-
     @LocalServerPort
     private int port;
 
@@ -38,7 +37,7 @@ public class EditPublicationsTests extends UiTests {
     @Test
     @DataSet("datasets/dataUi.json")
     public void showsAllPublications() {
-        open(URL);
+        open(ClientPages.PUBLICATIONS_EDIT);
         $$("#ptbody tr").shouldHaveSize(6);
     }
 
@@ -47,14 +46,14 @@ public class EditPublicationsTests extends UiTests {
     public void notAdminShouldNotSeeEditPage() {
         logout();
         loginAsUser();
-        open(URL);
+        open(ClientPages.PUBLICATIONS_EDIT);
         assertThat($("body").getText()).contains("Access denied");
     }
 
     @Test
     @DataSet("datasets/dataUi.json")
     public void selectsTheSecondPublication() {
-        open(URL);
+        open(ClientPages.PUBLICATIONS_EDIT);
         $$("#ptbody tr").shouldHaveSize(6);
         String secondId = $("#ptbody tr:nth-child(2) td:first-child").getText();
         $("#publicationId").setValue(secondId);
@@ -67,7 +66,7 @@ public class EditPublicationsTests extends UiTests {
     @Test
     @DataSet("datasets/dataUi.json")
     public void selectPublicationFails() {
-        open(URL);
+        open(ClientPages.PUBLICATIONS_EDIT);
         $$("#ptbody tr").shouldHaveSize(6);
         $("#publicationId").setValue("999");
         $("#selectPublication").click();
@@ -78,7 +77,7 @@ public class EditPublicationsTests extends UiTests {
     @Test
     @DataSet("datasets/dataUi.json")
     public void deletesTheForthPublication() {
-        open(URL);
+        open(ClientPages.PUBLICATIONS_EDIT);
         $$("#ptbody tr").shouldHaveSize(6);
         String forthId = $("#ptbody tr:nth-child(4) td:first-child").getText();
         $("#publicationId").setValue(forthId);
@@ -90,7 +89,7 @@ public class EditPublicationsTests extends UiTests {
     @Test
     @DataSet("datasets/dataUi.json")
     public void deletePublicationFails() {
-        open(URL);
+        open(ClientPages.PUBLICATIONS_EDIT);
         $$("#ptbody tr").shouldHaveSize(6);
         $("#publicationId").setValue("888");
         $("#deletePublication").click();
@@ -101,7 +100,7 @@ public class EditPublicationsTests extends UiTests {
     @Test
     @DataSet("datasets/dataUi.json")
     public void addsNewPublication() {
-        open(URL);
+        open(ClientPages.PUBLICATIONS_EDIT);
         $$("#ptbody tr").shouldHaveSize(6);
         enterPublication();
         $("#addPublication").click();
@@ -112,7 +111,7 @@ public class EditPublicationsTests extends UiTests {
     @Test
     @DataSet("datasets/dataUi.json")
     public void addPublicationFails() {
-        open(URL);
+        open(ClientPages.PUBLICATIONS_EDIT);
         $$("#ptbody tr").shouldHaveSize(6);
         enterInvalidPublication();
         $("#addPublication").click();
@@ -123,7 +122,7 @@ public class EditPublicationsTests extends UiTests {
     @Test
     @DataSet("datasets/dataUi.json")
     public void replacesTheThirdPublication() {
-        open(URL);
+        open(ClientPages.PUBLICATIONS_EDIT);
         $$("#ptbody tr").shouldHaveSize(6);
         String thirdId = $("#ptbody tr:nth-child(3) td:first-child").getText();
         $("#publicationId").setValue(thirdId);
@@ -136,7 +135,7 @@ public class EditPublicationsTests extends UiTests {
     @Test
     @DataSet("datasets/dataUi.json")
     public void replacePublicationFails() {
-        open(URL);
+        open(ClientPages.PUBLICATIONS_EDIT);
         $$("#ptbody tr").shouldHaveSize(6);
         enterInvalidPublication();
         $("#replacePublication").click();
@@ -144,6 +143,7 @@ public class EditPublicationsTests extends UiTests {
         $("#periodPublicationError").shouldNotBe(empty);
     }
 
+    @Override
     public int getPort() {
         return port;
     }

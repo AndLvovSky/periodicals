@@ -2,20 +2,19 @@ package com.andlvovsky.periodicals.service;
 
 import com.andlvovsky.periodicals.exception.EmptyBasketException;
 import com.andlvovsky.periodicals.model.basket.BasketItem;
-import com.andlvovsky.periodicals.model.publication.Publication;
+import com.andlvovsky.periodicals.model.Publication;
 import com.andlvovsky.periodicals.model.basket.Basket;
-import com.andlvovsky.periodicals.model.subscription.Subscription;
+import com.andlvovsky.periodicals.model.Subscription;
 import com.andlvovsky.periodicals.model.user.User;
 import com.andlvovsky.periodicals.repository.SubscriptionRepository;
 import com.andlvovsky.periodicals.service.impl.OrderServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
@@ -24,7 +23,6 @@ import static org.mockito.Mockito.*;
 @RunWith(SpringRunner.class)
 public class OrderServiceTests {
 
-    @InjectMocks
     private OrderServiceImpl orderService;
 
     @Mock
@@ -36,16 +34,14 @@ public class OrderServiceTests {
     private User user = new User(1L, "u", "p", null, null);
 
     private Publication[] publications = {
-            new Publication(1L,"The Guardian", 7, 10., "-"),
-            new Publication(2L, "Daily Mail", 1, 5., "-")
+            new Publication(1L,"The Guardian", 7, new BigDecimal("10"), "-"),
+            new Publication(2L, "Daily Mail", 1, new BigDecimal("5"), "-")
     };
 
     private Basket basket = new Basket(Arrays.asList(
             new BasketItem(publications[0], 5),
             new BasketItem(publications[1], 10)
     ));
-
-    private Basket emptyBasket = new Basket(new ArrayList<>());
 
     private Subscription[] subscriptions = {
             new Subscription(publications[0], user, 5),
@@ -54,19 +50,20 @@ public class OrderServiceTests {
 
     @Before
     public void beforeEach() {
+        orderService = new OrderServiceImpl(userService, subscriptionRepository);
         when(userService.getLoggedUser()).thenReturn(user);
     }
 
     @Test
     public void calculatesBasketCost() {
-        double cost = orderService.calculateCost(basket);
-        assertEquals(100.0, cost, 0.0);
+        BigDecimal cost = orderService.calculateCost(basket);
+        assertEquals(new BigDecimal("100"), cost);
     }
 
     @Test
     public void calculatesEmptyBasketCost() {
-        double cost = orderService.calculateCost(emptyBasket);
-        assertEquals(0.0, cost, 0.0);
+        BigDecimal cost = orderService.calculateCost(new Basket());
+        assertEquals(BigDecimal.ZERO, cost);
     }
 
     @Test
@@ -80,7 +77,7 @@ public class OrderServiceTests {
     @Test(expected = EmptyBasketException.class)
     public void registerOrderFailsEmptyBasket() {
         try {
-            orderService.registerOrder(emptyBasket);
+            orderService.registerOrder(new Basket());
         } finally {
             verifyNoMoreInteractions(subscriptionRepository);
         }

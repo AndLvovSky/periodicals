@@ -1,6 +1,6 @@
 package com.andlvovsky.periodicals.util;
 
-import com.andlvovsky.periodicals.model.publication.PublicationDto;
+import com.andlvovsky.periodicals.dto.PublicationDto;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +10,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.math.BigDecimal;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -27,7 +28,7 @@ public class PublicationValidationTest {
 
     @Test
     public void nameIsTooShort() {
-        PublicationDto publication = new PublicationDto("A", 7, 10.0, "-");
+        PublicationDto publication = new PublicationDto(1L, "A", 7, new BigDecimal("10"), "-");
         Set<ConstraintViolation<PublicationDto>> constraintViolations = validator.validate(publication);
         assertEquals(1, constraintViolations.size());
         assertEquals("A", constraintViolations.iterator().next().getInvalidValue());
@@ -35,7 +36,7 @@ public class PublicationValidationTest {
 
     @Test
     public void periodMustBePositive() {
-        PublicationDto publication = new PublicationDto("The Guardian", 0, 15.5, "-");
+        PublicationDto publication = new PublicationDto(2L, "The Guardian", 0, new BigDecimal("15.5"), "-");
         Set<ConstraintViolation<PublicationDto>> constraintViolations = validator.validate(publication);
         assertEquals(1, constraintViolations.size());
         assertEquals(0, constraintViolations.iterator().next().getInvalidValue());
@@ -43,16 +44,16 @@ public class PublicationValidationTest {
 
     @Test
     public void costMustNotBeNegative() {
-        PublicationDto publication = new PublicationDto("The Sun", 30, -5.0, "-");
+        PublicationDto publication = new PublicationDto(1L, "The Sun", 30, new BigDecimal("-5"), "-");
         Set<ConstraintViolation<PublicationDto>> constraintViolations = validator.validate(publication);
         assertEquals(1, constraintViolations.size());
-        assertEquals(-5.0, constraintViolations.iterator().next().getInvalidValue());
+        assertEquals(new BigDecimal("-5"), constraintViolations.iterator().next().getInvalidValue());
     }
 
     @Test
     public void publicationIsValid() {
         PublicationDto publication = new PublicationDto(
-                "The New York Times", 14, 20.25, null);
+                1L, "The New York Times", 14, new BigDecimal("20.25"), null);
         Set<ConstraintViolation<PublicationDto>> constraintViolations = validator.validate(publication);
         assertEquals(0, constraintViolations.size());
     }

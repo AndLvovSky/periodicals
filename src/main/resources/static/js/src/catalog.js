@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 function addToBasket(publicationId, number) {
     $.ajax({
-        url: ORDER_URL + "add",
+        url: BASKET_ITEMS_URL,
         method: "POST",
         data: JSON.stringify({
             "publicationId": publicationId,
@@ -66,11 +66,4 @@ function addToBasketCallback(publicationId) {
     return function() {
         addToBasket(publicationId, $("#pn" + publicationId).val());
     }
-}
-
-function formatDollars(money) {
-    var dollars = Math.floor(money);
-    var cents = Math.round((money - dollars) * 100);
-    if (cents < 10) cents = '0' + cents;
-    return dollars + '.' + cents + '$';
 }

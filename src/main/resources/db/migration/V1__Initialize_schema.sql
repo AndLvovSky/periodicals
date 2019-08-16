@@ -7,7 +7,7 @@ CREATE TABLE publication (
     id bigint NOT NULL PRIMARY KEY,
     name character varying(255),
     period integer,
-    cost double precision,
+    cost numeric(15, 4),
     description character varying(1000)
 );
 

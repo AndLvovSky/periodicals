@@ -1,14 +1,17 @@
 package com.andlvovsky.periodicals.repository;
 
-import com.andlvovsky.periodicals.model.publication.Publication;
+import com.andlvovsky.periodicals.model.Publication;
 import com.github.database.rider.core.api.dataset.DataSet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -32,7 +35,7 @@ public class PublicationRepositoryTests extends RepositoryTests {
     @Test
     @DataSet("datasets/publications.json")
     public void findsAllOrderedById() {
-        List<Publication> publications = repository.findAllByOrderById();
+        List<Publication> publications = repository.findAll(Sort.by("id"));
         assertEquals(2, publications.size());
         assertThat(publications.get(1).getPeriod()).isEqualTo(30);
     }
@@ -40,7 +43,7 @@ public class PublicationRepositoryTests extends RepositoryTests {
     @Test
     @DataSet("datasets/publications.json")
     public void saves() {
-        repository.save(new Publication("The Sun", 1, 5.5, "-"));
+        repository.save(new Publication("The Sun", 1, new BigDecimal("5.5"), "-"));
         assertEquals(3, repository.count());
     }
 
@@ -51,6 +54,12 @@ public class PublicationRepositoryTests extends RepositoryTests {
         assertEquals(1, repository.count());
         Publication publication = repository.findById(102L).get();
         assertEquals("New Yorker", publication.getName());
+    }
+
+    @Test(expected = EmptyResultDataAccessException.class)
+    @DataSet("datasets/publications.json")
+    public void deleteFailsEmptyResultDataAccess() {
+        repository.deleteById(99L);
     }
 
 }
